@@ -1574,12 +1574,11 @@ function loadSignupsLocal() {
 }
 function applySignupsToRuntime(signups) {
   signups.forEach(u => {
-    if (!USER_DB[u.username]) {
-      USER_DB[u.username] = { name: u.name, dept: u.dept, deptKey: u.deptKey, role: u.role, pwHash: u.pwHash };
-      if (!DEPT_USERS[u.deptKey]) DEPT_USERS[u.deptKey] = [];
-      if (!DEPT_USERS[u.deptKey].includes(u.username)) DEPT_USERS[u.deptKey].push(u.username);
-      USER_LABELS[u.username] = u.name;
-    }
+    // Always update USER_DB so password changes and new users sync correctly
+    USER_DB[u.username] = { name: u.name, dept: u.dept, deptKey: u.deptKey, role: u.role, pwHash: u.pwHash };
+    if (!DEPT_USERS[u.deptKey]) DEPT_USERS[u.deptKey] = [];
+    if (!DEPT_USERS[u.deptKey].includes(u.username)) DEPT_USERS[u.deptKey].push(u.username);
+    USER_LABELS[u.username] = u.name;
   });
 }
 
@@ -2011,6 +2010,26 @@ function getAllUsers() {
 function renderUserTable() {
   const tbody = document.getElementById('uman-tbody');
   if (!tbody) return;
+  // Show loading state
+  tbody.innerHTML = '<tr><td colspan="8" class="log-empty" style="color:var(--accent4);">⟳ Loading users…</td></tr>';
+  // Always reload from GS first so admin sees all users across all devices
+  _renderUserTableFromGS();
+}
+
+async function _renderUserTableFromGS() {
+  const tbody = document.getElementById('uman-tbody');
+  if (!tbody) return;
+
+  // Try to pull latest signups from GS
+  if (GS_URL && GS_URL !== 'YOUR_NEW_WEBAPP_URL_HERE') {
+    const res = await gsCall('getSignups');
+    if (res?.ok && Array.isArray(res.data)) {
+      // Sync GS signups into localStorage and runtime
+      localStorage.setItem('depdms_signups', JSON.stringify(res.data));
+      applySignupsToRuntime(res.data);
+    }
+  }
+
   const search = (document.getElementById('uman-search')?.value || '').toLowerCase();
   let users = getAllUsers();
   if (search) users = users.filter(u =>
@@ -2032,7 +2051,7 @@ function renderUserTable() {
       ? '<button class="uman-delete-btn" onclick="deleteSignupUser(\'' + escHtml(u.username) + '\')">🗑 Delete</button>'
       : '<span style="color:var(--muted);font-size:10px">—</span>';
 
-    const row = [
+    return [
       '<tr>',
       '<td style="color:var(--muted);font-size:11px;">' + (i+1) + '</td>',
       '<td style="font-family:monospace;font-size:12px;font-weight:600;">' + escHtml(u.username) + '</td>',
@@ -2048,7 +2067,6 @@ function renderUserTable() {
       '<td>' + deleteBtn + '</td>',
       '</tr>',
     ].join('');
-    return row;
   }).join('');
 }
 

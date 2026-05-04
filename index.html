@@ -354,7 +354,7 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       </div>
       <div class="login-field">
         <label>Department</label>
-        <select id="su-dept">
+        <select id="su-dept" onchange="onSuDeptChange()">
           <option value="">— Select department —</option>
           <option value="finance">Finance Department</option>
           <option value="tsd">Technical Services Department (TSD)</option>
@@ -364,7 +364,9 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       </div>
       <div class="login-field">
         <label>Username</label>
-        <input type="text" id="su-username" placeholder="Type your username" autocomplete="off">
+        <select id="su-username" disabled>
+          <option value="">— Select department first —</option>
+        </select>
       </div>
       <div class="login-field">
         <label>Password</label>
@@ -985,8 +987,12 @@ function enterSession(username, user) {
   _currentPeriodKey = getMonth() + '_' + getYear();
   // Load shared form data from Google Sheets for current period
   loadFormDataGS();
-  // Load shared audit log
-  loadAuditLogGS();
+  // Load audit log from GS, re-add this login entry on top, then save back
+  loadAuditLogGS().then(() => {
+    addLog('LOGIN', `Signed in as "${user.name}" · Role: ${cfg.label} · Dept: ${user.dept}`);
+    renderLog();
+    saveAuditLogGS();
+  });
 
   // Reset login form for next time
   document.getElementById('login-dept').value = '';
@@ -1897,16 +1903,19 @@ async function doSignUp() {
   USER_LABELS[username] = name;
 
   addLogAnon('LOGIN', 'New account created via Sign Up: "' + name + '" · Username: ' + username + ' · Dept: ' + newUser.dept, username, name, newUser.dept);
+  saveAuditLogGS();
   renderLog();
 
   btn.disabled = false; btn.textContent = 'Create Account ✓';
   showSignupOk('Account created! You can now sign in as "' + username + '".');
 
-  document.getElementById('su-name').value     = '';
-  document.getElementById('su-username').value = '';
-  document.getElementById('su-pw').value       = '';
-  document.getElementById('su-pw2').value      = '';
-  document.getElementById('su-dept').value     = '';
+  document.getElementById('su-name').value = '';
+  document.getElementById('su-pw').value   = '';
+  document.getElementById('su-pw2').value  = '';
+  document.getElementById('su-dept').value = '';
+  const suSel = document.getElementById('su-username');
+  suSel.innerHTML = '<option value="">— Select department first —</option>';
+  suSel.disabled = true;
 }
 
 // Load signed-up users on page load (GS first, then localStorage fallback)

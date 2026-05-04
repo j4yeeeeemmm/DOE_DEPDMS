@@ -987,12 +987,8 @@ function enterSession(username, user) {
   _currentPeriodKey = getMonth() + '_' + getYear();
   // Load shared form data from Google Sheets for current period
   loadFormDataGS();
-  // Load audit log from GS, re-add this login entry on top, then save back
-  loadAuditLogGS().then(() => {
-    addLog('LOGIN', `Signed in as "${user.name}" · Role: ${cfg.label} · Dept: ${user.dept}`);
-    renderLog();
-    saveAuditLogGS();
-  });
+  // Load the full shared audit log from GS (addLog above already pushed this login entry)
+  loadAuditLogGS();
 
   // Reset login form for next time
   document.getElementById('login-dept').value = '';
@@ -1014,8 +1010,11 @@ function doLogout() {
   }
   addLog('LOGOUT', `Signed out from "${currentUser?.name||'—'}" · Dept: ${currentUser?.dept||'—'}`);
   renderLog();
-  currentRole = null;
-  currentUser = null;
+  // Nullify session AFTER log entry is created (addLog reads currentUser)
+  setTimeout(() => {
+    currentRole = null;
+    currentUser = null;
+  }, 100);
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('app').classList.remove('visible');
   document.getElementById('signin-card').style.display = 'block';
@@ -1049,7 +1048,7 @@ function getTS() {
 }
 
 function addLog(type, detail) {
-  auditLog.unshift({
+  const entry = {
     ts: getTS(),
     tsRaw: Date.now(),
     type,
@@ -1058,18 +1057,39 @@ function addLog(type, detail) {
     dept: currentUser?.dept || '—',
     role: currentUser?.role || '—',
     detail,
-  });
+  };
+  auditLog.unshift(entry);
   updateLogStats();
+  // Merge with GS log before saving so we never overwrite other users' entries
+  _mergeAndSaveAuditLog(entry);
+}
+
+async function _mergeAndSaveAuditLog(newEntry) {
+  if (!GS_URL) return;
+  try {
+    const res = await gsCall('getAuditLog');
+    if (res?.ok && Array.isArray(res.data)) {
+      // Merge: put new entry on top, then all GS entries not duplicating this one
+      const merged = [newEntry, ...res.data.filter(e =>
+        !(e.ts === newEntry.ts && e.username === newEntry.username && e.type === newEntry.type)
+      )];
+      auditLog = merged.slice(0, 500);
+      updateLogStats();
+      renderLog();
+    }
+  } catch(e) {}
   saveAuditLogGS();
 }
 
 function addLogAnon(type, detail, username, name, dept) {
-  // For pre-login events (failed logins, lockouts)
-  auditLog.unshift({
+  // For pre-login events (failed logins, lockouts, signups)
+  const entry = {
     ts: getTS(), tsRaw: Date.now(),
     type, username: username||'—', name: name||'—', dept: dept||'—', role:'—', detail,
-  });
+  };
+  auditLog.unshift(entry);
   updateLogStats();
+  _mergeAndSaveAuditLog(entry);
 }
 
 function updateLogStats() {

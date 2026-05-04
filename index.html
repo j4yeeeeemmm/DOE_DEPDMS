@@ -387,6 +387,8 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
           A 6-digit code was sent to <strong id="fp-email-hint">your email</strong>.<br>
           It expires in <strong id="fp-otp-timer" style="font-family:'DM Mono',monospace;">5:00</strong>. Check your spam folder if you don't see it.
         </div>
+        <!-- Shown only when email sending fails -->
+        <div id="fp-otp-fallback" style="display:none;background:rgba(227,179,65,.1);border:1px solid rgba(227,179,65,.3);color:var(--accent4);border-radius:8px;padding:12px 14px;font-size:13px;font-weight:600;margin-bottom:12px;font-family:'DM Mono',monospace;letter-spacing:.05em;"></div>
         <div class="login-field">
           <label>Verification Code</label>
           <input type="text" id="fp-otp" placeholder="Enter 6-digit code" maxlength="6" style="letter-spacing:.2em;font-size:20px;font-family:'DM Mono',monospace;text-align:center;" onkeydown="if(event.key==='Enter')fpVerifyOtp()">
@@ -440,9 +442,8 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       </div>
       <div class="login-field">
         <label>Username</label>
-        <select id="su-username" disabled>
-          <option value="">— Select department first —</option>
-        </select>
+        <input type="text" id="su-username" placeholder="Type your preferred username" autocomplete="off" style="text-transform:lowercase;">
+        <div style="font-size:10px;color:var(--muted);margin-top:4px;">Letters, numbers, dots and underscores only. e.g. <span style="font-family:'DM Mono',monospace;color:var(--accent)">juan.delacruz</span></div>
       </div>
       <div class="login-field">
         <label>Gmail Address</label>
@@ -1617,7 +1618,7 @@ buildDSDTable();
 // To verify it works: paste the URL in a browser — you should see:
 //   {"ok":true,"message":"DEPDMS Backend is running."}
 // ══════════════════════════════════════════════════════════════
-const GS_URL = 'https://script.google.com/macros/s/AKfycbxg9moQNC4ao9ThQ7SQkXwxKMpVeRcvZoqHNb8i9DEL-_loFDfK3VQdIM4tj-mA7Rdh/exec';
+const GS_URL = 'https://script.google.com/macros/s/AKfycbwYQfAvq0saHuXh_WzLzsyYCe3ImyI41OtQGV1-XkAUskEGFKNK3q6tcGcyLZ0w7yxpEg/exec';
 
 // Shows a small sync indicator in the UI
 function setSyncStatus(state) {
@@ -2038,7 +2039,22 @@ async function fpSendOtp() {
   btn.disabled = false; btn.textContent = 'Send Verification Code →';
 
   if (!res?.ok) {
-    return showFpErr('Failed to send verification email. Please try again or contact the admin. (' + (res?.error || 'No response') + ')');
+    // Email failed — show OTP directly on screen as fallback
+    // This happens when Apps Script MailApp isn't authorized yet
+    const masked = user.email.replace(/^(.).+(@.+)$/, (_, a, b) => a + '***' + b);
+    document.getElementById('fp-email-hint').textContent = masked + ' (email failed — code shown below)';
+    document.getElementById('fp-step2-username').textContent = username;
+    _fpVerifiedUsername = username;
+    _fpStartOtpTimer();
+    _fpGoToStep(2);
+    // Show OTP on screen as fallback
+    const otpHint = document.getElementById('fp-otp-fallback');
+    if (otpHint) {
+      otpHint.style.display = 'block';
+      otpHint.textContent = '⚠ Email could not be sent. Your verification code is: ' + otp;
+    }
+    addLogAnon('SAVE', 'OTP shown on-screen (email failed) for account "' + username + '"', username, user.name, user.dept);
+    return;
   }
 
   // Mask the email for display: j***@gmail.com
@@ -2186,30 +2202,7 @@ const DEPT_DEFAULT_ROLE = {
 };
 
 function onSuDeptChange() {
-  const dept = document.getElementById('su-dept').value;
-  const sel  = document.getElementById('su-username');
-  sel.innerHTML = '';
-  if (!dept) {
-    sel.innerHTML = '<option value="">— Select department first —</option>';
-    sel.disabled = true;
-    return;
-  }
-  // Get predefined slots, filter out already-taken usernames
-  const taken = Object.keys(USER_DB);
-  const available = (DEPT_USERNAMES[dept] || []).filter(u => !taken.includes(u));
-  if (available.length === 0) {
-    sel.innerHTML = '<option value="">— No available usernames —</option>';
-    sel.disabled = true;
-    return;
-  }
-  sel.innerHTML = '<option value="">— Pick a username —</option>';
-  available.forEach(u => {
-    const opt = document.createElement('option');
-    opt.value = u;
-    opt.textContent = u;
-    sel.appendChild(opt);
-  });
-  sel.disabled = false;
+  // Username is now a free-text field — no dropdown to update
   document.getElementById('signup-error').classList.remove('show');
 }
 
@@ -2228,7 +2221,8 @@ function showSignupOk(msg) {
 
 async function doSignUp() {
   const name     = document.getElementById('su-name').value.trim();
-  const username = document.getElementById('su-username').value.trim().toLowerCase().replace(/\s+/g, '.');
+  const rawUser  = document.getElementById('su-username').value.trim();
+  const username = rawUser.toLowerCase().replace(/\s+/g, '.').replace(/[^a-z0-9._]/g, '');
   const dept     = document.getElementById('su-dept').value;
   const email    = document.getElementById('su-email').value.trim().toLowerCase();
   const pw       = document.getElementById('su-pw').value;
@@ -2239,16 +2233,21 @@ async function doSignUp() {
 
   if (!name)     return showSignupErr('Full name is required.');
   if (!dept)     return showSignupErr('Please select a department.');
-  if (!username) return showSignupErr('Username is required.');
+  if (!rawUser)  return showSignupErr('Username is required.');
+  if (username.length < 3) return showSignupErr('Username must be at least 3 characters.');
+  if (username !== rawUser.toLowerCase()) {
+    // Auto-corrected — show user what it will be
+    document.getElementById('su-username').value = username;
+  }
   if (!email)    return showSignupErr('Gmail address is required.');
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return showSignupErr('Please enter a valid email address.');
   if (!pw)       return showSignupErr('Password is required.');
   if (pw.length < 6) return showSignupErr('Password must be at least 6 characters.');
   if (pw !== pw2) return showSignupErr('Passwords do not match.');
 
-  if (USER_DB[username]) return showSignupErr('Username already taken. Please choose another.');
+  if (USER_DB[username]) return showSignupErr('Username "' + username + '" is already taken. Please choose another.');
   const signups = getSignups();
-  if (signups.find(u => u.username === username)) return showSignupErr('Username already taken. Choose another.');
+  if (signups.find(u => u.username === username)) return showSignupErr('Username "' + username + '" is already taken. Choose another.');
 
   const btn = document.getElementById('signup-btn');
   btn.disabled = true; btn.textContent = 'Creating…';
@@ -2272,20 +2271,17 @@ async function doSignUp() {
   USER_LABELS[username] = name;
 
   addLogAnon('LOGIN', 'New account created via Sign Up: "' + name + '" · Username: ' + username + ' · Dept: ' + newUser.dept, username, name, newUser.dept);
-  // saveAuditLogGS() not needed here — addLogAnon calls _mergeAndSaveAuditLog internally
   renderLog();
 
   btn.disabled = false; btn.textContent = 'Create Account ✓';
   showSignupOk('Account created! You can now sign in as "' + username + '".');
 
-  document.getElementById('su-name').value  = '';
-  document.getElementById('su-email').value = '';
-  document.getElementById('su-pw').value    = '';
-  document.getElementById('su-pw2').value   = '';
-  document.getElementById('su-dept').value  = '';
-  const suSel = document.getElementById('su-username');
-  suSel.innerHTML = '<option value="">— Select department first —</option>';
-  suSel.disabled = true;
+  document.getElementById('su-name').value     = '';
+  document.getElementById('su-username').value = '';
+  document.getElementById('su-email').value    = '';
+  document.getElementById('su-pw').value       = '';
+  document.getElementById('su-pw2').value      = '';
+  document.getElementById('su-dept').value     = '';
 }
 
 // Load signed-up users on page load (GS first, then localStorage fallback)

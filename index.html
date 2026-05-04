@@ -227,6 +227,15 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-he
 .log-clear-btn:hover{opacity:1;}
 input[type=text].small,select.small{width:auto;min-width:unset;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:6px 10px;font-family:'Sora',sans-serif;font-size:12px;outline:none;}
 input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
+/* ── FORGOT PASSWORD ── */
+#forgotpw-card{display:none;}
+.fp-step{display:none;}
+.fp-step.active{display:block;}
+.fp-back{background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;font-family:'Sora',sans-serif;padding:0;margin-bottom:14px;display:flex;align-items:center;gap:4px;transition:color .15s;}
+.fp-back:hover{color:var(--text);}
+.fp-info-box{background:rgba(31,111,235,.07);border:1px solid rgba(31,111,235,.18);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+.fp-info-box strong{color:var(--text);}
+
 /* ── SIGN UP TOGGLE ── */
 .login-toggle-row{display:flex;gap:8px;justify-content:center;margin-top:14px;font-size:12px;color:var(--muted);}
 .login-toggle-row a{color:var(--accent);cursor:pointer;text-decoration:underline;}
@@ -336,10 +345,77 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       </div>
 
       <button class="login-btn" onclick="doLogin()" id="login-btn">Sign In →</button>
-      <div class="login-toggle-row">Don't have an account? <a onclick="showSignUp()">Sign Up</a></div>
+      <div class="login-toggle-row">Don't have an account? <a onclick="showSignUp()">Sign Up</a> &nbsp;·&nbsp; <a onclick="showForgotPw()">Forgot Password?</a></div>
 
       <hr class="login-divider">
       <div class="login-dept-hint" id="dept-hint">Select a department above to see available accounts.</div>
+    </div>
+
+    <!-- ─── FORGOT PASSWORD CARD ─── -->
+    <div class="login-card" id="forgotpw-card" style="display:none;">
+      <button class="fp-back" onclick="hideForgotPw()">← Back to Sign In</button>
+      <div class="login-card-title">Reset Password</div>
+      <div class="login-card-sub">A 6-digit code will be sent to your registered Gmail.</div>
+      <div class="login-error" id="fp-error"><span>⚠</span><span id="fp-error-msg">Error</span></div>
+      <div class="login-error" id="fp-ok" style="background:rgba(63,185,80,.1);border-color:rgba(63,185,80,.3);color:var(--accent2);"><span>✓</span><span id="fp-ok-msg">Password reset!</span></div>
+
+      <!-- Step 1: Select account & send OTP -->
+      <div class="fp-step active" id="fp-step1">
+        <div class="fp-info-box">Select your account. A <strong>6-digit verification code</strong> will be sent to your registered Gmail address.</div>
+        <div class="login-field">
+          <label>Department</label>
+          <select id="fp-dept" onchange="onFpDeptChange()">
+            <option value="">— Select department —</option>
+            <option value="finance">Finance Department</option>
+            <option value="tsd">Technical Services Department (TSD)</option>
+            <option value="power-trading">Power Trading Department</option>
+            <option value="admin">Administration</option>
+          </select>
+        </div>
+        <div class="login-field">
+          <label>Username</label>
+          <select id="fp-username" disabled>
+            <option value="">— Select department first —</option>
+          </select>
+        </div>
+        <button class="login-btn" onclick="fpSendOtp()" id="fp-send-btn">Send Verification Code →</button>
+      </div>
+
+      <!-- Step 2: Enter OTP -->
+      <div class="fp-step" id="fp-step2">
+        <div class="fp-info-box">
+          A 6-digit code was sent to <strong id="fp-email-hint">your email</strong>.<br>
+          It expires in <strong id="fp-otp-timer" style="font-family:'DM Mono',monospace;">5:00</strong>. Check your spam folder if you don't see it.
+        </div>
+        <div class="login-field">
+          <label>Verification Code</label>
+          <input type="text" id="fp-otp" placeholder="Enter 6-digit code" maxlength="6" style="letter-spacing:.2em;font-size:20px;font-family:'DM Mono',monospace;text-align:center;" onkeydown="if(event.key==='Enter')fpVerifyOtp()">
+        </div>
+        <button class="login-btn" onclick="fpVerifyOtp()" id="fp-otp-btn">Verify Code →</button>
+        <div style="margin-top:10px;text-align:center;">
+          <button class="fp-back" onclick="fpGoBack()" style="display:inline-flex;">← Try a different account</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Set new password -->
+      <div class="fp-step" id="fp-step3">
+        <div class="fp-info-box">✓ Identity confirmed: <strong id="fp-verified-label">—</strong><br>Now set your new password below.</div>
+        <div class="login-field">
+          <label>New Password</label>
+          <div class="field-wrap">
+            <input type="password" id="fp-pw" placeholder="Minimum 6 characters">
+            <button class="pw-toggle" onclick="toggleFpPw('fp-pw','fp-pw-eye')" type="button" id="fp-pw-eye">👁</button>
+          </div>
+        </div>
+        <div class="login-field">
+          <label>Confirm New Password</label>
+          <div class="field-wrap">
+            <input type="password" id="fp-pw2" placeholder="Re-enter new password">
+            <button class="pw-toggle" onclick="toggleFpPw('fp-pw2','fp-pw2-eye')" type="button" id="fp-pw2-eye">👁</button>
+          </div>
+        </div>
+        <button class="login-btn" onclick="fpResetPassword()" id="fp-reset-btn" style="background:var(--accent2);color:#0d1117;">Reset Password ✓</button>
+      </div>
     </div>
 
     <!-- ─── SIGN UP CARD ─── -->
@@ -367,6 +443,10 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         <select id="su-username" disabled>
           <option value="">— Select department first —</option>
         </select>
+      </div>
+      <div class="login-field">
+        <label>Gmail Address</label>
+        <input type="email" id="su-email" placeholder="e.g. juan@gmail.com">
       </div>
       <div class="login-field">
         <label>Password</label>
@@ -1813,6 +1893,265 @@ const DEPT_LABEL_MAP = {
   'admin': 'Administration',
 };
 
+// ═══════════════════════════════════════════════
+// ── FORGOT PASSWORD (Email OTP) ─────────────────
+// ═══════════════════════════════════════════════
+
+let _fpVerifiedUsername = null; // confirmed after OTP
+let _fpOtpCode          = null; // 6-digit code sent to email
+let _fpOtpExpiry        = null; // expiry timestamp (5 min)
+
+function showForgotPw() {
+  document.getElementById('signin-card').style.display   = 'none';
+  document.getElementById('signup-card').style.display   = 'none';
+  document.getElementById('forgotpw-card').style.display = 'block';
+  _fpReset();
+}
+
+function hideForgotPw() {
+  document.getElementById('forgotpw-card').style.display = 'none';
+  document.getElementById('signin-card').style.display   = 'block';
+  _fpReset();
+}
+
+function _fpReset() {
+  _fpVerifiedUsername = null;
+  _fpOtpCode          = null;
+  _fpOtpExpiry        = null;
+  ['fp-dept','fp-name'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  ['fp-otp','fp-pw','fp-pw2'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  ['fp-pw','fp-pw2'].forEach(id => { const el = document.getElementById(id); if(el) el.type = 'password'; });
+  ['fp-pw-eye','fp-pw2-eye'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = '👁'; });
+  const uSel = document.getElementById('fp-username');
+  if (uSel) { uSel.innerHTML = '<option value="">— Select department first —</option>'; uSel.disabled = true; }
+  document.getElementById('fp-error').classList.remove('show');
+  document.getElementById('fp-ok').classList.remove('show');
+  _fpGoToStep(1);
+}
+
+function _fpGoToStep(n) {
+  [1,2,3].forEach(i => {
+    const el = document.getElementById('fp-step' + i);
+    if (el) el.classList.toggle('active', i === n);
+  });
+}
+
+function fpGoBack() {
+  _fpVerifiedUsername = null;
+  _fpOtpCode          = null;
+  _fpOtpExpiry        = null;
+  document.getElementById('fp-otp').value = '';
+  document.getElementById('fp-pw').value  = '';
+  document.getElementById('fp-pw2').value = '';
+  document.getElementById('fp-error').classList.remove('show');
+  document.getElementById('fp-ok').classList.remove('show');
+  _fpGoToStep(1);
+}
+
+function showFpErr(msg) {
+  document.getElementById('fp-error-msg').textContent = msg;
+  document.getElementById('fp-error').classList.add('show');
+  document.getElementById('fp-ok').classList.remove('show');
+}
+function showFpOk(msg) {
+  document.getElementById('fp-ok-msg').textContent = msg;
+  document.getElementById('fp-ok').classList.add('show');
+  document.getElementById('fp-error').classList.remove('show');
+}
+
+function onFpDeptChange() {
+  const dept = document.getElementById('fp-dept').value;
+  const sel  = document.getElementById('fp-username');
+  sel.innerHTML = '';
+  document.getElementById('fp-error').classList.remove('show');
+  if (!dept) {
+    sel.innerHTML = '<option value="">— Select department first —</option>';
+    sel.disabled = true;
+    return;
+  }
+  // Only show signed-up accounts (they have a registered email)
+  const signups = getSignups();
+  const deptSignups = signups.filter(u => u.deptKey === dept && u.email);
+  if (deptSignups.length === 0) {
+    sel.innerHTML = '<option value="">— No registered accounts in this department —</option>';
+    sel.disabled = true;
+    return;
+  }
+  sel.innerHTML = '<option value="">— Select your username —</option>';
+  deptSignups.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u.username;
+    opt.textContent = u.username;
+    sel.appendChild(opt);
+  });
+  sel.disabled = false;
+}
+
+// ── STEP 1: Send OTP to registered email ──
+async function fpSendOtp() {
+  const username = document.getElementById('fp-username').value.trim();
+  const dept     = document.getElementById('fp-dept').value;
+
+  document.getElementById('fp-error').classList.remove('show');
+  document.getElementById('fp-ok').classList.remove('show');
+
+  if (!dept)     return showFpErr('Please select your department.');
+  if (!username) return showFpErr('Please select your username.');
+
+  const btn = document.getElementById('fp-send-btn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  // Reload signups from GS to get latest email
+  if (GS_URL) {
+    const res = await gsCall('getSignups');
+    if (res?.ok && Array.isArray(res.data)) {
+      localStorage.setItem('depdms_signups', JSON.stringify(res.data));
+      applySignupsToRuntime(res.data);
+    }
+  }
+
+  const signups = getSignups();
+  const user = signups.find(u => u.username === username);
+
+  if (!user) {
+    btn.disabled = false; btn.textContent = 'Send Verification Code →';
+    return showFpErr('Account not found. Only signed-up accounts can reset their password.');
+  }
+  if (!user.email) {
+    btn.disabled = false; btn.textContent = 'Send Verification Code →';
+    return showFpErr('No email registered for this account. Please contact the admin to reset your password.');
+  }
+
+  // Generate 6-digit OTP
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  _fpOtpCode    = otp;
+  _fpOtpExpiry  = Date.now() + 5 * 60 * 1000; // 5 minutes
+
+  // Send OTP via Google Apps Script
+  const res = await gsCall('sendOtp', {
+    email:    user.email,
+    username: user.username,
+    name:     user.name,
+    otp:      otp,
+  });
+
+  btn.disabled = false; btn.textContent = 'Send Verification Code →';
+
+  if (!res?.ok) {
+    return showFpErr('Failed to send verification email. Please try again or contact the admin. (' + (res?.error || 'No response') + ')');
+  }
+
+  // Mask the email for display: j***@gmail.com
+  const masked = user.email.replace(/^(.).+(@.+)$/, (_, a, b) => a + '***' + b);
+  document.getElementById('fp-email-hint').textContent = masked;
+  document.getElementById('fp-step2-username').textContent = username;
+
+  // Start 5-minute countdown
+  _fpVerifiedUsername = username; // store for step 2
+  _fpStartOtpTimer();
+
+  _fpGoToStep(2);
+  addLogAnon('SAVE', 'Password reset OTP sent to "' + masked + '" for account "' + username + '"', username, user.name, user.dept);
+}
+
+let _fpTimerInterval = null;
+function _fpStartOtpTimer() {
+  clearInterval(_fpTimerInterval);
+  _fpUpdateTimer();
+  _fpTimerInterval = setInterval(() => {
+    if (!_fpUpdateTimer()) clearInterval(_fpTimerInterval);
+  }, 1000);
+}
+function _fpUpdateTimer() {
+  const remaining = Math.max(0, Math.ceil((_fpOtpExpiry - Date.now()) / 1000));
+  const el = document.getElementById('fp-otp-timer');
+  if (!el) return false;
+  const m = Math.floor(remaining / 60);
+  const s = remaining % 60;
+  el.textContent = m + ':' + String(s).padStart(2,'0');
+  if (remaining === 0) {
+    el.textContent = 'Expired';
+    el.style.color = 'var(--danger)';
+    return false;
+  }
+  el.style.color = remaining < 60 ? 'var(--accent4)' : 'var(--accent2)';
+  return true;
+}
+
+// ── STEP 2: Verify OTP ──
+function fpVerifyOtp() {
+  const entered = document.getElementById('fp-otp').value.trim();
+
+  document.getElementById('fp-error').classList.remove('show');
+  document.getElementById('fp-ok').classList.remove('show');
+
+  if (!entered) return showFpErr('Please enter the 6-digit code from your email.');
+  if (entered.length !== 6 || !/^\d+$/.test(entered)) return showFpErr('The code must be exactly 6 digits.');
+
+  if (Date.now() > _fpOtpExpiry) {
+    return showFpErr('This code has expired. Please go back and request a new one.');
+  }
+  if (entered !== _fpOtpCode) {
+    addLogAnon('FAIL', 'Wrong OTP entered for account "' + _fpVerifiedUsername + '"', _fpVerifiedUsername, '', '');
+    return showFpErr('Incorrect code. Please check your email and try again.');
+  }
+
+  // OTP is correct — move to step 3
+  clearInterval(_fpTimerInterval);
+  const signups = getSignups();
+  const user = signups.find(u => u.username === _fpVerifiedUsername);
+  document.getElementById('fp-verified-label').textContent = (user?.name || _fpVerifiedUsername) + ' (' + _fpVerifiedUsername + ')';
+  _fpGoToStep(3);
+}
+
+// ── STEP 3: Set new password ──
+async function fpResetPassword() {
+  if (!_fpVerifiedUsername) return showFpErr('Session expired. Please start over.');
+
+  const pw  = document.getElementById('fp-pw').value;
+  const pw2 = document.getElementById('fp-pw2').value;
+
+  document.getElementById('fp-error').classList.remove('show');
+  document.getElementById('fp-ok').classList.remove('show');
+
+  if (!pw)           return showFpErr('Please enter a new password.');
+  if (pw.length < 6) return showFpErr('Password must be at least 6 characters.');
+  if (pw !== pw2)    return showFpErr('Passwords do not match.');
+
+  const btn = document.getElementById('fp-reset-btn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  const newHash = await sha256(pw);
+  const signups = getSignups();
+  const idx = signups.findIndex(u => u.username === _fpVerifiedUsername);
+
+  if (idx === -1) {
+    btn.disabled = false; btn.textContent = 'Reset Password ✓';
+    return showFpErr('Account not found. Please contact the admin.');
+  }
+
+  signups[idx].pwHash   = newHash;
+  signups[idx].password = pw;
+  saveSignups(signups);
+
+  if (USER_DB[_fpVerifiedUsername]) USER_DB[_fpVerifiedUsername].pwHash = newHash;
+
+  addLogAnon('SAVE',
+    'Password successfully reset via OTP for account "' + _fpVerifiedUsername + '" · Dept: ' + signups[idx].dept,
+    _fpVerifiedUsername, signups[idx].name, signups[idx].dept
+  );
+
+  btn.disabled = false; btn.textContent = 'Reset Password ✓';
+  showFpOk('Password reset successfully! Redirecting to sign in…');
+  setTimeout(() => hideForgotPw(), 2500);
+}
+
+function toggleFpPw(inputId, btnId) {
+  const inp = document.getElementById(inputId);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  document.getElementById(btnId).textContent = inp.type === 'password' ? '👁' : '🙈';
+}
+
 function showSignUp() {
   document.getElementById('signin-card').style.display = 'none';
   document.getElementById('signup-card').style.display = 'block';
@@ -1891,6 +2230,7 @@ async function doSignUp() {
   const name     = document.getElementById('su-name').value.trim();
   const username = document.getElementById('su-username').value.trim().toLowerCase().replace(/\s+/g, '.');
   const dept     = document.getElementById('su-dept').value;
+  const email    = document.getElementById('su-email').value.trim().toLowerCase();
   const pw       = document.getElementById('su-pw').value;
   const pw2      = document.getElementById('su-pw2').value;
 
@@ -1900,6 +2240,8 @@ async function doSignUp() {
   if (!name)     return showSignupErr('Full name is required.');
   if (!dept)     return showSignupErr('Please select a department.');
   if (!username) return showSignupErr('Username is required.');
+  if (!email)    return showSignupErr('Gmail address is required.');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return showSignupErr('Please enter a valid email address.');
   if (!pw)       return showSignupErr('Password is required.');
   if (pw.length < 6) return showSignupErr('Password must be at least 6 characters.');
   if (pw !== pw2) return showSignupErr('Passwords do not match.');
@@ -1914,7 +2256,7 @@ async function doSignUp() {
   const role   = DEPT_DEFAULT_ROLE[dept] || 'ur';
   const pwHash = await sha256(pw);
   const newUser = {
-    username, name,
+    username, name, email,
     dept: DEPT_LABEL_MAP[dept] || dept,
     deptKey: dept, role,
     password: pw, pwHash,
@@ -1936,10 +2278,11 @@ async function doSignUp() {
   btn.disabled = false; btn.textContent = 'Create Account ✓';
   showSignupOk('Account created! You can now sign in as "' + username + '".');
 
-  document.getElementById('su-name').value = '';
-  document.getElementById('su-pw').value   = '';
-  document.getElementById('su-pw2').value  = '';
-  document.getElementById('su-dept').value = '';
+  document.getElementById('su-name').value  = '';
+  document.getElementById('su-email').value = '';
+  document.getElementById('su-pw').value    = '';
+  document.getElementById('su-pw2').value   = '';
+  document.getElementById('su-dept').value  = '';
   const suSel = document.getElementById('su-username');
   suSel.innerHTML = '<option value="">— Select department first —</option>';
   suSel.disabled = true;

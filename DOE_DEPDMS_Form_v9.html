@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOE DEPDMS – Monthly Submission Form</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
+  --accent:#1f6feb;--accent2:#3fb950;--accent3:#f78166;--accent4:#e3b341;
+  --text:#e6edf3;--muted:#8b949e;--danger:#da3633;--tag-bg:rgba(31,111,235,0.12);
+  --radius:8px;--col-label:220px;--col-type:160px;--col-input:180px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:13px;}
+
+/* ── LOGIN SCREEN ── */
+#login-screen{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px;}
+.login-wrap{width:100%;max-width:420px;}
+.login-logo{text-align:center;margin-bottom:24px;}
+.login-logo .logo-icon{font-size:40px;filter:drop-shadow(0 0 28px rgba(31,111,235,.6));}
+.login-logo .logo-title{font-size:22px;font-weight:700;letter-spacing:.04em;margin-top:8px;}
+.login-logo .logo-sub{font-size:12px;color:var(--muted);margin-top:3px;}
+.login-logo .logo-tag{display:inline-block;margin-top:10px;font-size:11px;font-weight:600;color:var(--accent);background:var(--tag-bg);border:1px solid rgba(31,111,235,.3);padding:3px 14px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.06em;}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px 28px 24px;box-shadow:0 16px 56px rgba(0,0,0,.4);}
+.login-card-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.login-card-sub{font-size:11px;color:var(--muted);margin-bottom:22px;}
+.login-field{margin-bottom:14px;}
+.login-field label{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.login-field .field-wrap{position:relative;}
+.login-field input,.login-field select{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px 14px;font-family:'Sora',sans-serif;font-size:13px;outline:none;transition:border-color .15s,box-shadow .15s;}
+.login-field input:focus,.login-field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(31,111,235,.2);}
+.login-field input.err{border-color:var(--danger);box-shadow:0 0 0 3px rgba(218,54,51,.2);}
+.login-field select{cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238b949e' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+.login-field select option{background:#21262d;}
+.login-field .pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0;line-height:1;}
+.login-error{background:rgba(218,54,51,.1);border:1px solid rgba(218,54,51,.3);color:#ff7b72;border-radius:8px;padding:10px 14px;font-size:12px;margin-bottom:14px;display:none;align-items:center;gap:8px;}
+.login-error.show{display:flex;}
+.login-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;transition:background .15s,transform .1s;letter-spacing:.02em;margin-top:6px;}
+.login-btn:hover{background:#388bfd;}
+.login-btn:active{transform:scale(.98);}
+.login-btn:disabled{opacity:.5;cursor:not-allowed;}
+.login-divider{border:none;border-top:1px solid var(--border);margin:18px 0;}
+.login-dept-hint{font-size:10px;color:var(--muted);text-align:center;line-height:1.7;margin-top:12px;}
+.login-dept-hint strong{color:var(--text);}
+/* Session badge in sidebar */
+.session-info{padding:10px 18px;background:rgba(31,111,235,.06);border:1px solid rgba(31,111,235,.15);border-radius:8px;margin:10px 12px 4px;font-size:11px;}
+.session-info .si-name{font-weight:700;color:var(--text);font-size:12px;}
+.session-info .si-dept{color:var(--muted);margin-top:1px;font-size:10px;font-family:'DM Mono',monospace;}
+/* Attempts lock overlay */
+.lock-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;padding:24px;}
+.lock-overlay.show{display:flex;}
+.lock-icon-big{font-size:48px;}
+.lock-title{font-size:18px;font-weight:700;color:var(--danger);}
+.lock-sub{font-size:13px;color:var(--muted);}
+.lock-countdown{font-size:28px;font-weight:700;color:var(--accent4);font-family:'DM Mono',monospace;}
+
+/* ── APP ── */
+#app{display:none;}
+#app.visible{display:flex;min-height:100vh;}
+.sidebar{width:240px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow-y:auto;}
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.role-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;background:var(--pill-bg,rgba(31,111,235,.12));color:var(--pill-color,var(--accent));border:1px solid var(--pill-border,rgba(31,111,235,.3));font-family:'DM Mono',monospace;letter-spacing:.05em;margin-top:6px;}
+.brand{padding:16px 18px 12px;border-bottom:1px solid var(--border);}
+.brand-title{font-size:13px;font-weight:700;letter-spacing:.04em;}
+.brand-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+.nav-section{padding:12px 12px 4px;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 18px;cursor:pointer;font-size:12px;color:var(--muted);border-left:3px solid transparent;transition:all .15s;}
+.nav-item:hover:not(.locked){background:var(--surface2);color:var(--text);}
+.nav-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(31,111,235,.06);}
+.nav-item .dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;}
+.nav-item.done .dot{background:var(--accent2);}
+.nav-item.active .dot{background:var(--accent);}
+.nav-item.locked{opacity:.35;cursor:not-allowed;}
+.nav-item.locked .dot{background:var(--danger);opacity:.4;}
+.lock-icon{font-size:10px;margin-left:auto;opacity:.5;}
+.sidebar-footer{margin-top:auto;padding:14px 18px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);}
+.switch-role-btn{margin-top:8px;padding:5px 10px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:10px;cursor:pointer;font-family:'Sora',sans-serif;transition:all .15s;width:100%;}
+.switch-role-btn:hover{border-color:var(--accent3);color:var(--accent3);}
+.header{padding:18px 28px 0;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;}
+.header-title{font-size:16px;font-weight:700;}
+.header-meta{display:flex;gap:8px;align-items:center;}
+.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:var(--tag-bg);color:var(--accent);border:1px solid rgba(31,111,235,.3);font-family:'DM Mono',monospace;}
+.tabs{display:flex;overflow-x:auto;}
+.tab{padding:9px 18px;cursor:pointer;font-size:12px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+.tab:hover:not(.tab-locked){color:var(--text);}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.tab.tab-locked{opacity:.3;cursor:not-allowed;}
+.content{flex:1;overflow:auto;padding:24px 28px;}
+.section-header{margin-bottom:18px;}
+.section-title{font-size:15px;font-weight:700;margin-bottom:3px;}
+.section-desc{font-size:12px;color:var(--muted);}
+.info-strip{display:flex;gap:24px;align-items:center;padding:12px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:20px;flex-wrap:wrap;}
+.info-strip .item label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:2px;}
+.info-strip .item .val{font-size:13px;font-weight:600;font-family:'DM Mono',monospace;}
+
+/* ── GRID ── */
+.grid-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;}
+.grid-header-bar{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--surface2);border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
+.grid-scroll{overflow-x:auto;}
+.xls{width:100%;border-collapse:collapse;font-size:12px;font-family:'DM Mono',monospace;}
+.xls .col-nums th{background:#1c2128;color:var(--muted);font-size:10px;font-weight:700;text-align:center;padding:5px 4px;border-right:1px solid var(--border);border-bottom:2px solid var(--border);white-space:nowrap;letter-spacing:.05em;position:sticky;top:0;z-index:20;}
+.xls .col-nums th.row-num-head{background:#1c2128;min-width:36px;width:36px;border-right:2px solid var(--border);position:sticky;left:0;z-index:30;}
+.xls .col-nums th.col-label-head{min-width:var(--col-label);text-align:left;padding-left:10px;position:sticky;left:36px;z-index:25;background:#1c2128;border-right:2px solid var(--border);}
+.xls .col-nums th.col-type-head{min-width:var(--col-type);text-align:left;padding-left:8px;}
+.xls .sub-header td{background:var(--surface2);color:var(--muted);font-size:10px;font-weight:600;padding:6px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);white-space:nowrap;text-transform:uppercase;letter-spacing:.05em;position:sticky;top:34px;z-index:18;}
+.xls .sub-header td.row-num{background:#1c2128;color:var(--muted);text-align:center;position:sticky;left:0;z-index:26;border-right:2px solid var(--border);}
+.xls .sub-header td.field-label{position:sticky;left:36px;z-index:22;background:var(--surface2);border-right:2px solid var(--border);}
+.xls tbody tr{transition:background .1s;}
+.xls tbody tr:hover td{background:rgba(255,255,255,.025);}
+.xls tbody tr:hover td.row-num,.xls tbody tr:hover td.field-label{background:rgba(31,111,235,.07);}
+.xls tbody td{padding:5px 8px;border-right:1px solid rgba(48,54,61,.6);border-bottom:1px solid rgba(48,54,61,.5);vertical-align:middle;min-width:var(--col-input);}
+.xls tbody td.row-num{background:#1c2128;color:var(--muted);font-size:10px;text-align:center;min-width:36px;width:36px;position:sticky;left:0;z-index:10;border-right:2px solid var(--border);}
+.xls tbody td.field-label{background:var(--surface2);color:var(--text);font-size:12px;font-weight:500;min-width:var(--col-label);position:sticky;left:36px;z-index:10;border-right:2px solid var(--border);padding-left:12px;white-space:nowrap;}
+.xls tbody td.type-cell{background:rgba(139,148,158,.05);color:var(--muted);font-size:10px;min-width:var(--col-type);font-style:italic;border-right:2px solid var(--border);}
+.xls input[type=text],.xls input[type=number],.xls input[type=email],.xls select{background:transparent;border:none;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;padding:2px 4px;width:100%;outline:none;min-width:120px;}
+.xls input:focus,.xls select:focus{background:rgba(31,111,235,.12);border-radius:3px;box-shadow:0 0 0 2px rgba(31,111,235,.4);}
+.xls select{cursor:pointer;}
+.xls select option{background:#21262d;}
+.xls td.has-val{background:rgba(63,185,80,.03);}
+.xls td.is-required{border-left:2px solid rgba(31,111,235,.4);}
+.xls tr.eof td{background:rgba(218,54,51,.06);color:var(--danger);font-size:11px;font-weight:700;letter-spacing:.1em;padding:6px 12px;}
+.xls tr.eof td.field-label{color:var(--danger);background:rgba(218,54,51,.1);}
+.xls tr.section-row td{background:rgba(31,111,235,.08);color:var(--accent);font-size:11px;font-weight:700;padding:7px 12px;border-bottom:1px solid rgba(31,111,235,.2);letter-spacing:.05em;}
+.xls tr.section-row td.row-num{background:rgba(31,111,235,.14);}
+.xls tr.section-row td.field-label{background:rgba(31,111,235,.1);color:var(--accent);}
+
+/* ── VALIDATION ── */
+/* Red outline on empty required inputs */
+.xls td.inp-error input, .xls td.inp-error select {
+  background: rgba(218,54,51,.12) !important;
+  box-shadow: 0 0 0 2px rgba(218,54,51,.5) !important;
+  border-radius: 3px;
+}
+.xls td.inp-error { background: rgba(218,54,51,.06) !important; }
+/* Tooltip */
+.val-tooltip {
+  position: absolute; z-index: 9999;
+  background: #da3633; color: #fff;
+  font-size: 11px; font-family: 'Sora', sans-serif;
+  padding: 6px 10px; border-radius: 6px;
+  white-space: nowrap; pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,.4);
+  display: none;
+}
+.val-tooltip::before{content:'';position:absolute;bottom:-5px;left:14px;border:5px solid transparent;border-bottom:none;border-top-color:#da3633;}
+/* Validation modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;display:none;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 28px 22px;max-width:460px;width:90%;box-shadow:0 16px 64px rgba(0,0,0,.5);}
+.modal-icon{font-size:28px;margin-bottom:12px;}
+.modal-title{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--danger);}
+.modal-body{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:18px;}
+.modal-body ul{margin:8px 0 0 16px;}
+.modal-body li{margin-bottom:4px;color:var(--text);}
+.modal-close{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Sora',sans-serif;transition:all .15s;}
+.modal-close:hover{border-color:var(--accent);color:var(--accent);}
+
+.add-row-btn{margin:8px;padding:6px 14px;border:1px dashed var(--border);border-radius:6px;background:none;color:var(--muted);cursor:pointer;font-size:11px;font-family:'Sora',sans-serif;transition:all .15s;display:inline-flex;align-items:center;gap:5px;}
+.add-row-btn:hover{border-color:var(--accent);color:var(--accent);}
+.del-btn{background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;padding:0 4px;opacity:.6;transition:opacity .15s;}
+.del-btn:hover{opacity:1;}
+.btn-row{display:flex;gap:10px;align-items:center;margin-top:20px;flex-wrap:wrap;}
+.btn{padding:9px 18px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .15s;font-family:'Sora',sans-serif;display:flex;align-items:center;gap:6px;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#388bfd;}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
+.btn-success{background:var(--accent2);color:#0d1117;}
+.btn-success:hover{background:#56d364;}
+.btn-danger-outline{background:none;border:1px solid var(--danger);color:var(--danger);}
+.alert{padding:11px 14px;border-radius:var(--radius);margin-bottom:16px;font-size:12px;display:none;align-items:center;gap:8px;}
+.alert.show{display:flex;}
+.alert-success{background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.3);color:var(--accent2);}
+.alert-error{background:rgba(218,54,51,.1);border:1px solid rgba(218,54,51,.3);color:#ff7b72;}
+.export-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;}
+.export-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer;transition:all .2s;position:relative;}
+.export-card:hover{border-color:var(--accent);transform:translateY(-1px);}
+.export-card.done{border-color:var(--accent2);background:rgba(63,185,80,.05);}
+.export-card.blocked{opacity:.45;cursor:not-allowed;border-color:var(--danger)!important;}
+.export-card.blocked:hover{transform:none;}
+.export-icon{font-size:20px;margin-bottom:7px;}
+.export-name{font-size:13px;font-weight:600;margin-bottom:2px;}
+.export-desc{font-size:11px;color:var(--muted);}
+.export-status{font-size:10px;font-weight:600;margin-top:6px;font-family:'DM Mono',monospace;}
+.export-status.ok{color:var(--accent2);}
+.export-status.err{color:var(--danger);}
+/* ── AUDIT LOG ── */
+.log-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+.log-toolbar .log-search{flex:1;min-width:180px;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 14px;font-family:'Sora',sans-serif;font-size:12px;outline:none;}
+.log-toolbar .log-search:focus{border-color:var(--accent);}
+.log-filter-btn{padding:7px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;font-size:11px;font-family:'Sora',sans-serif;transition:all .15s;white-space:nowrap;}
+.log-filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.log-filter-btn:hover:not(.active){border-color:var(--accent);color:var(--text);}
+.log-stats{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap;}
+.log-stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 16px;flex:1;min-width:100px;}
+.log-stat .ls-val{font-size:22px;font-weight:700;font-family:'DM Mono',monospace;}
+.log-stat .ls-lbl{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.07em;}
+.log-stat.ls-login .ls-val{color:var(--accent);}
+.log-stat.ls-save .ls-val{color:var(--accent2);}
+.log-stat.ls-export .ls-val{color:var(--accent4);}
+.log-stat.ls-fail .ls-val{color:var(--danger);}
+.log-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.log-table{width:100%;border-collapse:collapse;font-size:12px;}
+.log-table thead th{background:var(--surface2);padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;border-bottom:2px solid var(--border);white-space:nowrap;}
+.log-table tbody tr{border-bottom:1px solid rgba(48,54,61,.5);transition:background .1s;}
+.log-table tbody tr:hover{background:rgba(255,255,255,.025);}
+.log-table tbody td{padding:9px 12px;vertical-align:middle;}
+.log-table tbody tr:last-child{border-bottom:none;}
+.log-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+.log-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;white-space:nowrap;}
+.log-badge.lb-login{background:rgba(31,111,235,.15);color:#58a6ff;border:1px solid rgba(31,111,235,.3);}
+.log-badge.lb-logout{background:rgba(139,148,158,.12);color:var(--muted);border:1px solid rgba(139,148,158,.2);}
+.log-badge.lb-save{background:rgba(63,185,80,.15);color:var(--accent2);border:1px solid rgba(63,185,80,.3);}
+.log-badge.lb-export{background:rgba(227,179,65,.15);color:var(--accent4);border:1px solid rgba(227,179,65,.3);}
+.log-badge.lb-fail{background:rgba(218,54,51,.15);color:#ff7b72;border:1px solid rgba(218,54,51,.3);}
+.log-badge.lb-lock{background:rgba(218,54,51,.2);color:#ff7b72;border:1px solid rgba(218,54,51,.4);}
+.log-badge.lb-field{background:rgba(163,113,247,.12);color:#a371f7;border:1px solid rgba(163,113,247,.25);}
+.log-user{font-weight:600;color:var(--text);}
+.log-dept{font-size:10px;color:var(--muted);margin-top:1px;font-family:'DM Mono',monospace;}
+.log-detail{color:var(--muted);font-size:11px;}
+.log-empty{text-align:center;padding:40px;color:var(--muted);font-size:13px;}
+.log-export-bar{display:flex;justify-content:flex-end;margin-top:12px;}
+.log-clear-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--danger);background:none;color:var(--danger);cursor:pointer;font-size:11px;font-family:'Sora',sans-serif;opacity:.7;transition:opacity .15s;}
+.log-clear-btn:hover{opacity:1;}
+input[type=text].small,select.small{width:auto;min-width:unset;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:6px 10px;font-family:'Sora',sans-serif;font-size:12px;outline:none;}
+input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
+/* ── SIGN UP TOGGLE ── */
+.login-toggle-row{display:flex;gap:8px;justify-content:center;margin-top:14px;font-size:12px;color:var(--muted);}
+.login-toggle-row a{color:var(--accent);cursor:pointer;text-decoration:underline;}
+/* ── CHANGE PASSWORD PANEL ── */
+.changepw-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 22px 18px;margin-bottom:20px;max-width:480px;}
+.changepw-panel h3{font-size:14px;font-weight:700;margin-bottom:4px;}
+.changepw-panel p{font-size:11px;color:var(--muted);margin-bottom:18px;}
+.changepw-field{margin-bottom:13px;}
+.changepw-field label{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.changepw-field .fw{position:relative;}
+.changepw-field input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px 38px 10px 14px;font-family:'Sora',sans-serif;font-size:13px;outline:none;transition:border-color .15s,box-shadow .15s;}
+.changepw-field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(31,111,235,.2);}
+.changepw-field input.err{border-color:var(--danger);box-shadow:0 0 0 3px rgba(218,54,51,.2);}
+.changepw-field .eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0;}
+.changepw-msg{font-size:12px;padding:9px 12px;border-radius:6px;margin-bottom:12px;display:none;}
+.changepw-msg.ok{display:block;background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.3);color:var(--accent2);}
+.changepw-msg.err{display:block;background:rgba(218,54,51,.1);border:1px solid rgba(218,54,51,.3);color:#ff7b72;}
+/* ── ADMIN USER MANAGEMENT ── */
+.uman-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:14px;}
+.uman-table{width:100%;border-collapse:collapse;font-size:12px;}
+.uman-table thead th{background:var(--surface2);padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;border-bottom:2px solid var(--border);white-space:nowrap;}
+.uman-table tbody tr{border-bottom:1px solid rgba(48,54,61,.5);transition:background .1s;}
+.uman-table tbody tr:hover{background:rgba(255,255,255,.025);}
+.uman-table tbody td{padding:9px 12px;vertical-align:middle;}
+.uman-table tbody tr:last-child{border-bottom:none;}
+.uman-pw-cell{font-family:'DM Mono',monospace;font-size:11px;}
+.uman-pw-mask{cursor:pointer;letter-spacing:.12em;color:var(--muted);user-select:none;}
+.uman-pw-reveal{color:var(--text);}
+.uman-source-badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;}
+.uman-source-badge.built-in{background:rgba(31,111,235,.12);color:var(--accent);border:1px solid rgba(31,111,235,.25);}
+.uman-source-badge.signed-up{background:rgba(63,185,80,.12);color:var(--accent2);border:1px solid rgba(63,185,80,.25);}
+.uman-delete-btn{background:none;border:1px solid var(--danger);color:var(--danger);border-radius:5px;padding:3px 9px;cursor:pointer;font-size:10px;font-family:'Sora',sans-serif;opacity:.7;transition:opacity .15s;}
+.uman-delete-btn:hover{opacity:1;}
+.hidden{display:none!important;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+@media(max-width:860px){.sidebar{display:none;}.role-grid{grid-template-columns:1fr 1fr;}.role-card.admin-card{grid-column:1/-1;}}
+@media(max-width:520px){.role-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- tooltip element -->
+<div class="val-tooltip" id="val-tooltip"></div>
+
+<!-- validation modal -->
+<div class="modal-overlay" id="val-modal">
+  <div class="modal-box">
+    <div class="modal-icon">⚠️</div>
+    <div class="modal-title" id="modal-title">Incomplete Fields</div>
+    <div class="modal-body" id="modal-body"></div>
+    <button class="modal-close" onclick="closeModal()">OK, I'll fix it</button>
+  </div>
+</div>
+
+<!-- ═══ LOCK OVERLAY ═══ -->
+<div class="lock-overlay" id="lock-overlay">
+  <div class="lock-icon-big">🔒</div>
+  <div class="lock-title">Account Temporarily Locked</div>
+  <div class="lock-sub">Too many failed login attempts.<br>Please wait before trying again.</div>
+  <div class="lock-countdown" id="lock-countdown">30</div>
+  <div style="font-size:11px;color:var(--muted)">seconds remaining</div>
+</div>
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div id="login-screen">
+  <div class="login-wrap">
+    <div class="login-logo">
+      <div class="logo-icon">⚡</div>
+      <div class="logo-title">DOE DEPDMS</div>
+      <div class="logo-sub">Monthly Submission Form</div>
+      <div class="logo-tag">ZAMECO I · Region 3 · 2025</div>
+    </div>
+    <div class="login-card" id="signin-card">
+      <div class="login-card-title">Sign in to your account</div>
+      <div class="login-card-sub">Enter your department credentials to access the system.</div>
+
+      <div class="login-error" id="login-error">
+        <span>⚠</span><span id="login-error-msg">Invalid username or password.</span>
+      </div>
+
+      <div class="login-field">
+        <label>Department</label>
+        <select id="login-dept" onchange="onDeptChange()">
+          <option value="">— Select your department —</option>
+          <option value="finance">Finance Department</option>
+          <option value="tsd">Technical Services Department (TSD)</option>
+          <option value="power-trading">Power Trading Department</option>
+          <option value="admin">Administration</option>
+        </select>
+      </div>
+
+      <div class="login-field">
+        <label>Username</label>
+        <select id="login-user" disabled>
+          <option value="">— Select department first —</option>
+        </select>
+      </div>
+
+      <div class="login-field">
+        <label>Password</label>
+        <div class="field-wrap">
+          <input type="password" id="login-pw" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()">
+          <button class="pw-toggle" onclick="togglePwVis()" type="button" id="pw-eye" title="Show/hide password">👁</button>
+        </div>
+      </div>
+
+      <button class="login-btn" onclick="doLogin()" id="login-btn">Sign In →</button>
+      <div class="login-toggle-row">Don't have an account? <a onclick="showSignUp()">Sign Up</a></div>
+
+      <hr class="login-divider">
+      <div class="login-dept-hint" id="dept-hint">Select a department above to see available accounts.</div>
+    </div>
+
+    <!-- ─── SIGN UP CARD ─── -->
+    <div class="login-card" id="signup-card" style="display:none;">
+      <div class="login-card-title">Create New Account</div>
+      <div class="login-card-sub">Select your department and set your own username and password.</div>
+      <div class="login-error" id="signup-error"><span>⚠</span><span id="signup-error-msg">Error</span></div>
+      <div class="login-error" id="signup-ok" style="background:rgba(63,185,80,.1);border-color:rgba(63,185,80,.3);color:var(--accent2);"><span>✓</span><span id="signup-ok-msg">Account created!</span></div>
+      <div class="login-field">
+        <label>Full Name</label>
+        <input type="text" id="su-name" placeholder="e.g. Juan dela Cruz">
+      </div>
+      <div class="login-field">
+        <label>Department</label>
+        <select id="su-dept">
+          <option value="">— Select department —</option>
+          <option value="finance">Finance Department</option>
+          <option value="tsd">Technical Services Department (TSD)</option>
+          <option value="power-trading">Power Trading Department</option>
+          <option value="admin">Administration</option>
+        </select>
+      </div>
+      <div class="login-field">
+        <label>Username</label>
+        <input type="text" id="su-username" placeholder="Type your username" autocomplete="off">
+      </div>
+      <div class="login-field">
+        <label>Password</label>
+        <div class="field-wrap">
+          <input type="password" id="su-pw" placeholder="Choose a password">
+          <button class="pw-toggle" onclick="toggleSuPw()" type="button" id="su-eye">👁</button>
+        </div>
+      </div>
+      <div class="login-field"><label>Confirm Password</label><input type="password" id="su-pw2" placeholder="Re-enter password"></div>
+      <button class="login-btn" onclick="doSignUp()" style="background:var(--accent2);color:#0d1117;" id="signup-btn">Create Account ✓</button>
+      <div class="login-toggle-row">Already have an account? <a onclick="hideSignUp()">Sign In</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-title">⚡ DOE DEPDMS</div>
+    <div class="brand-sub">Monthly Submission System</div>
+    <div class="role-pill" id="sidebar-role-pill">ROLE</div>
+  </div>
+  <div class="nav-section">Navigation</div>
+  <div class="nav-item active" onclick="goTab('profile')" id="nav-profile"><div class="dot"></div>DU Profile</div>
+  <div class="nav-item" onclick="tryGoTab('mor-ur')" id="nav-mor-ur"><div class="dot"></div>MOR-UR · Unbundled Rates<span class="lock-icon" id="lock-ur"></span></div>
+  <div class="nav-item" onclick="tryGoTab('mor-wcd')" id="nav-mor-wcd"><div class="dot"></div>MOR-WCD · Wheeling Data<span class="lock-icon" id="lock-wcd"></span></div>
+  <div class="nav-item" onclick="tryGoTab('mor-dtd')" id="nav-mor-dtd"><div class="dot"></div>MOR-DTD · Technical Data<span class="lock-icon" id="lock-dtd"></span></div>
+  <div class="nav-item" onclick="tryGoTab('mor-csd')" id="nav-mor-csd"><div class="dot"></div>MOR-CSD · Customer Sales<span class="lock-icon" id="lock-csd"></span></div>
+  <div class="nav-item" onclick="tryGoTab('mor-dsd')" id="nav-mor-dsd"><div class="dot"></div>MOR-DSD · Supply Data<span class="lock-icon" id="lock-dsd"></span></div>
+  <div class="nav-section">Output</div>
+  <div class="nav-item" onclick="tryGoTab('export')" id="nav-export"><div class="dot"></div>Export CSV Files<span class="lock-icon" id="lock-export"></span></div>
+  <div class="nav-item" onclick="tryGoTab('audit')" id="nav-audit"><div class="dot"></div>Audit Log<span class="lock-icon" id="lock-audit"></span></div>
+  <div class="nav-section">Account</div>
+  <div class="nav-item" onclick="goTab('changepw')" id="nav-changepw"><div class="dot"></div>Change Password</div>
+  <div class="nav-item" onclick="tryGoTab('users')" id="nav-users"><div class="dot"></div>User Management<span class="lock-icon" id="lock-users"></span></div>
+  <div class="session-info">
+    <div class="si-name" id="session-name">—</div>
+    <div class="si-dept" id="session-dept">—</div>
+    <div id="sync-status" style="font-size:10px;margin-top:5px;font-family:'DM Mono',monospace;color:var(--muted);">⊘ Offline</div>
+  </div>
+  <div class="sidebar-footer">
+    <div>ZAMECO1 · Region 3</div>
+    <div style="margin-top:2px;opacity:.6">2025 Submission Year</div>
+    <button class="switch-role-btn" onclick="doLogout()">⇄ Log Out</button>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="header">
+    <div class="header-top">
+      <div class="header-title" id="header-title">DU General Information</div>
+      <div class="header-meta">
+        <select class="small" id="month-select" onchange="updatePeriod()">
+          <option>January</option><option>February</option><option>March</option><option>April</option>
+          <option>May</option><option>June</option><option>July</option><option>August</option>
+          <option>September</option><option>October</option><option>November</option><option>December</option>
+        </select>
+        <select class="small" id="year-select" onchange="updatePeriod()">
+          <option>2025</option><option>2026</option><option>2027</option>
+        </select>
+        <span class="badge" id="period-badge">JAN 2025</span>
+      </div>
+    </div>
+    <div class="tabs">
+      <div class="tab active" onclick="tryGoTab('profile')" id="tab-profile">DU-PROFILE</div>
+      <div class="tab" onclick="tryGoTab('mor-ur')" id="tab-mor-ur">MOR-UR</div>
+      <div class="tab" onclick="tryGoTab('mor-wcd')" id="tab-mor-wcd">MOR-WCD</div>
+      <div class="tab" onclick="tryGoTab('mor-dtd')" id="tab-mor-dtd">MOR-DTD</div>
+      <div class="tab" onclick="tryGoTab('mor-csd')" id="tab-mor-csd">MOR-CSD</div>
+      <div class="tab" onclick="tryGoTab('mor-dsd')" id="tab-mor-dsd">MOR-DSD</div>
+      <div class="tab" onclick="tryGoTab('export')" id="tab-export">⬇ Export</div>
+      <div class="tab" onclick="tryGoTab('audit')" id="tab-audit">📋 Audit Log</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="alert alert-success" id="alert-ok">✓ &nbsp;<span id="alert-msg">Saved</span></div>
+    <div class="alert alert-error" id="alert-err">⚠ &nbsp;<span id="alert-emsg">Error</span></div>
+
+    <!-- ====== DU PROFILE ====== -->
+    <div id="pane-profile">
+      <div class="section-header">
+        <div class="section-title">DU General Information (DU-PROFILE)</div>
+        <div class="section-desc">Company profile and KPIs. This data appears on ALL monthly reports.</div>
+      </div>
+      <div class="info-strip">
+        <div class="item"><label>Reporting Period</label><div class="val" id="period-display">31 January 2025</div></div>
+        <div class="item"><label>Template</label><div class="val">DU_PROFILE</div></div>
+        <div class="item"><label>Status</label><div class="val" style="color:var(--accent2)">● Active</div></div>
+        <div class="item"><label>Role</label><div class="val" id="profile-role-badge" style="color:var(--accent4)">—</div></div>
+      </div>
+      <div class="grid-wrap">
+        <div class="grid-header-bar"><span>DU Profile Data · 19 Columns</span><span style="color:var(--accent)">Cols 1–19</span></div>
+        <div class="grid-scroll">
+          <table class="xls">
+            <thead>
+              <tr class="col-nums">
+                <th class="row-num-head">#</th>
+                <th class="col-label-head">Field Name</th>
+                <th class="col-type-head">Data Type</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="section-row"><td class="row-num">—</td><td class="field-label" colspan="10">Company Identification (Cols 1–3)</td></tr>
+              <tr><td class="row-num">1</td><td class="field-label is-required">1 – Participant ID</td><td class="type-cell">Alphanumeric</td><td class="has-val" data-label="Participant ID"><input type="text" id="p_id" value="ZAMECO1" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">2</td><td class="field-label is-required">2 – Region</td><td class="type-cell">Alphanumeric</td><td class="has-val"><select id="p_region"><option>R1</option><option>R2</option><option selected>R3</option><option>R4A</option><option>R4B</option><option>R5</option><option>R6</option><option>R7</option><option>R8</option><option>R9</option><option>R10</option><option>R11</option><option>R12</option><option>R13</option><option>NCR</option><option>CAR</option><option>BARMM</option></select></td></tr>
+              <tr><td class="row-num">3</td><td class="field-label is-required">3 – Company Name</td><td class="type-cell">Alphanumeric</td><td class="has-val" data-label="Company Name"><input type="text" id="p_company" value="Zambales I Electric Cooperative, Inc." style="min-width:280px" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr class="section-row"><td class="row-num">—</td><td class="field-label" colspan="10">Officials &amp; Contact (Cols 4–9)</td></tr>
+              <tr><td class="row-num">4</td><td class="field-label is-required">4 – Head of the Company</td><td class="type-cell">Alphanumeric</td><td class="has-val" data-label="Head of the Company"><input type="text" id="p_head" value="GM SHARON Q. DOMACENA" style="min-width:240px" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">5</td><td class="field-label is-required">5 – Board President</td><td class="type-cell">Alphanumeric</td><td class="has-val" data-label="Board President"><input type="text" id="p_pres" value="ENGR. RENE A. DIVINO" style="min-width:240px" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">6</td><td class="field-label is-required">6 – Official Email</td><td class="type-cell">Alphanumeric</td><td class="has-val" data-label="Official Email"><input type="email" id="p_email" value="zameco1@gmail.com" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">7</td><td class="field-label is-required">7 – Website</td><td class="type-cell">Alphanumeric</td><td class="has-val" data-label="Website"><input type="text" id="p_web" value="www.zameco1.com" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">8</td><td class="field-label is-required">8 – Telephone Number</td><td class="type-cell">Alphanumeric</td><td class="has-val" data-label="Telephone Number"><input type="text" id="p_tel" value="047-603-0858/ 09083800859" style="min-width:220px" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">9</td><td class="field-label is-required">9 – Physical Address</td><td class="type-cell">Alphanumeric</td><td class="has-val" data-label="Physical Address"><input type="text" id="p_addr" value="PUROK 1/ BARANGAY TITION/ PALAUIG/ ZAMBALES" style="min-width:320px" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr class="section-row"><td class="row-num">—</td><td class="field-label" colspan="10">Key Performance Indicators (Cols 10–19)</td></tr>
+              <tr><td class="row-num">10</td><td class="field-label is-required">10 – No. of Employees</td><td class="type-cell">Integers</td><td class="has-val" data-label="No. of Employees"><input type="number" id="p_emp" value="159" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">11</td><td class="field-label is-required">11 – Connections/Employees</td><td class="type-cell">Integers</td><td class="has-val" data-label="Connections/Employees"><input type="number" id="p_conemp" value="546" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">12</td><td class="field-label is-required">12 – Circuit km of Lines</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Circuit km of Lines"><input type="number" id="p_circ" step="0.0001" value="2426.4817" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">13</td><td class="field-label is-required">13 – Consumer Density/km</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Consumer Density/km"><input type="number" id="p_density" step="0.0001" value="45.2886" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">14</td><td class="field-label is-required">14 – SAIDI</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="SAIDI"><input type="number" id="p_saidi" step="0.0001" value="7.5468" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">15</td><td class="field-label is-required">15 – SAIFI</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="SAIFI"><input type="number" id="p_saifi" step="0.0001" value="0.4328" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">16</td><td class="field-label is-required">16 – Collection Efficiency (%)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Collection Efficiency"><input type="number" id="p_collect" step="0.0001" value="0.969" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">17</td><td class="field-label is-required">17 – Load Factor (%)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Load Factor"><input type="number" id="p_load" step="0.0001" value="0.725" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">18</td><td class="field-label is-required">18 – No. of Substations</td><td class="type-cell">Integers</td><td class="has-val" data-label="No. of Substations"><input type="number" id="p_subs" value="5" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">19</td><td class="field-label is-required">19 – Total Capacity (kVA)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Total Capacity (kVA)"><input type="number" id="p_kva" step="0.0001" value="55000" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr class="eof"><td class="row-num">—</td><td class="field-label">EOF</td><td colspan="10"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="saveSection('profile')">✓ Save DU Profile</button>
+        <button class="btn btn-secondary" onclick="goToMySection()">Go to My Section →</button>
+      </div>
+    </div>
+
+    <!-- ====== MOR-UR ====== -->
+    <div id="pane-mor-ur" class="hidden">
+      <div class="section-header">
+        <div class="section-title">MOR-UR – Monthly Unbundled Rates</div>
+        <div class="section-desc">Rate charges per customer type. Values in PhP/kWh (up to 4 decimal places).</div>
+      </div>
+      <div class="grid-wrap">
+        <div class="grid-header-bar"><span>Unbundled Rate Data · 7 Customer Types × 29 Rate Columns</span><span style="color:var(--accent)">32 Columns</span></div>
+        <div class="grid-scroll">
+          <table class="xls" id="ur-table">
+            <thead>
+              <tr class="col-nums">
+                <th class="row-num-head">#</th><th class="col-label-head">Customer Type</th><th class="col-type-head">Type</th>
+                <th>4–Gen Charges</th><th>5–GRAM-DAA</th><th>6–ICERA-DAA</th><th>7–Pwr Act Red</th>
+                <th>8–Tx Sys Chg</th><th>9–Tx Dem Chg</th><th>10–SysLoss</th><th>11–Dist Sys</th>
+                <th>12–Dist Dem</th><th>13–True-Up</th><th>14–Sup Sys</th><th>15–Sup Retail</th>
+                <th>16–Met Sys</th><th>17–Met Retail</th><th>18–RFSC</th><th>19–Lifeline</th>
+                <th>20–SC Sub</th><th>21–UCME-SPUG</th><th>22–UCME-REDCI</th><th>23–UC-EC</th>
+                <th>24–UC-SCC</th><th>25–UC-SD</th><th>26–FIT-All</th><th>27–Franchise</th>
+                <th>28–RealProp</th><th>29–Gen VAT</th><th>30–Tx VAT</th><th>31–Dist VAT</th><th>32–Other VAT</th>
+              </tr>
+            </thead>
+            <tbody id="ur-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goTab('profile')">← DU Profile</button>
+        <button class="btn btn-primary" onclick="saveSection('mor-ur')">✓ Save MOR-UR</button>
+      </div>
+    </div>
+
+    <!-- ====== MOR-WCD ====== -->
+    <div id="pane-mor-wcd" class="hidden">
+      <div class="section-header">
+        <div class="section-title">MOR-WCD – Wheeling Customer Data</div>
+        <div class="section-desc">Number of wheeling customers, total electricity wheeled, and wheeling rate.</div>
+      </div>
+      <div class="grid-wrap">
+        <div class="grid-header-bar"><span>Wheeling Customer Data · 6 Columns</span><span style="color:var(--accent)">Per Row = 1 Category</span></div>
+        <div class="grid-scroll">
+          <table class="xls" id="wcd-table">
+            <thead>
+              <tr class="col-nums">
+                <th class="row-num-head">#</th><th class="col-label-head">3 – Customer Category</th><th class="col-type-head">Type</th>
+                <th>4 – No. of Customers</th><th>5 – Total Elec. Wheeled (MWh)</th><th>6 – Wheeling Rate (PhP/kWh)</th><th style="min-width:50px"></th>
+              </tr>
+            </thead>
+            <tbody id="wcd-body"></tbody>
+          </table>
+        </div>
+        <button class="add-row-btn" onclick="addWCDRow()">＋ Add Row</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goTab('profile')">← DU Profile</button>
+        <button class="btn btn-primary" onclick="saveSection('mor-wcd')">✓ Save MOR-WCD</button>
+      </div>
+    </div>
+
+    <!-- ====== MOR-DTD ====== -->
+    <div id="pane-mor-dtd" class="hidden">
+      <div class="section-header">
+        <div class="section-title">MOR-DTD – DU Technical Data</div>
+        <div class="section-desc">Single-row technical metrics for the billing period.</div>
+      </div>
+      <div class="grid-wrap">
+        <div class="grid-header-bar"><span>DU Technical Data · 7 Columns</span><span style="color:var(--accent)">Single Row</span></div>
+        <div class="grid-scroll">
+          <table class="xls">
+            <thead>
+              <tr class="col-nums">
+                <th class="row-num-head">#</th><th class="col-label-head">Field Name</th><th class="col-type-head">Data Type</th><th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="row-num">3</td><td class="field-label is-required">3 – Maximum Load (kW)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Maximum Load"><input type="number" id="dtd_ml" step="0.0001" value="32064.0286" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">4</td><td class="field-label is-required">4 – Company Use (MWh)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Company Use"><input type="number" id="dtd_cu" step="0.0001" value="26161" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">5</td><td class="field-label is-required">5 – System Loss (MWh)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="System Loss"><input type="number" id="dtd_sl" step="0.0001" value="1542.101" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">6</td><td class="field-label is-required">6 – Total No. of Barangays</td><td class="type-cell">Integers</td><td class="has-val" data-label="Total Barangays"><input type="number" id="dtd_tb" value="118" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">7</td><td class="field-label is-required">7 – Total Energized Barangays</td><td class="type-cell">Integers</td><td class="has-val" data-label="Energized Barangays"><input type="number" id="dtd_eb" value="118" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr class="eof"><td class="row-num">—</td><td class="field-label">EOF</td><td colspan="5"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goTab('profile')">← DU Profile</button>
+        <button class="btn btn-primary" onclick="saveSection('mor-dtd')">✓ Save MOR-DTD</button>
+      </div>
+    </div>
+
+    <!-- ====== MOR-CSD ====== -->
+    <div id="pane-mor-csd" class="hidden">
+      <div class="section-header">
+        <div class="section-title">MOR-CSD – Customer Sales Data</div>
+        <div class="section-desc">Number of customers, electricity sales, effective rate, and capacity allocation per type.</div>
+      </div>
+      <div class="grid-wrap">
+        <div class="grid-header-bar"><span>Customer Sales Data · 7 Columns</span><span style="color:var(--accent)">7 Customer Types</span></div>
+        <div class="grid-scroll">
+          <table class="xls" id="csd-table">
+            <thead>
+              <tr class="col-nums">
+                <th class="row-num-head">#</th><th class="col-label-head">3 – Customer Type</th><th class="col-type-head">Type</th>
+                <th>4 – No. of Customers</th><th>5 – Electricity Sales (MWh)</th><th>6 – Effective Rate (PhP/kWh)</th><th>7 – Capacity Allocation (MW)</th>
+              </tr>
+            </thead>
+            <tbody id="csd-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goTab('profile')">← DU Profile</button>
+        <button class="btn btn-primary" onclick="saveSection('mor-csd')">✓ Save MOR-CSD</button>
+      </div>
+    </div>
+
+    <!-- ====== MOR-DSD ====== -->
+    <div id="pane-mor-dsd" class="hidden">
+      <div class="section-header">
+        <div class="section-title">MOR-DSD – DU Supply Data</div>
+        <div class="section-desc">Power supplier contracts and purchased electricity per source.</div>
+      </div>
+      <div class="grid-wrap">
+        <div class="grid-header-bar"><span>Supply Data · 10 Columns</span><span style="color:var(--accent)">1 Row per Supplier</span></div>
+        <div class="grid-scroll">
+          <table class="xls" id="dsd-table">
+            <thead>
+              <tr class="col-nums">
+                <th class="row-num-head">#</th><th class="col-label-head">3 – Power Supplier</th><th class="col-type-head">Type</th>
+                <th>4 – Gen Affiliated (Y/N)</th><th>5 – Contract Start (yyyy-mm-dd)</th><th>6 – Contract End (yyyy-mm-dd)</th>
+                <th>7 – Contracted Capacity (MW)</th><th>8 – Contracted Energy (MWh)</th>
+                <th>9 – Purchased Electricity (MWh)</th><th>10 – Generation Cost (PhP/kWh)</th><th style="min-width:50px"></th>
+              </tr>
+            </thead>
+            <tbody id="dsd-body"></tbody>
+          </table>
+        </div>
+        <button class="add-row-btn" onclick="addDSDRow()">＋ Add Supplier Row</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goTab('profile')">← DU Profile</button>
+        <button class="btn btn-primary" onclick="saveSection('mor-dsd')">✓ Save MOR-DSD</button>
+      </div>
+    </div>
+
+    <!-- ====== EXPORT ====== -->
+    <div id="pane-export" class="hidden">
+      <div class="section-header">
+        <div class="section-title">Export CSV Files</div>
+        <div class="section-desc">All required fields must be filled before export. Click a card to download.</div>
+      </div>
+      <div style="padding:12px 16px;background:rgba(31,111,235,.06);border:1px solid rgba(31,111,235,.2);border-radius:var(--radius);font-size:12px;color:var(--muted);margin-bottom:16px;">
+        🔍 &nbsp;<strong style="color:var(--text)">Validation is automatic.</strong> Cards with <span style="color:var(--danger)">red border</span> have empty fields and cannot be exported.
+      </div>
+      <div class="export-grid" id="export-grid-cards">
+        <div class="export-card" id="ec-profile" onclick="exportCSV('profile')"><div class="export-icon">📋</div><div class="export-name">DU_PROFILE</div><div class="export-desc">DU General Information</div><div class="export-status" id="es-profile"></div></div>
+        <div class="export-card" id="ec-ur" onclick="exportCSV('mor-ur')"><div class="export-icon">⚡</div><div class="export-name">MOR_UR</div><div class="export-desc">Unbundled Rates</div><div class="export-status" id="es-ur"></div></div>
+        <div class="export-card" id="ec-wcd" onclick="exportCSV('mor-wcd')"><div class="export-icon">🔄</div><div class="export-name">MOR_WCD</div><div class="export-desc">Wheeling Customer Data</div><div class="export-status" id="es-wcd"></div></div>
+        <div class="export-card" id="ec-dtd" onclick="exportCSV('mor-dtd')"><div class="export-icon">📡</div><div class="export-name">MOR_DTD</div><div class="export-desc">DU Technical Data</div><div class="export-status" id="es-dtd"></div></div>
+        <div class="export-card" id="ec-csd" onclick="exportCSV('mor-csd')"><div class="export-icon">👥</div><div class="export-name">MOR_CSD</div><div class="export-desc">Customer Sales Data</div><div class="export-status" id="es-csd"></div></div>
+        <div class="export-card" id="ec-dsd" onclick="exportCSV('mor-dsd')"><div class="export-icon">🏭</div><div class="export-name">MOR_DSD</div><div class="export-desc">DU Supply Data</div><div class="export-status" id="es-dsd"></div></div>
+      </div>
+      <div class="btn-row" style="margin-top:24px">
+        <button class="btn btn-success" onclick="exportAll()">⬇ Download All 6 CSV Files</button>
+      </div>
+      <div style="margin-top:14px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);font-size:11px;color:var(--muted);">
+        <strong style="color:var(--text)">📌 Naming Convention:</strong> e.g. <span style="font-family:'DM Mono',monospace;color:var(--accent)">DU_PROFILE_template_1january2025.csv</span>
+      </div>
+    </div>
+
+    <!-- ====== AUDIT LOG ====== -->
+    <div id="pane-audit" class="hidden">
+      <div class="section-header">
+        <div class="section-title">Audit Log</div>
+        <div class="section-desc">Full activity history — sign-ins, data saves, exports, and failed attempts. Admin-only.</div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="log-stats">
+        <div class="log-stat ls-login"><div class="ls-val" id="ls-logins">0</div><div class="ls-lbl">Sign-Ins</div></div>
+        <div class="log-stat ls-save"><div class="ls-val" id="ls-saves">0</div><div class="ls-lbl">Data Saves</div></div>
+        <div class="log-stat ls-export"><div class="ls-val" id="ls-exports">0</div><div class="ls-lbl">CSV Exports</div></div>
+        <div class="log-stat ls-fail"><div class="ls-val" id="ls-fails">0</div><div class="ls-lbl">Failed Logins</div></div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="log-toolbar">
+        <input class="log-search" type="text" id="log-search" placeholder="🔍  Search by user, dept, action…" oninput="renderLog()">
+        <button class="log-filter-btn active" data-filter="all" onclick="setLogFilter('all')">All</button>
+        <button class="log-filter-btn" data-filter="LOGIN" onclick="setLogFilter('LOGIN')">Sign-In</button>
+        <button class="log-filter-btn" data-filter="SAVE" onclick="setLogFilter('SAVE')">Saves</button>
+        <button class="log-filter-btn" data-filter="EXPORT" onclick="setLogFilter('EXPORT')">Exports</button>
+        <button class="log-filter-btn" data-filter="FAIL" onclick="setLogFilter('FAIL')">Failures</button>
+        <button class="log-clear-btn" onclick="confirmClearLog()">🗑 Clear Log</button>
+      </div>
+
+      <div class="log-table-wrap">
+        <table class="log-table">
+          <thead>
+            <tr>
+              <th style="width:150px">Timestamp</th>
+              <th style="width:70px">Event</th>
+              <th>User / Account</th>
+              <th>Department</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="log-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="log-export-bar">
+        <button class="btn btn-secondary" style="font-size:11px;padding:7px 14px;" onclick="exportLogCSV()">⬇ Export Log as CSV</button>
+      </div>
+    </div>
+
+
+    <!-- ====== CHANGE PASSWORD ====== -->
+    <div id="pane-changepw" class="hidden">
+      <div class="section-header">
+        <div class="section-title">Change Password</div>
+        <div class="section-desc">Update your account password. You must know your current password.</div>
+      </div>
+      <div class="changepw-panel">
+        <h3>🔑 Update Your Password</h3>
+        <p>Logged in as: <strong id="cpw-username-label">—</strong></p>
+        <div class="changepw-msg" id="cpw-msg"></div>
+        <div class="changepw-field">
+          <label>Current Password</label>
+          <div class="fw"><input type="password" id="cpw-old" placeholder="Enter current password"><button class="eye" onclick="toggleCpwVis('cpw-old','cpw-eye0')" id="cpw-eye0">👁</button></div>
+        </div>
+        <div class="changepw-field">
+          <label>New Password</label>
+          <div class="fw"><input type="password" id="cpw-new" placeholder="Enter new password"><button class="eye" onclick="toggleCpwVis('cpw-new','cpw-eye1')" id="cpw-eye1">👁</button></div>
+        </div>
+        <div class="changepw-field">
+          <label>Confirm New Password</label>
+          <div class="fw"><input type="password" id="cpw-new2" placeholder="Re-enter new password"><button class="eye" onclick="toggleCpwVis('cpw-new2','cpw-eye2')" id="cpw-eye2">👁</button></div>
+        </div>
+        <div class="btn-row" style="margin-top:6px;">
+          <button class="btn btn-primary" onclick="doChangePassword()">✓ Update Password</button>
+          <button class="btn btn-secondary" onclick="clearCpwForm()">✕ Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== USER MANAGEMENT (Admin only) ====== -->
+    <div id="pane-users" class="hidden">
+      <div class="section-header">
+        <div class="section-title">User Management</div>
+        <div class="section-desc">All registered accounts — built-in and signed-up users. Passwords are visible to admin. Admin-only.</div>
+      </div>
+      <div style="padding:12px 16px;background:rgba(227,179,65,.06);border:1px solid rgba(227,179,65,.2);border-radius:var(--radius);font-size:12px;color:var(--muted);margin-bottom:16px;">
+        🔐 &nbsp;<strong style="color:var(--text)">Admin View:</strong> Click the 👁 icon to reveal a user's password. Signed-up passwords are stored and visible here.
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+        <input class="log-search" type="text" id="uman-search" placeholder="🔍  Search users…" oninput="renderUserTable()" style="max-width:300px;">
+        <button class="btn btn-secondary" style="font-size:11px;" onclick="renderUserTable()">↻ Refresh</button>
+      </div>
+      <div class="uman-table-wrap">
+        <table class="uman-table">
+          <thead>
+            <tr>
+              <th>#</th><th>Username</th><th>Full Name</th><th>Department</th><th>Role</th><th>Password</th><th>Source</th><th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="uman-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+</div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+// ── CONSTANTS ──
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTH_SHORT=['jan','feb','mar','apr','may','june','july','aug','sep','oct','nov','dec'];
+const MONTH_DAYS=[31,28,31,30,31,30,31,31,30,31,30,31];
+const CT=['Residential-Lifeline-Grid','Residential-Non-Lifeline','Commercial-LV','Industrial-HV','Public-Building-LV','Streetlights-LV','Special-Lighting'];
+
+// ── AUTH SYSTEM ──
+// Department user accounts with role-based access
+// Passwords are stored as SHA-256 hashes for security
+// Plain-text reference (for setup only): see LOGIN_HINT_MAP below
+const USER_DB = {
+  // ── Administration ──
+  'admin': {
+    name: 'System Administrator',
+    dept: 'Administration',
+    deptKey: 'admin',
+    role: 'admin',
+    pwHash: '421aac374dc3e405bb9289bdedf0127de6e25c432a8ddf2711def50a31c88819', // zameco2025
+  },
+};
+
+// Department → list of usernames for the dropdown
+const DEPT_USERS = {
+  'finance':      [],
+  'tsd':          [],
+  'power-trading':[],
+  'admin':        ['admin'],
+};
+
+// Friendly labels for the user dropdown
+const USER_LABELS = {
+  'admin': 'System Administrator',
+};
+
+// Per-department credential hint shown below sign-in card
+const DEPT_HINTS = {
+  'finance':       '<strong>Finance Dept.</strong> — Select an account and use your assigned password.',
+  'tsd':           '<strong>Technical Services Dept.</strong> — Manages DU Technical Data (DTD) forms.',
+  'power-trading': '<strong>Power Trading Dept.</strong> — Manages Supply Data (DSD) and Wheeling Data (WCD).',
+  'admin':         '<strong>Administration</strong> — Full access to all sections and CSV export.',
+};
+
+// Quick reference (printed only in dev console — remove for production)
+const _CREDS_REF = {
+  'admin': 'zameco2025',
+};
+
+// ── Brute-force lockout ──
+let loginAttempts = 0;
+const MAX_ATTEMPTS = 5;
+const LOCKOUT_SECS = 30;
+let lockTimer = null;
+
+// ── SHA-256 via Web Crypto ──
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+// ── Login UI helpers ──
+function onDeptChange() {
+  const dept = document.getElementById('login-dept').value;
+  const userSel = document.getElementById('login-user');
+  const hint = document.getElementById('dept-hint');
+  userSel.innerHTML = '';
+  if (!dept) {
+    userSel.innerHTML = '<option value="">— Select department first —</option>';
+    userSel.disabled = true;
+    hint.innerHTML = 'Select a department above to see available accounts.';
+    return;
+  }
+  const users = DEPT_USERS[dept] || [];
+  userSel.innerHTML = '<option value="">— Select account —</option>';
+  users.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u; opt.textContent = USER_LABELS[u] || u;
+    userSel.appendChild(opt);
+  });
+  userSel.disabled = false;
+  hint.innerHTML = DEPT_HINTS[dept] || '';
+  document.getElementById('login-error').classList.remove('show');
+  document.getElementById('login-pw').value = '';
+  document.getElementById('login-pw').classList.remove('err');
+}
+
+function togglePwVis() {
+  const inp = document.getElementById('login-pw');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  document.getElementById('pw-eye').textContent = inp.type === 'password' ? '👁' : '🙈';
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById('login-error');
+  document.getElementById('login-error-msg').textContent = msg;
+  el.classList.add('show');
+  document.getElementById('login-pw').classList.add('err');
+}
+
+function clearLoginError() {
+  document.getElementById('login-error').classList.remove('show');
+  document.getElementById('login-pw').classList.remove('err');
+}
+
+// ── Lockout handling ──
+function triggerLockout() {
+  const overlay = document.getElementById('lock-overlay');
+  const countdown = document.getElementById('lock-countdown');
+  overlay.classList.add('show');
+  let remaining = LOCKOUT_SECS;
+  countdown.textContent = remaining;
+  lockTimer = setInterval(() => {
+    remaining--;
+    countdown.textContent = remaining;
+    if (remaining <= 0) {
+      clearInterval(lockTimer);
+      overlay.classList.remove('show');
+      loginAttempts = 0;
+      document.getElementById('login-btn').disabled = false;
+      document.getElementById('login-pw').value = '';
+      clearLoginError();
+    }
+  }, 1000);
+}
+
+// ── Main login handler ──
+async function doLogin() {
+  if (loginAttempts >= MAX_ATTEMPTS) return;
+  const username = document.getElementById('login-user').value;
+  const password = document.getElementById('login-pw').value;
+  const dept     = document.getElementById('login-dept').value;
+
+  clearLoginError();
+
+  if (!dept) { showLoginError('Please select a department.'); return; }
+  if (!username) { showLoginError('Please select an account.'); return; }
+  if (!password) { showLoginError('Please enter your password.'); document.getElementById('login-pw').focus(); return; }
+
+  // Disable button while hashing
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+
+  // Hash the input and compare
+  const hash = await sha256(password);
+  const user = USER_DB[username];
+
+  if (!user || hash !== user.pwHash) {
+    loginAttempts++;
+    const remaining = MAX_ATTEMPTS - loginAttempts;
+    // Log the failed attempt (pre-login, so use addLogAnon)
+    addLogAnon('FAIL', `Failed login attempt for account "${username}" · ${remaining} attempt(s) remaining`, username, USER_LABELS[username]||username, (USER_DB[username]?.dept)||'Unknown');
+    renderLog();
+    if (remaining <= 0) {
+      showLoginError('Too many failed attempts. Account locked temporarily.');
+      addLogAnon('LOCK', `Account temporarily locked after ${MAX_ATTEMPTS} failed attempts · Username: ${username}`, username, USER_LABELS[username]||username, (USER_DB[username]?.dept)||'Unknown');
+      renderLog();
+      triggerLockout();
+    } else {
+      showLoginError(`Incorrect password. ${remaining} attempt${remaining===1?'':'s'} remaining.`);
+      btn.disabled = false;
+      btn.textContent = 'Sign In →';
+    }
+    document.getElementById('login-pw').value = '';
+    document.getElementById('login-pw').focus();
+    return;
+  }
+
+  // ── Successful login ──
+  loginAttempts = 0;
+  enterSession(username, user);
+}
+
+function enterSession(username, user) {
+  // Set active session
+  currentUser = { username, ...user };
+
+  // Hide login, show app
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').classList.add('visible');
+
+  // Update session UI
+  document.getElementById('session-name').textContent = user.name;
+  document.getElementById('session-dept').textContent = user.dept;
+
+  // Apply role + permissions (reuse existing ROLE_CONFIG)
+  currentRole = user.role;
+  const cfg = ROLE_CONFIG[user.role];
+  const pill = document.getElementById('sidebar-role-pill');
+  pill.textContent = cfg.pill;
+  pill.style.setProperty('--pill-color', cfg.color);
+  pill.style.setProperty('--pill-bg', cfg.bg);
+  pill.style.setProperty('--pill-border', cfg.border);
+  applyPermissions(cfg.allow);
+  document.getElementById('profile-role-badge').textContent = cfg.label + ' · ' + user.name;
+
+  // ── LOG sign-in ──
+  addLog('LOGIN', `Signed in as "${user.name}" · Role: ${cfg.label} · Dept: ${user.dept}`);
+  renderLog();
+
+  goTab('profile');
+  updatePeriod();
+  // Load shared form data from Google Sheets for current period
+  loadFormDataGS();
+  // Load shared audit log
+  loadAuditLogGS();
+
+  // Reset login form for next time
+  document.getElementById('login-dept').value = '';
+  document.getElementById('login-user').innerHTML = '<option value="">— Select department first —</option>';
+  document.getElementById('login-user').disabled = true;
+  document.getElementById('login-pw').value = '';
+  document.getElementById('login-pw').type = 'password';
+  document.getElementById('pw-eye').textContent = '👁';
+  document.getElementById('login-btn').disabled = false;
+  document.getElementById('login-btn').textContent = 'Sign In →';
+  document.getElementById('login-error').classList.remove('show');
+  document.getElementById('dept-hint').innerHTML = 'Select a department above to see available accounts.';
+}
+
+function doLogout() {
+  addLog('LOGOUT', `Signed out from "${currentUser?.name||'—'}" · Dept: ${currentUser?.dept||'—'}`);
+  renderLog();
+  currentRole = null;
+  currentUser = null;
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('signin-card').style.display = 'block';
+  document.getElementById('signup-card').style.display = 'none';
+  document.getElementById('login-dept').value = '';
+  onDeptChange();
+  document.getElementById('login-pw').value = '';
+}
+
+// ── ROLE CONFIG ──
+const ROLE_CONFIG={
+  'ur':   {label:'MOR-UR Encoder',  pill:'⚡ MOR-UR',  color:'#1f6feb',bg:'rgba(31,111,235,.12)',border:'rgba(31,111,235,.3)', allow:['profile','mor-ur']},
+  'wcd':  {label:'MOR-WCD Encoder', pill:'🔄 MOR-WCD', color:'#3fb950',bg:'rgba(63,185,80,.12)', border:'rgba(63,185,80,.3)',  allow:['profile','mor-wcd']},
+  'dtd':  {label:'MOR-DTD Encoder', pill:'📡 MOR-DTD', color:'#58a6ff',bg:'rgba(88,166,255,.12)',border:'rgba(88,166,255,.3)', allow:['profile','mor-dtd']},
+  'csd':  {label:'MOR-CSD Encoder', pill:'👥 MOR-CSD', color:'#a371f7',bg:'rgba(163,113,247,.12)',border:'rgba(163,113,247,.3)',allow:['profile','mor-csd']},
+  'dsd':  {label:'MOR-DSD Encoder', pill:'🏭 MOR-DSD', color:'#f78166',bg:'rgba(247,129,102,.12)',border:'rgba(247,129,102,.3)',allow:['profile','mor-dsd']},
+  'admin':{label:'Administrator',   pill:'🔐 ADMIN',   color:'#e3b341',bg:'rgba(227,179,65,.12)', border:'rgba(227,179,65,.3)', allow:['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','export','audit','users']},
+};
+const ALL_PANES=['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','export','audit','changepw','users'];
+let currentRole=null;
+let currentUser=null; // active user object
+
+// ── AUDIT LOG ENGINE ──
+let auditLog = [];       // {ts, type, username, name, dept, role, detail}
+let logFilter = 'all';
+
+function getTS() {
+  const now = new Date();
+  return now.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'2-digit'})
+    + ' ' + now.toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
+}
+
+function addLog(type, detail) {
+  auditLog.unshift({
+    ts: getTS(),
+    tsRaw: Date.now(),
+    type,
+    username: currentUser?.username || '—',
+    name: currentUser?.name || '—',
+    dept: currentUser?.dept || '—',
+    role: currentUser?.role || '—',
+    detail,
+  });
+  updateLogStats();
+  saveAuditLogGS();
+}
+
+function addLogAnon(type, detail, username, name, dept) {
+  // For pre-login events (failed logins, lockouts)
+  auditLog.unshift({
+    ts: getTS(), tsRaw: Date.now(),
+    type, username: username||'—', name: name||'—', dept: dept||'—', role:'—', detail,
+  });
+  updateLogStats();
+}
+
+function updateLogStats() {
+  document.getElementById('ls-logins').textContent  = auditLog.filter(e=>e.type==='LOGIN').length;
+  document.getElementById('ls-saves').textContent   = auditLog.filter(e=>e.type==='SAVE').length;
+  document.getElementById('ls-exports').textContent = auditLog.filter(e=>e.type==='EXPORT').length;
+  document.getElementById('ls-fails').textContent   = auditLog.filter(e=>['FAIL','LOCK'].includes(e.type)).length;
+}
+
+function setLogFilter(f) {
+  logFilter = f;
+  document.querySelectorAll('.log-filter-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.filter === f);
+  });
+  renderLog();
+}
+
+const LOG_BADGE_CLASS = {
+  LOGIN:'lb-login', LOGOUT:'lb-logout', SAVE:'lb-save',
+  EXPORT:'lb-export', FAIL:'lb-fail', LOCK:'lb-lock', FIELD:'lb-field',
+};
+const LOG_ICON = {
+  LOGIN:'🔑', LOGOUT:'🚪', SAVE:'💾', EXPORT:'⬇', FAIL:'⚠', LOCK:'🔒', FIELD:'✏',
+};
+
+function renderLog() {
+  const tbody = document.getElementById('log-tbody');
+  const search = (document.getElementById('log-search')?.value||'').toLowerCase();
+  let rows = auditLog;
+
+  if (logFilter !== 'all') rows = rows.filter(e => e.type === logFilter);
+  if (search) rows = rows.filter(e =>
+    [e.username,e.name,e.dept,e.role,e.detail,e.type].some(v=>(v||'').toLowerCase().includes(search))
+  );
+
+  if (rows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="log-empty">No log entries match the current filter.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = rows.map((e,i) => `
+    <tr>
+      <td class="log-time">${e.ts}</td>
+      <td><span class="log-badge ${LOG_BADGE_CLASS[e.type]||'lb-login'}">${LOG_ICON[e.type]||''} ${e.type}</span></td>
+      <td>
+        <div class="log-user">${escHtml(e.name)}</div>
+        <div class="log-dept">${escHtml(e.username)}</div>
+      </td>
+      <td class="log-dept" style="font-size:11px;">${escHtml(e.dept)}</td>
+      <td class="log-detail">${escHtml(e.detail)}</td>
+    </tr>
+  `).join('');
+}
+
+function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function confirmClearLog() {
+  if (confirm('Clear all audit log entries? This cannot be undone.')) {
+    auditLog = [];
+    updateLogStats();
+    renderLog();
+  }
+}
+
+function exportLogCSV() {
+  const rows = [['Timestamp','Event Type','Username','Full Name','Department','Role','Detail']];
+  auditLog.forEach(e => rows.push([e.ts,e.type,e.username,e.name,e.dept,e.role,e.detail]));
+  const csv = rows.map(r=>r.map(v=>{
+    const s=String(v||'');
+    return (s.includes(',')||s.includes('"')||s.includes('\n'))?'"'+s.replace(/"/g,'""')+'"':s;
+  }).join(',')).join('\r\n');
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='DEPDMS_AuditLog_'+Date.now()+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  addLog('EXPORT','Exported audit log to CSV');
+  renderLog();
+}
+
+const UR_DEF={
+  'Residential-Lifeline-Grid': [0.6366,0,0,0,1.1892,0,0.2669,0.5143,0,0,0.5828,0,0.3669,5,0.2508,0,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
+  'Residential-Non-Lifeline':  [0.6366,0,0,0,1.1892,0,0.2669,0.5143,0,0,0.5828,0,0.3669,5,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
+  'Commercial-LV':             [0.6366,0,0,0,1.2793,0,0.2669,0.5134,0,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
+  'Industrial-HV':             [0.6366,0,0,0,0,356.98,0.2669,0,190.03,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
+  'Public-Building-LV':        [0.6366,0,0,0,1.2793,0,0.2669,0.5134,0,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
+  'Streetlights-LV':           [0.6366,0,0,0,1.2793,0,0.2669,0.5134,0,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
+  'Special-Lighting':          [0.6366,0,0,0,1.2793,0,0.2669,0.5134,0,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
+};
+const CSD_DEF={
+  'Residential-Lifeline-Grid': [59,697,4.661,0],
+  'Residential-Non-Lifeline':  [72957,9405211.5,4.6735,0],
+  'Commercial-LV':             [5863,2803510.18,3.813,0],
+  'Industrial-HV':             [166,3507503.5,2.0203,10.564],
+  'Public-Building-LV':        [690,778522,3.813,0],
+  'Streetlights-LV':           [124,59621.04,3.813,0],
+  'Special-Lighting':          [48,26601,3.813,0],
+};
+const DSD_DEF=[['Net-Metering','N','','','','','',68580,4.341],['WESM','N','','','','','',17991610,3.3336],['SPARC','N','','','','','',439491,0]];
+const WCD_DEF=[['CAP-750kW',1,289.8,262.83],['CAP-Below 500kW',21,1344.698,262.83]];
+const WCD_CATS=['CAP-750kW','CAP-Below 500kW','Small-Power Users','Contestable Customers'];
+
+// ── VALIDATION ──
+function validateField(inp) {
+  const td = inp.closest('td');
+  if (!td) return true;
+  const val = inp.value.trim();
+  if (val === '') {
+    td.classList.add('inp-error');
+    showTooltip(inp, td.dataset.label ? `Please fill in "${td.dataset.label}"` : 'This field is required. Please fill it in.');
+    return false;
+  } else {
+    td.classList.remove('inp-error');
+    return true;
+  }
+}
+function clearErr(inp) {
+  const td = inp.closest('td');
+  if (td) td.classList.remove('inp-error');
+  hideTooltip();
+}
+let tooltipTimer;
+function showTooltip(inp, msg) {
+  const tip = document.getElementById('val-tooltip');
+  tip.textContent = msg;
+  tip.style.display = 'block';
+  const rect = inp.getBoundingClientRect();
+  tip.style.left = (rect.left + window.scrollX) + 'px';
+  tip.style.top  = (rect.top  + window.scrollY - tip.offsetHeight - 10) + 'px';
+  clearTimeout(tooltipTimer);
+  tooltipTimer = setTimeout(hideTooltip, 3500);
+}
+function hideTooltip() {
+  document.getElementById('val-tooltip').style.display = 'none';
+}
+document.addEventListener('click', hideTooltip);
+
+// Validate all inputs inside a pane, returns list of empty field labels
+function validatePane(paneId) {
+  const pane = document.getElementById('pane-'+paneId);
+  if (!pane) return [];
+  const empties = [];
+  pane.querySelectorAll('input[type=text], input[type=number], input[type=email]').forEach(inp => {
+    const td = inp.closest('td');
+    if (!td) return;
+    if (inp.value.trim() === '') {
+      td.classList.add('inp-error');
+      const lbl = td.dataset.label || inp.id || 'Unknown field';
+      empties.push(lbl);
+    }
+  });
+  return empties;
+}
+
+function showModal(title, fields) {
+  document.getElementById('modal-title').textContent = title;
+  let html = 'Please fill in the following required fields:<ul>';
+  fields.forEach(f => html += `<li>${f}</li>`);
+  html += '</ul>';
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('val-modal').classList.add('show');
+}
+function closeModal() { document.getElementById('val-modal').classList.remove('show'); }
+
+// ── PERMISSIONS ──
+function applyPermissions(allow){
+  const tabMap={'ur':'mor-ur','wcd':'mor-wcd','dtd':'mor-dtd','csd':'mor-csd','dsd':'mor-dsd','export':'export','audit':'audit'};
+  ALL_PANES.forEach(pane=>{
+    if(pane==='changepw') return; // always unlocked
+    const allowed=allow.includes(pane);
+    const navEl=document.getElementById('nav-'+pane);
+    const tabEl=document.getElementById('tab-'+pane);
+    if(navEl) navEl.classList.toggle('locked',!allowed);
+    if(tabEl) tabEl.classList.toggle('tab-locked',!allowed);
+  });
+  ['ur','wcd','dtd','csd','dsd','export','audit','users'].forEach(k=>{
+    const pane=tabMap[k]||k;
+    const lockEl=document.getElementById('lock-'+k);
+    if(lockEl) lockEl.textContent=allow.includes(pane)?'':'🔒';
+  });
+}
+function tryGoTab(id){
+  if(id==='changepw'){goTab('changepw');return;}
+  const cfg=ROLE_CONFIG[currentRole];
+  if(!cfg||!cfg.allow.includes(id)){showErr('🔒 Access restricted. Your role: '+cfg.allow.filter(x=>x!=='profile').join(', '));return;}
+  goTab(id);
+}
+function goToMySection(){
+  const cfg=ROLE_CONFIG[currentRole];
+  const sec=cfg.allow.find(a=>a!=='profile');
+  if(sec) goTab(sec); else goTab('export');
+}
+// ── HELPERS ──
+function getMonth(){return document.getElementById('month-select').value;}
+function getYear() {return document.getElementById('year-select').value;}
+function getMonthIdx(){return MONTHS.indexOf(getMonth());}
+function getDay()  {return MONTH_DAYS[getMonthIdx()];}
+function v(id)     {return document.getElementById(id)?.value||'';}
+function updatePeriod(){
+  const mi=getMonthIdx(),m=getMonth(),y=getYear();
+  document.getElementById('period-badge').textContent=MONTH_SHORT[mi].toUpperCase()+' '+y;
+  document.getElementById('period-display').textContent=getDay()+' '+m+' '+y;
+  // Reload form data for new period if user is already logged in
+  if (currentUser) loadFormDataGS();
+}
+const TITLES={
+  'profile':()=>`DU General Information (DU-PROFILE) as of ${getDay()} ${getMonth()} ${getYear()}`,
+  'mor-ur': ()=>`MOR-UR – Unbundled Rates · ${getMonth()} ${getYear()}`,
+  'mor-wcd':()=>`MOR-WCD – Wheeling Customer Data · ${getMonth()} ${getYear()}`,
+  'mor-dtd':()=>`MOR-DTD – DU Technical Data · ${getMonth()} ${getYear()}`,
+  'mor-csd':()=>`MOR-CSD – Customer Sales Data · ${getMonth()} ${getYear()}`,
+  'mor-dsd':()=>`MOR-DSD – DU Supply Data · ${getMonth()} ${getYear()}`,
+  'export': ()=>'Export CSV Files',
+  'audit':  ()=>'Audit Log · System Activity',
+  'changepw':()=>'Change Password',
+  'users':  ()=>'User Management · All Accounts',
+};
+function goTab(id){
+  ALL_PANES.forEach(p=>{
+    document.getElementById('pane-'+p).classList.toggle('hidden',p!==id);
+    const t=document.getElementById('tab-'+p);if(t)t.classList.toggle('active',p===id);
+    const n=document.getElementById('nav-'+p);if(n)n.classList.toggle('active',p===id);
+  });
+  document.getElementById('header-title').textContent=TITLES[id]();
+  hideAlerts();
+  if(id==='export') refreshExportStatus();
+  if(id==='audit') { renderLog(); updateLogStats(); }
+  if(id==='changepw') { document.getElementById('cpw-username-label').textContent = currentUser?.name + ' (' + currentUser?.username + ')'; }
+  if(id==='users') renderUserTable();
+}
+function showOk(msg){const a=document.getElementById('alert-ok');document.getElementById('alert-msg').textContent=msg;a.classList.add('show');setTimeout(()=>a.classList.remove('show'),3000);}
+function showErr(msg){const a=document.getElementById('alert-err');document.getElementById('alert-emsg').textContent=msg;a.classList.add('show');setTimeout(()=>a.classList.remove('show'),4000);}
+function hideAlerts(){document.getElementById('alert-ok').classList.remove('show');document.getElementById('alert-err').classList.remove('show');}
+
+function saveSection(id){
+  const empties=validatePane(id);
+  if(empties.length>0){
+    showModal('⚠ Incomplete Fields in '+id.toUpperCase(),empties);
+    addLog('FIELD', `Attempted to save "${id.toUpperCase()}" but ${empties.length} field(s) were empty`);
+    renderLog();
+    return;
+  }
+  document.getElementById('nav-'+id)?.classList.add('done');
+  showOk(id.toUpperCase()+' saved successfully! ✓');
+  addLog('SAVE', `Saved section "${id.toUpperCase()}" — Period: ${getMonth()} ${getYear()}`);
+  renderLog();
+  // Sync to Google Sheets
+  saveFormDataGS(id);
+}
+
+// ── BUILD TABLES ──
+function buildURTable(){
+  const tbody=document.getElementById('ur-body');tbody.innerHTML='';
+  CT.forEach((ct,ri)=>{
+    const vals=UR_DEF[ct]||Array(29).fill('');
+    const tr=document.createElement('tr');
+    const cells=vals.map((v,i)=>`<td class="has-val" data-label="${ct} Col ${i+4}"><input type="number" step="0.0001" value="${v}" style="min-width:90px" oninput="clearErr(this)" onblur="validateField(this)"></td>`).join('');
+    tr.innerHTML=`<td class="row-num">${ri+1}</td><td class="field-label">${ct}</td><td class="type-cell">PhP/kWh</td>${cells}`;
+    tbody.appendChild(tr);
+  });
+  const eof=document.createElement('tr');eof.className='eof';
+  eof.innerHTML=`<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="32"></td>`;
+  tbody.appendChild(eof);
+}
+function buildCSDTable(){
+  const tbody=document.getElementById('csd-body');tbody.innerHTML='';
+  CT.forEach((ct,ri)=>{
+    const d=CSD_DEF[ct]||[0,0,0,0];
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td class="row-num">${ri+1}</td><td class="field-label">${ct}</td><td class="type-cell">—</td>
+      <td class="has-val" data-label="${ct} – No. of Customers"><input type="number" value="${d[0]}" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+      <td class="has-val" data-label="${ct} – Electricity Sales"><input type="number" step="0.0001" value="${d[1]}" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+      <td class="has-val" data-label="${ct} – Effective Rate"><input type="number" step="0.0001" value="${d[2]}" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+      <td class="has-val" data-label="${ct} – Capacity Alloc"><input type="number" step="0.0001" value="${d[3]}" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>`;
+    tbody.appendChild(tr);
+  });
+  const eof=document.createElement('tr');eof.className='eof';
+  eof.innerHTML=`<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="6"></td>`;
+  tbody.appendChild(eof);
+}
+function buildWCDTable(){document.getElementById('wcd-body').innerHTML='';WCD_DEF.forEach(r=>addWCDRowData(r));}
+function addWCDRow(){addWCDRowData(['',0,0,0]);}
+let wcdCount=0;
+function addWCDRowData([cat,ncust,elec,rate]){
+  wcdCount++;
+  const tbody=document.getElementById('wcd-body');
+  const opts=WCD_CATS.map(c=>`<option ${c===cat?'selected':''}>${c}</option>`).join('');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td class="row-num">${wcdCount}</td>
+    <td class="field-label" style="padding:3px 8px;"><select style="width:100%;min-width:180px;background:transparent;border:none;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;">${opts}</select></td>
+    <td class="type-cell">Category</td>
+    <td class="has-val" data-label="Row ${wcdCount} – No. of Customers"><input type="number" value="${ncust}" style="min-width:100px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+    <td class="has-val" data-label="Row ${wcdCount} – Elec. Wheeled"><input type="number" step="0.0001" value="${elec}" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+    <td class="has-val" data-label="Row ${wcdCount} – Wheeling Rate"><input type="number" step="0.0001" value="${rate}" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+    <td><button class="del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
+  tbody.appendChild(tr);
+}
+function buildDSDTable(){document.getElementById('dsd-body').innerHTML='';DSD_DEF.forEach(r=>addDSDRowData(r));}
+function addDSDRow(){addDSDRowData(['','N','','','','','',0,0]);}
+let dsdCount=0;
+function addDSDRowData([supplier,gen,cstart,cend,ccap,cenergy,_,purch,cost]){
+  dsdCount++;
+  const tbody=document.getElementById('dsd-body');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td class="row-num">${dsdCount}</td>
+    <td class="field-label" style="padding:3px 8px;"><input type="text" value="${supplier}" placeholder="e.g. WESM" style="min-width:150px" oninput="clearErr(this)" onblur="validateField(this)" data-label="Supplier ${dsdCount} Name"></td>
+    <td class="type-cell">Supplier</td>
+    <td class="has-val"><select style="min-width:80px;background:transparent;border:none;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;"><option ${gen==='Y'?'selected':''}>Y</option><option ${gen!=='Y'?'selected':''}>N</option></select></td>
+    <td class="has-val" data-label="Supplier ${dsdCount} – Contract Start"><input type="text" value="${cstart}" placeholder="yyyy-mm-dd" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+    <td class="has-val" data-label="Supplier ${dsdCount} – Contract End"><input type="text" value="${cend}" placeholder="yyyy-mm-dd" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+    <td class="has-val" data-label="Supplier ${dsdCount} – Contracted Capacity"><input type="number" step="0.0001" value="${ccap}" style="min-width:110px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+    <td class="has-val" data-label="Supplier ${dsdCount} – Contracted Energy"><input type="number" step="0.0001" value="${cenergy}" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+    <td class="has-val" data-label="Supplier ${dsdCount} – Purchased Electricity"><input type="number" step="0.0001" value="${purch}" style="min-width:140px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+    <td class="has-val" data-label="Supplier ${dsdCount} – Generation Cost"><input type="number" step="0.0001" value="${cost}" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+    <td><button class="del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
+  tbody.appendChild(tr);
+}
+
+// ── EXPORT VALIDATION ──
+// Check if a pane has any empty text/number inputs
+function paneHasEmpty(paneId){
+  const pane=document.getElementById('pane-'+paneId);
+  if(!pane) return false;
+  let empty=false;
+  pane.querySelectorAll('input[type=text],input[type=number],input[type=email]').forEach(inp=>{
+    if(inp.value.trim()==='') empty=true;
+  });
+  return empty;
+}
+
+function refreshExportStatus(){
+  const map={
+    'profile':'profile','mor-ur':'ur','mor-wcd':'wcd','mor-dtd':'dtd','mor-csd':'csd','mor-dsd':'dsd'
+  };
+  Object.entries(map).forEach(([paneId,key])=>{
+    const card=document.getElementById('ec-'+key);
+    const stat=document.getElementById('es-'+key);
+    if(!card||!stat) return;
+    const hasEmpty=paneHasEmpty(paneId);
+    card.classList.toggle('blocked',hasEmpty);
+    if(hasEmpty){
+      stat.className='export-status err';
+      stat.textContent='⚠ Has empty fields';
+    } else {
+      stat.className='export-status ok';
+      stat.textContent='✓ Ready to export';
+    }
+  });
+}
+
+// ── CSV ──
+function csvEsc(val){const s=String(val??'');return(s.includes(',')||s.includes('"')||s.includes('\n'))?'"'+s.replace(/"/g,'""')+'"':s;}
+function makeCSV(rows){return rows.map(r=>r.map(csvEsc).join(',')).join('\r\n');}
+function getP(){return{id:v('p_id'),region:v('p_region'),company:v('p_company'),head:v('p_head'),pres:v('p_pres'),email:v('p_email'),web:v('p_web'),tel:v('p_tel'),addr:v('p_addr'),emp:v('p_emp'),conemp:v('p_conemp'),circ:v('p_circ'),density:v('p_density'),saidi:v('p_saidi'),saifi:v('p_saifi'),collect:v('p_collect'),load:v('p_load'),subs:v('p_subs'),kva:v('p_kva')};}
+
+function buildProfileCSV(){const p=getP(),m=getMonth(),y=getYear(),d=getDay();const hdr=`DU General Information (DU-PROFILE) as of <${d}> <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Company Name','4 - Head of the Company','5 - Board President','6 - Official Email','7 - Website','8 - Telephone Number','9 - Physical Address','10 - Number of Employees','11 - Connection/ Employees','12 - Circuit km of Lines','13 - Consumer Density per Circuit km of lines','14 - SAIDI','15 - SAIFI','16 - Collection Efficiency (%)','17 - Load Factor (%)','18 - No. of Substations','19 - Total Capacity (kVA)'];const types=['Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Integers','Integers','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Integers','Numeric, up to 4 decimal places'];const blank=Array(19).fill('');blank[0]=hdr;return makeCSV([blank,cols,types,[p.id,p.region,p.company,p.head,p.pres,p.email,p.web,p.tel,p.addr,p.emp,p.conemp,p.circ,p.density,p.saidi,p.saifi,p.collect,p.load,p.subs,p.kva],['EOF',...Array(18).fill('')]]);}
+function buildURCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report - Unbundled Rates (MOR-UR) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Customer Type','4 - Generation Charges','5 - GRAM-DAA','6 - ICERA-DAA','7 - Power Act Reduction','8 - Transmission System Charge','9 - Transmission Demand Charge','10 - System Loss Charge','11 - Distribution System Charge','12 - Distribution Demand Charge','13 - True-Up Adjustments','14 - Supply System Charge','15 - Supply Retail Customer Charge','16 - Metering System Charge','17 - Metering Retail Customer Charge','18 - RFSC','19 - Lifeline Subsidy','20 - Senior Citizen Subsidy','21 - UCME  - NPC SPUG','22 - UCME - REDCI','23 - UC - EC','24 - UC - SCC','25 - UC - SD','26 - FIT - All','27 - Franchise Tax','28 - Real Property Tax','29 - Generation VAT','30 - Transmission VAT','31 - Distribution VAT','32 - Other VAT'];const types=Array(32).fill('Numeric, up to 4 decimal places');types[0]='Alphanumeric';types[1]='Alphanumeric';types[2]='Alphanumeric';const blank=Array(32).fill('');blank[0]=hdr;const rows=[blank,cols,types];document.getElementById('ur-body').querySelectorAll('tr:not(.eof)').forEach((tr,i)=>{const vals=[p.id,p.region,CT[i]];tr.querySelectorAll('input').forEach(inp=>vals.push(inp.value));rows.push(vals);});rows.push(['EOF',...Array(31).fill('')]);return makeCSV(rows);}
+function buildWCDCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report - Wheeling Customer Data (MOR-WCD) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Customer Category','4 - No. of Customers','5 - Total Electricity Wheeled','6 - Wheeling Rate'];const types=['Alphanumeric','Alphanumeric','Alphanumeric','Integers','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places'];const blank=Array(6).fill('');blank[0]=hdr;const rows=[blank,cols,types];document.getElementById('wcd-body').querySelectorAll('tr').forEach(tr=>{const cat=tr.querySelector('select')?.value||'';const inps=tr.querySelectorAll('input');rows.push([p.id,p.region,cat,inps[0]?.value||'',inps[1]?.value||'',inps[2]?.value||'']);});rows.push(['EOF',...Array(5).fill('')]);return makeCSV(rows);}
+function buildDTDCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report - DU Technical Data (MOR-DTD) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Maximum Load','4 - Company Use','5 - System Loss','6 - Total No. of Barangays','7 - Total Energized Barangays'];const types=['Alphanumeric','Alphanumeric','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Integers','Integers'];const blank=Array(7).fill('');blank[0]=hdr;return makeCSV([blank,cols,types,[p.id,p.region,v('dtd_ml'),v('dtd_cu'),v('dtd_sl'),v('dtd_tb'),v('dtd_eb')],['EOF',...Array(6).fill('')]]);}
+function buildCSDCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report  Customer Sales Data (MOR-CSD) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Customer Type','4 - No. of Customers','5 - Electricity Sales','6 - Effective Rate','7 - Capacity Allocation'];const types=['Alphanumeric','Alphanumeric','Alphanumeric','Integers','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places'];const blank=Array(7).fill('');blank[0]=hdr;const rows=[blank,cols,types];document.getElementById('csd-body').querySelectorAll('tr:not(.eof)').forEach((tr,i)=>{const inps=tr.querySelectorAll('input');rows.push([p.id,p.region,CT[i],inps[0]?.value||'',inps[1]?.value||'',inps[2]?.value||'',inps[3]?.value||'']);});rows.push(['EOF',...Array(6).fill('')]);return makeCSV(rows);}
+function buildDSDCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report  DU Supply Data (MOR-DSD) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Power Suppliers','4 - Generator Affiliated to DU','5 - Contract Start','6 - Contract End','7 - Contracted Capacity','8 - Contracted Energy','9 - Purchased Electricity','10 - Generation Cost'];const types=['Alphanumeric','Alphanumeric','Alphanumeric','Alphabet','Date in yyyy-mm-dd format','Date in yyyy-mm-dd format','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places'];const blank=Array(10).fill('');blank[0]=hdr;const rows=[blank,cols,types];document.getElementById('dsd-body').querySelectorAll('tr').forEach(tr=>{const sup=tr.querySelector('td.field-label input')?.value||'';const gen=tr.querySelector('select')?.value||'N';const inps=tr.querySelectorAll('td.has-val input');if(sup)rows.push([p.id,p.region,sup,gen,inps[0]?.value||'',inps[1]?.value||'',inps[2]?.value||'',inps[3]?.value||'',inps[4]?.value||'',inps[5]?.value||'']);});rows.push(['EOF',...Array(9).fill('')]);return makeCSV(rows);}
+
+const CSV_BUILDERS={profile:buildProfileCSV,'mor-ur':buildURCSV,'mor-wcd':buildWCDCSV,'mor-dtd':buildDTDCSV,'mor-csd':buildCSDCSV,'mor-dsd':buildDSDCSV};
+const PANE_KEY={'profile':'profile','mor-ur':'ur','mor-wcd':'wcd','mor-dtd':'dtd','mor-csd':'csd','mor-dsd':'dsd'};
+
+function getFilename(type){const mi=getMonthIdx()+1,m=getMonth().toLowerCase(),y=getYear();return({'profile':`DU_PROFILE_template_${mi}${m}${y}.csv`,'mor-ur':`MOR_UR_template_${mi}${m}${y}.csv`,'mor-wcd':`MOR_WCD_template_${mi}${m}${y}.csv`,'mor-dtd':`MOR_DTD_template_${mi}${m}${y}.csv`,'mor-csd':`MOR_CSD_template_${mi}${m}${y}.csv`,'mor-dsd':`MOR_DSD_template_${mi}${m}${y}.csv`})[type];}
+function dlCSV(content,filename){const blob=new Blob(['\ufeff'+content],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}
+
+function exportCSV(type){
+  // Check if pane has empty fields
+  if(paneHasEmpty(type)){
+    const empties=validatePane(type);
+    showModal('⚠ Cannot Export – Empty Fields Found in '+type.toUpperCase().replace('MOR-','MOR-'), empties.length>0?empties:['Some fields are empty. Please fill in all required data.']);
+    addLog('FIELD', `Blocked export of "${type.toUpperCase()}" — empty required fields`);
+    renderLog();
+    return;
+  }
+  dlCSV(CSV_BUILDERS[type](), getFilename(type));
+  const key=PANE_KEY[type]||type.replace('mor-','');
+  const card=document.getElementById('ec-'+key)||document.getElementById('ec-'+type);
+  if(card){card.classList.add('done');setTimeout(()=>{card.classList.remove('done');refreshExportStatus();},2000);}
+  showOk('Downloaded: '+getFilename(type));
+  addLog('EXPORT', `Downloaded CSV: "${getFilename(type)}" — Period: ${getMonth()} ${getYear()}`);
+  renderLog();
+}
+
+async function exportAll(){
+  const types=['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'];
+  const blocked=types.filter(t=>paneHasEmpty(t));
+  if(blocked.length>0){
+    showModal('⚠ Cannot Export All – Incomplete Sections',blocked.map(t=>t.toUpperCase()+' has empty fields'));
+    addLog('FIELD', `Blocked "Export All" — sections with empty fields: ${blocked.map(t=>t.toUpperCase()).join(', ')}`);
+    renderLog();
+    return;
+  }
+  for(const t of types){dlCSV(CSV_BUILDERS[t](),getFilename(t));await new Promise(r=>setTimeout(r,300));}
+  showOk('All 6 CSV files downloaded successfully!');
+  addLog('EXPORT', `Downloaded ALL 6 CSV files — Period: ${getMonth()} ${getYear()}`);
+  renderLog();
+}
+
+// ── INIT ──
+buildURTable();
+buildCSDTable();
+buildWCDTable();
+buildDSDTable();
+
+// ═══════════════════════════════════════════════
+// ── SIGN UP SYSTEM ──────────────────────────────
+// ═══════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════
+// ── GOOGLE SHEETS INTEGRATION ────────────────
+// ═══════════════════════════════════════════════
+// Paste your deployed Apps Script Web App URL below.
+// Leave blank to use localStorage fallback (offline mode).
+const GS_URL = ''; // ← PASTE YOUR APPS SCRIPT URL HERE
+
+// Shows a small sync indicator in the UI
+function setSyncStatus(state) {
+  // state: 'syncing' | 'ok' | 'error' | 'offline'
+  const el = document.getElementById('sync-status');
+  if (!el) return;
+  const map = {
+    syncing: { text: '⟳ Syncing…',  color: 'var(--accent4)' },
+    ok:      { text: '☁ Synced',    color: 'var(--accent2)' },
+    error:   { text: '✕ Sync fail', color: 'var(--danger)'  },
+    offline: { text: '⊘ Offline',   color: 'var(--muted)'   },
+  };
+  const s = map[state] || map.offline;
+  el.textContent = s.text;
+  el.style.color = s.color;
+}
+
+// Generic Google Sheets API call
+async function gsCall(action, payload = {}) {
+  if (!GS_URL) return null; // no URL configured → offline
+  try {
+    const res = await fetch(GS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action, ...payload }),
+    });
+    const json = await res.json();
+    return json;
+  } catch (e) {
+    console.warn('GS call failed:', e);
+    return null;
+  }
+}
+
+// ── SIGNUPS (users) ──
+function getSignups() {
+  try { return JSON.parse(localStorage.getItem('depdms_signups') || '[]'); }
+  catch(e) { return []; }
+}
+function saveSignups(arr) {
+  localStorage.setItem('depdms_signups', JSON.stringify(arr));
+  // Also push to Google Sheets
+  if (GS_URL) {
+    setSyncStatus('syncing');
+    gsCall('saveSignups', { data: arr })
+      .then(r => setSyncStatus(r?.ok ? 'ok' : 'error'))
+      .catch(() => setSyncStatus('error'));
+  }
+}
+
+// Load signups — try Google Sheets first, fall back to localStorage
+async function loadSignupsFromGS() {
+  if (!GS_URL) { loadSignupsLocal(); setSyncStatus('offline'); return; }
+  setSyncStatus('syncing');
+  const res = await gsCall('getSignups');
+  if (res?.ok && Array.isArray(res.data)) {
+    localStorage.setItem('depdms_signups', JSON.stringify(res.data));
+    setSyncStatus('ok');
+    applySignupsToRuntime(res.data);
+  } else {
+    setSyncStatus('error');
+    loadSignupsLocal();
+  }
+}
+function loadSignupsLocal() {
+  applySignupsToRuntime(getSignups());
+}
+function applySignupsToRuntime(signups) {
+  signups.forEach(u => {
+    if (!USER_DB[u.username]) {
+      USER_DB[u.username] = { name: u.name, dept: u.dept, deptKey: u.deptKey, role: u.role, pwHash: u.pwHash };
+      if (!DEPT_USERS[u.deptKey]) DEPT_USERS[u.deptKey] = [];
+      if (!DEPT_USERS[u.deptKey].includes(u.username)) DEPT_USERS[u.deptKey].push(u.username);
+      USER_LABELS[u.username] = u.name;
+    }
+  });
+}
+
+// ── FORM DATA (profile + MOR sections) ──
+// Key: "month_year" e.g. "January_2025"
+function formDataKey() {
+  return getMonth() + '_' + getYear();
+}
+
+// Collect all inputs from a pane into a plain object
+function collectPane(paneId) {
+  const pane = document.getElementById('pane-' + paneId);
+  if (!pane) return {};
+  const data = {};
+  pane.querySelectorAll('input, select, textarea').forEach(el => {
+    if (el.id) data[el.id] = el.value;
+  });
+  return data;
+}
+
+// Restore inputs in a pane from a saved object
+function restorePane(paneId, data) {
+  if (!data) return;
+  const pane = document.getElementById('pane-' + paneId);
+  if (!pane) return;
+  Object.entries(data).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.value = val;
+  });
+}
+
+// Save a section's data to GS + localStorage
+async function saveFormDataGS(section) {
+  const key = formDataKey();
+  const payload = { section, key, data: collectPane(section) };
+  // localStorage backup
+  try {
+    const stored = JSON.parse(localStorage.getItem('depdms_formdata') || '{}');
+    if (!stored[key]) stored[key] = {};
+    stored[key][section] = payload.data;
+    localStorage.setItem('depdms_formdata', JSON.stringify(stored));
+  } catch(e) {}
+  // Google Sheets
+  if (GS_URL) {
+    setSyncStatus('syncing');
+    const res = await gsCall('saveFormData', payload);
+    setSyncStatus(res?.ok ? 'ok' : 'error');
+  }
+}
+
+// Load all form data for current period from GS, fall back to localStorage
+async function loadFormDataGS() {
+  const key = formDataKey();
+  if (GS_URL) {
+    setSyncStatus('syncing');
+    const res = await gsCall('getFormData', { key });
+    if (res?.ok && res.data) {
+      setSyncStatus('ok');
+      ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s => {
+        if (res.data[s]) restorePane(s, res.data[s]);
+      });
+      return;
+    }
+    setSyncStatus('error');
+  }
+  // fallback
+  try {
+    const stored = JSON.parse(localStorage.getItem('depdms_formdata') || '{}');
+    const periodData = stored[key];
+    if (periodData) {
+      ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s => {
+        if (periodData[s]) restorePane(s, periodData[s]);
+      });
+    }
+  } catch(e) {}
+}
+
+// ── AUDIT LOG SYNC ──
+async function saveAuditLogGS() {
+  if (!GS_URL) return;
+  await gsCall('saveAuditLog', { data: auditLog.slice(0, 500) }); // keep last 500
+}
+async function loadAuditLogGS() {
+  if (!GS_URL) return;
+  const res = await gsCall('getAuditLog');
+  if (res?.ok && Array.isArray(res.data)) {
+    auditLog = res.data;
+    updateLogStats();
+    renderLog();
+  }
+}
+
+const DEPT_LABEL_MAP = {
+  'finance': 'Finance Department',
+  'tsd': 'Technical Services Dept.',
+  'power-trading': 'Power Trading Dept.',
+  'admin': 'Administration',
+};
+
+function showSignUp() {
+  document.getElementById('signin-card').style.display = 'none';
+  document.getElementById('signup-card').style.display = 'block';
+  document.getElementById('login-error').classList.remove('show');
+  document.getElementById('signup-error').classList.remove('show');
+  document.getElementById('signup-ok').classList.remove('show');
+}
+function hideSignUp() {
+  document.getElementById('signup-card').style.display = 'none';
+  document.getElementById('signin-card').style.display = 'block';
+}
+function toggleSuPw() {
+  const inp = document.getElementById('su-pw');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  document.getElementById('su-eye').textContent = inp.type === 'password' ? '👁' : '🙈';
+}
+
+// Predefined username slots per department (available to sign up)
+const DEPT_USERNAMES = {
+  'finance':       ['finance.head','finance.encoder','finance.officer','finance.staff'],
+  'tsd':           ['tsd.engineer','tsd.encoder','tsd.officer','tsd.staff'],
+  'power-trading': ['pt.analyst','pt.encoder','pt.wheeling','pt.officer','pt.staff'],
+  'admin':         ['admin.officer','admin.staff','admin.encoder'],
+};
+
+// Role auto-assigned per department
+const DEPT_DEFAULT_ROLE = {
+  'finance':       'ur',
+  'tsd':           'dtd',
+  'power-trading': 'dsd',
+  'admin':         'admin',
+};
+
+function onSuDeptChange() {
+  const dept = document.getElementById('su-dept').value;
+  const sel  = document.getElementById('su-username');
+  sel.innerHTML = '';
+  if (!dept) {
+    sel.innerHTML = '<option value="">— Select department first —</option>';
+    sel.disabled = true;
+    return;
+  }
+  // Get predefined slots, filter out already-taken usernames
+  const taken = Object.keys(USER_DB);
+  const available = (DEPT_USERNAMES[dept] || []).filter(u => !taken.includes(u));
+  if (available.length === 0) {
+    sel.innerHTML = '<option value="">— No available usernames —</option>';
+    sel.disabled = true;
+    return;
+  }
+  sel.innerHTML = '<option value="">— Pick a username —</option>';
+  available.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u;
+    opt.textContent = u;
+    sel.appendChild(opt);
+  });
+  sel.disabled = false;
+  document.getElementById('signup-error').classList.remove('show');
+}
+
+function showSignupErr(msg) {
+  const el = document.getElementById('signup-error');
+  document.getElementById('signup-error-msg').textContent = msg;
+  el.classList.add('show');
+  document.getElementById('signup-ok').classList.remove('show');
+}
+function showSignupOk(msg) {
+  const el = document.getElementById('signup-ok');
+  document.getElementById('signup-ok-msg').textContent = msg;
+  el.classList.add('show');
+  document.getElementById('signup-error').classList.remove('show');
+}
+
+async function doSignUp() {
+  const name     = document.getElementById('su-name').value.trim();
+  const username = document.getElementById('su-username').value.trim().toLowerCase().replace(/\s+/g, '.');
+  const dept     = document.getElementById('su-dept').value;
+  const pw       = document.getElementById('su-pw').value;
+  const pw2      = document.getElementById('su-pw2').value;
+
+  document.getElementById('signup-error').classList.remove('show');
+  document.getElementById('signup-ok').classList.remove('show');
+
+  if (!name)     return showSignupErr('Full name is required.');
+  if (!dept)     return showSignupErr('Please select a department.');
+  if (!username) return showSignupErr('Username is required.');
+  if (!pw)       return showSignupErr('Password is required.');
+  if (pw.length < 6) return showSignupErr('Password must be at least 6 characters.');
+  if (pw !== pw2) return showSignupErr('Passwords do not match.');
+
+  if (USER_DB[username]) return showSignupErr('Username already taken. Please choose another.');
+  const signups = getSignups();
+  if (signups.find(u => u.username === username)) return showSignupErr('Username already taken. Choose another.');
+
+  const btn = document.getElementById('signup-btn');
+  btn.disabled = true; btn.textContent = 'Creating…';
+
+  const role   = DEPT_DEFAULT_ROLE[dept] || 'ur';
+  const pwHash = await sha256(pw);
+  const newUser = {
+    username, name,
+    dept: DEPT_LABEL_MAP[dept] || dept,
+    deptKey: dept, role,
+    password: pw, pwHash,
+    createdAt: new Date().toISOString(),
+    source: 'signup',
+  };
+  signups.push(newUser);
+  saveSignups(signups);
+
+  USER_DB[username] = { name: newUser.name, dept: newUser.dept, deptKey: dept, role, pwHash };
+  if (!DEPT_USERS[dept]) DEPT_USERS[dept] = [];
+  if (!DEPT_USERS[dept].includes(username)) DEPT_USERS[dept].push(username);
+  USER_LABELS[username] = name;
+
+  addLogAnon('LOGIN', 'New account created via Sign Up: "' + name + '" · Username: ' + username + ' · Dept: ' + newUser.dept, username, name, newUser.dept);
+  renderLog();
+
+  btn.disabled = false; btn.textContent = 'Create Account ✓';
+  showSignupOk('Account created! You can now sign in as "' + username + '".');
+
+  document.getElementById('su-name').value     = '';
+  document.getElementById('su-username').value = '';
+  document.getElementById('su-pw').value       = '';
+  document.getElementById('su-pw2').value      = '';
+  document.getElementById('su-dept').value     = '';
+}
+
+// Load signed-up users on page load (GS first, then localStorage fallback)
+loadSignupsFromGS();
+
+// ═══════════════════════════════════════════════
+// ── CHANGE PASSWORD ──────────────────────────────
+// ═══════════════════════════════════════════════
+
+function toggleCpwVis(inputId, btnId) {
+  const inp = document.getElementById(inputId);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  document.getElementById(btnId).textContent = inp.type === 'password' ? '👁' : '🙈';
+}
+function clearCpwForm() {
+  ['cpw-old','cpw-new','cpw-new2'].forEach(id => document.getElementById(id).value = '');
+  const msg = document.getElementById('cpw-msg');
+  msg.className = 'changepw-msg'; msg.textContent = '';
+}
+function cpwMsg(text, isErr) {
+  const msg = document.getElementById('cpw-msg');
+  msg.textContent = text;
+  msg.className = 'changepw-msg ' + (isErr ? 'err' : 'ok');
+}
+
+async function doChangePassword() {
+  const oldPw   = document.getElementById('cpw-old').value;
+  const newPw   = document.getElementById('cpw-new').value;
+  const newPw2  = document.getElementById('cpw-new2').value;
+
+  if (!oldPw)  return cpwMsg('Enter your current password.', true);
+  if (!newPw)  return cpwMsg('Enter a new password.', true);
+  if (newPw.length < 6) return cpwMsg('New password must be at least 6 characters.', true);
+  if (newPw !== newPw2) return cpwMsg('New passwords do not match.', true);
+
+  const oldHash = await sha256(oldPw);
+  const user = USER_DB[currentUser.username];
+  if (!user || oldHash !== user.pwHash) return cpwMsg('Current password is incorrect.', true);
+
+  const newHash = await sha256(newPw);
+
+  // Update in runtime USER_DB
+  user.pwHash = newHash;
+
+  // Update in localStorage signups if they're a signed-up user
+  const signups = getSignups();
+  const idx = signups.findIndex(u => u.username === currentUser.username);
+  if (idx !== -1) {
+    signups[idx].pwHash = newHash;
+    signups[idx].password = newPw;   // keep plain-text in sync for admin view
+    saveSignups(signups);
+  }
+
+  addLog('SAVE', 'Password changed for account "' + currentUser.username + '"');
+  renderLog();
+  cpwMsg('✓ Password updated successfully!', false);
+  clearCpwForm();
+  setTimeout(() => { const m = document.getElementById('cpw-msg'); m.className = 'changepw-msg'; m.textContent=''; }, 4000);
+}
+
+// ═══════════════════════════════════════════════
+// ── ADMIN USER MANAGEMENT ────────────────────────
+// ═══════════════════════════════════════════════
+
+// Built-in plain-text credentials for admin reference
+const BUILTIN_PW = {
+  'finance.head':'finance@2025','finance.encoder':'encode2025',
+  'tsd.engineer':'tsd@2025','tsd.encoder':'encode2025',
+  'pt.analyst':'power@2025','pt.encoder':'encode2025','pt.wheeling':'power@2025',
+  'admin':'zameco2025','admin.csd':'zameco2025',
+};
+
+function getAllUsers() {
+  const signups = getSignups();
+  const signupMap = {};
+  signups.forEach(u => signupMap[u.username] = u);
+
+  const builtIn = Object.keys(USER_DB)
+    .filter(k => !signupMap[k])
+    .map(k => ({
+      username: k,
+      name: USER_DB[k].name,
+      dept: USER_DB[k].dept,
+      role: USER_DB[k].role,
+      password: BUILTIN_PW[k] || '(built-in)',
+      source: 'built-in',
+    }));
+
+  const signedUp = signups.map(u => ({
+    username: u.username,
+    name: u.name,
+    dept: u.dept,
+    role: u.role,
+    password: u.password,
+    source: 'signup',
+  }));
+
+  return [...builtIn, ...signedUp];
+}
+
+function renderUserTable() {
+  const tbody = document.getElementById('uman-tbody');
+  if (!tbody) return;
+  const search = (document.getElementById('uman-search')?.value || '').toLowerCase();
+  let users = getAllUsers();
+  if (search) users = users.filter(u =>
+    [u.username, u.name, u.dept, u.role].some(v => (v||'').toLowerCase().includes(search))
+  );
+
+  if (users.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" class="log-empty">No users found.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = users.map((u, i) => {
+    const safePw = escHtml(u.password || '');
+    const roleLabel = (ROLE_CONFIG[u.role]?.label) || u.role;
+    const sourceBadge = u.source === 'signup'
+      ? '<span class="uman-source-badge signed-up">Signed Up</span>'
+      : '<span class="uman-source-badge built-in">Built-in</span>';
+    const deleteBtn = u.source === 'signup'
+      ? '<button class="uman-delete-btn" onclick="deleteSignupUser(\'' + escHtml(u.username) + '\')">🗑 Delete</button>'
+      : '<span style="color:var(--muted);font-size:10px">—</span>';
+
+    const row = [
+      '<tr>',
+      '<td style="color:var(--muted);font-size:11px;">' + (i+1) + '</td>',
+      '<td style="font-family:monospace;font-size:12px;font-weight:600;">' + escHtml(u.username) + '</td>',
+      '<td>' + escHtml(u.name) + '</td>',
+      '<td style="font-size:11px;color:var(--muted);">' + escHtml(u.dept) + '</td>',
+      '<td style="font-size:11px;">' + escHtml(roleLabel) + '</td>',
+      '<td class="uman-pw-cell">',
+        '<span class="uman-pw-mask" id="pw-mask-' + i + '" onclick="revealPw(' + i + ')" title="Click to reveal">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span>',
+        '<span class="uman-pw-reveal" id="pw-rev-' + i + '" style="display:none;">' + safePw + '</span>',
+        '<button class="eye" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;margin-left:4px;" onclick="revealPw(' + i + ')" title="Show/hide">&#128065;</button>',
+      '</td>',
+      '<td>' + sourceBadge + '</td>',
+      '<td>' + deleteBtn + '</td>',
+      '</tr>',
+    ].join('');
+    return row;
+  }).join('');
+}
+
+function revealPw(idx) {
+  const mask = document.getElementById('pw-mask-' + idx);
+  const rev  = document.getElementById('pw-rev-'  + idx);
+  if (!mask || !rev) return;
+  const showing = rev.style.display !== 'none';
+  mask.style.display = showing ? '' : 'none';
+  rev.style.display  = showing ? 'none' : '';
+}
+
+function deleteSignupUser(username) {
+  if (!confirm('Delete signed-up user "' + username + '"? This cannot be undone.')) return;
+  const signups = getSignups().filter(u => u.username !== username);
+  saveSignups(signups);
+  // Remove from runtime
+  delete USER_DB[username];
+  delete USER_LABELS[username];
+  Object.keys(DEPT_USERS).forEach(k => {
+    DEPT_USERS[k] = DEPT_USERS[k].filter(u => u !== username);
+  });
+  addLog('SAVE', 'Admin deleted signed-up user "' + username + '"');
+  renderLog();
+  renderUserTable();
+}
+
+</script>
+</body>
+</html>

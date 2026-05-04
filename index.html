@@ -987,8 +987,13 @@ function enterSession(username, user) {
   _currentPeriodKey = getMonth() + '_' + getYear();
   // Load shared form data from Google Sheets for current period
   loadFormDataGS();
-  // Load the full shared audit log from GS (addLog above already pushed this login entry)
-  loadAuditLogGS();
+  // Note: loadAuditLogGS() is intentionally NOT called here.
+  // addLog('LOGIN') above already calls _mergeAndSaveAuditLog() which:
+  //   1. Fetches current GS log
+  //   2. Merges this login entry on top
+  //   3. Saves back to GS
+  //   4. Updates auditLog in memory
+  // Calling loadAuditLogGS() here would race against that and overwrite the result.
 
   // Reset login form for next time
   document.getElementById('login-dept').value = '';
@@ -1068,17 +1073,19 @@ async function _mergeAndSaveAuditLog(newEntry) {
   if (!GS_URL) return;
   try {
     const res = await gsCall('getAuditLog');
-    if (res?.ok && Array.isArray(res.data)) {
-      // Merge: put new entry on top, then all GS entries not duplicating this one
-      const merged = [newEntry, ...res.data.filter(e =>
-        !(e.ts === newEntry.ts && e.username === newEntry.username && e.type === newEntry.type)
-      )];
-      auditLog = merged.slice(0, 500);
-      updateLogStats();
-      renderLog();
-    }
-  } catch(e) {}
-  saveAuditLogGS();
+    const existing = (res?.ok && Array.isArray(res.data)) ? res.data : [];
+    // Merge: new entry on top + all GS entries, deduplicated by ts+username+type
+    const merged = [newEntry, ...existing.filter(e =>
+      !(e.ts === newEntry.ts && e.username === newEntry.username && e.type === newEntry.type)
+    )].slice(0, 500);
+    auditLog = merged;
+    updateLogStats();
+    renderLog();
+    // Save the fully merged log back to GS atomically
+    await gsCall('saveAuditLog', { data: merged });
+  } catch(e) {
+    console.warn('Audit log merge failed:', e);
+  }
 }
 
 function addLogAnon(type, detail, username, name, dept) {
@@ -1923,7 +1930,7 @@ async function doSignUp() {
   USER_LABELS[username] = name;
 
   addLogAnon('LOGIN', 'New account created via Sign Up: "' + name + '" · Username: ' + username + ' · Dept: ' + newUser.dept, username, name, newUser.dept);
-  saveAuditLogGS();
+  // saveAuditLogGS() not needed here — addLogAnon calls _mergeAndSaveAuditLog internally
   renderLog();
 
   btn.disabled = false; btn.textContent = 'Create Account ✓';

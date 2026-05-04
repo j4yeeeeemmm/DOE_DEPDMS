@@ -1714,19 +1714,40 @@ async function loadFormDataGS() {
   if (GS_URL && GS_URL !== 'YOUR_NEW_WEBAPP_URL_HERE') {
     setSyncStatus('syncing');
     const res = await gsCall('getFormData', { key });
-    if (res?.ok && res.data && Object.keys(res.data).length > 0) {
+
+    if (res === null) {
+      // Network/fetch failure — real error
+      setSyncStatus('error');
+    } else if (res?.ok) {
+      // GS responded fine — even if no data yet for this month, that's OK
       setSyncStatus('ok');
-      ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s => {
-        if (res.data[s]) restorePane(s, res.data[s]);
-      });
+      if (res.data && Object.keys(res.data).length > 0) {
+        ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s => {
+          if (res.data[s]) restorePane(s, res.data[s]);
+        });
+      }
+      // If no GS data, also check localStorage for this period
+      else {
+        try {
+          const stored = JSON.parse(localStorage.getItem('depdms_formdata') || '{}');
+          const periodData = stored[key];
+          if (periodData) {
+            ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s => {
+              if (periodData[s]) restorePane(s, periodData[s]);
+            });
+          }
+        } catch(e) {}
+      }
       return;
+    } else {
+      // GS returned ok:false — actual backend error
+      setSyncStatus('error');
     }
-    setSyncStatus('error');
   } else {
     setSyncStatus('offline');
   }
 
-  // Fallback: localStorage
+  // Fallback: localStorage only
   try {
     const stored = JSON.parse(localStorage.getItem('depdms_formdata') || '{}');
     const periodData = stored[key];

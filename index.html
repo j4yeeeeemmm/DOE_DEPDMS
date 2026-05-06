@@ -44,11 +44,9 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-he
 .login-divider{border:none;border-top:1px solid var(--border);margin:18px 0;}
 .login-dept-hint{font-size:10px;color:var(--muted);text-align:center;line-height:1.7;margin-top:12px;}
 .login-dept-hint strong{color:var(--text);}
-/* Session badge in sidebar */
 .session-info{padding:10px 18px;background:rgba(31,111,235,.06);border:1px solid rgba(31,111,235,.15);border-radius:8px;margin:10px 12px 4px;font-size:11px;}
 .session-info .si-name{font-weight:700;color:var(--text);font-size:12px;}
 .session-info .si-dept{color:var(--muted);margin-top:1px;font-size:10px;font-family:'DM Mono',monospace;}
-/* Attempts lock overlay */
 .lock-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;padding:24px;}
 .lock-overlay.show{display:flex;}
 .lock-icon-big{font-size:48px;}
@@ -128,14 +126,12 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-he
 .xls tr.section-row td.field-label{background:rgba(31,111,235,.1);color:var(--accent);}
 
 /* ── VALIDATION ── */
-/* Red outline on empty required inputs */
 .xls td.inp-error input, .xls td.inp-error select {
   background: rgba(218,54,51,.12) !important;
   box-shadow: 0 0 0 2px rgba(218,54,51,.5) !important;
   border-radius: 3px;
 }
 .xls td.inp-error { background: rgba(218,54,51,.06) !important; }
-/* Tooltip */
 .val-tooltip {
   position: absolute; z-index: 9999;
   background: #da3633; color: #fff;
@@ -146,7 +142,6 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-he
   display: none;
 }
 .val-tooltip::before{content:'';position:absolute;bottom:-5px;left:14px;border:5px solid transparent;border-bottom:none;border-top-color:#da3633;}
-/* Validation modal */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;display:none;align-items:center;justify-content:center;}
 .modal-overlay.show{display:flex;}
 .modal-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 28px 22px;max-width:460px;width:90%;box-shadow:0 16px 64px rgba(0,0,0,.5);}
@@ -209,6 +204,16 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-he
 .log-table tbody tr:hover{background:rgba(255,255,255,.025);}
 .log-table tbody td{padding:9px 12px;vertical-align:middle;}
 .log-table tbody tr:last-child{border-bottom:none;}
+.log-del-btn{background:none;border:none;color:var(--danger);cursor:pointer;font-size:13px;padding:2px 6px;border-radius:4px;opacity:0;transition:opacity .15s,background .15s;line-height:1;}
+.log-table tbody tr:hover .log-del-btn{opacity:.6;}
+.log-del-btn:hover{opacity:1!important;background:rgba(218,54,51,.12);}
+.log-cb{width:15px;height:15px;cursor:pointer;accent-color:var(--danger);}
+.log-table tbody tr.log-selected{background:rgba(218,54,51,.07)!important;}
+.log-table tbody tr.log-selected td{border-color:rgba(218,54,51,.15);}
+.del-selected-btn{padding:7px 14px;border-radius:6px;border:1px solid var(--danger);background:rgba(218,54,51,.1);color:var(--danger);cursor:pointer;font-size:11px;font-weight:700;font-family:'Sora',sans-serif;transition:all .15s;display:none;white-space:nowrap;}
+.del-selected-btn.visible{display:inline-flex;align-items:center;gap:5px;}
+.del-selected-btn:hover{background:rgba(218,54,51,.2);}
+.log-cb-head{width:15px;height:15px;cursor:pointer;accent-color:var(--danger);}
 .log-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
 .log-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;white-space:nowrap;}
 .log-badge.lb-login{background:rgba(31,111,235,.15);color:#58a6ff;border:1px solid rgba(31,111,235,.3);}
@@ -235,11 +240,8 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
 .fp-back:hover{color:var(--text);}
 .fp-info-box{background:rgba(31,111,235,.07);border:1px solid rgba(31,111,235,.18);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
 .fp-info-box strong{color:var(--text);}
-
-/* ── SIGN UP TOGGLE ── */
 .login-toggle-row{display:flex;gap:8px;justify-content:center;margin-top:14px;font-size:12px;color:var(--muted);}
 .login-toggle-row a{color:var(--accent);cursor:pointer;text-decoration:underline;}
-/* ── CHANGE PASSWORD PANEL ── */
 .changepw-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 22px 18px;margin-bottom:20px;max-width:480px;}
 .changepw-panel h3{font-size:14px;font-weight:700;margin-bottom:4px;}
 .changepw-panel p{font-size:11px;color:var(--muted);margin-bottom:18px;}
@@ -253,7 +255,6 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
 .changepw-msg{font-size:12px;padding:9px 12px;border-radius:6px;margin-bottom:12px;display:none;}
 .changepw-msg.ok{display:block;background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.3);color:var(--accent2);}
 .changepw-msg.err{display:block;background:rgba(218,54,51,.1);border:1px solid rgba(218,54,51,.3);color:#ff7b72;}
-/* ── ADMIN USER MANAGEMENT ── */
 .uman-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:14px;}
 .uman-table{width:100%;border-collapse:collapse;font-size:12px;}
 .uman-table thead th{background:var(--surface2);padding:9px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;border-bottom:2px solid var(--border);white-space:nowrap;}
@@ -273,16 +274,39 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
 ::-webkit-scrollbar{width:6px;height:6px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @media(max-width:860px){.sidebar{display:none;}.role-grid{grid-template-columns:1fr 1fr;}.role-card.admin-card{grid-column:1/-1;}}
 @media(max-width:520px){.role-grid{grid-template-columns:1fr;}}
+
+/* ── CSV PREVIEW PANEL ── */
+.csv-preview-wrap{margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.csv-preview-header{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:var(--surface2);border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;cursor:pointer;user-select:none;transition:background .15s;}
+.csv-preview-header:hover{background:rgba(31,111,235,.06);color:var(--accent);}
+.csv-preview-header .csv-ph-left{display:flex;align-items:center;gap:8px;}
+.csv-preview-header .csv-ph-toggle{font-size:13px;transition:transform .2s;}
+.csv-preview-header .csv-ph-toggle.open{transform:rotate(180deg);}
+.csv-preview-body{display:none;}
+.csv-preview-body.open{display:block;}
+.csv-preview-scroll{overflow-x:auto;max-height:320px;overflow-y:auto;}
+.csv-tbl{width:max-content;min-width:100%;border-collapse:collapse;font-size:11px;font-family:'DM Mono',monospace;}
+.csv-tbl tr:nth-child(1) td{background:rgba(31,111,235,.10);color:var(--accent);font-weight:700;font-size:10px;padding:5px 10px;border-bottom:1px solid rgba(31,111,235,.2);border-right:1px solid rgba(48,54,61,.5);white-space:nowrap;}
+.csv-tbl tr:nth-child(2) td{background:var(--surface2);color:var(--muted);font-size:10px;font-weight:600;padding:5px 10px;border-bottom:1px solid var(--border);border-right:1px solid rgba(48,54,61,.5);white-space:nowrap;text-transform:uppercase;letter-spacing:.04em;}
+.csv-tbl tr:nth-child(3) td{background:rgba(139,148,158,.06);color:var(--muted);font-size:9px;font-style:italic;padding:4px 10px;border-bottom:1px solid var(--border);border-right:1px solid rgba(48,54,61,.4);white-space:nowrap;}
+.csv-tbl tr.csv-data-row td{background:transparent;color:var(--text);padding:5px 10px;border-bottom:1px solid rgba(48,54,61,.4);border-right:1px solid rgba(48,54,61,.3);white-space:nowrap;}
+.csv-tbl tr.csv-data-row:hover td{background:rgba(255,255,255,.025);}
+.csv-tbl tr.csv-eof-row td{background:rgba(218,54,51,.06);color:var(--danger);font-size:10px;font-weight:700;padding:5px 10px;border-right:1px solid rgba(48,54,61,.3);}
+.csv-tbl td.csv-empty{color:rgba(139,148,158,.4);font-style:italic;}
+.csv-preview-footer{padding:7px 14px;background:var(--surface2);border-top:1px solid var(--border);font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.csv-refresh-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:5px;padding:3px 10px;font-size:10px;cursor:pointer;font-family:'Sora',sans-serif;transition:all .15s;margin-left:auto;}
+.csv-refresh-btn:hover{border-color:var(--accent);color:var(--accent);}
+.date-hint{font-size:9px;color:var(--accent4);margin-top:2px;font-family:'Sora',sans-serif;display:block;letter-spacing:.02em;}
+.xls input[type=number]::placeholder,.xls input[type=text]::placeholder{color:rgba(139,148,158,0.5);font-style:italic;}
 </style>
 </head>
 <body>
 
-<!-- tooltip element -->
 <div class="val-tooltip" id="val-tooltip"></div>
 
-<!-- validation modal -->
 <div class="modal-overlay" id="val-modal">
   <div class="modal-box">
     <div class="modal-icon">⚠️</div>
@@ -292,7 +316,6 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
   </div>
 </div>
 
-<!-- ═══ LOCK OVERLAY ═══ -->
 <div class="lock-overlay" id="lock-overlay">
   <div class="lock-icon-big">🔒</div>
   <div class="lock-title">Account Temporarily Locked</div>
@@ -313,11 +336,7 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
     <div class="login-card" id="signin-card">
       <div class="login-card-title">Sign in to your account</div>
       <div class="login-card-sub">Enter your department credentials to access the system.</div>
-
-      <div class="login-error" id="login-error">
-        <span>⚠</span><span id="login-error-msg">Invalid username or password.</span>
-      </div>
-
+      <div class="login-error" id="login-error"><span>⚠</span><span id="login-error-msg">Invalid username or password.</span></div>
       <div class="login-field">
         <label>Department</label>
         <select id="login-dept" onchange="onDeptChange()">
@@ -328,14 +347,10 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
           <option value="admin">Administration</option>
         </select>
       </div>
-
       <div class="login-field">
         <label>Username</label>
-        <select id="login-user" disabled>
-          <option value="">— Select department first —</option>
-        </select>
+        <select id="login-user" disabled><option value="">— Select department first —</option></select>
       </div>
-
       <div class="login-field">
         <label>Password</label>
         <div class="field-wrap">
@@ -343,23 +358,19 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
           <button class="pw-toggle" onclick="togglePwVis()" type="button" id="pw-eye" title="Show/hide password">👁</button>
         </div>
       </div>
-
       <button class="login-btn" onclick="doLogin()" id="login-btn">Sign In →</button>
       <div class="login-toggle-row">Don't have an account? <a onclick="showSignUp()">Sign Up</a> &nbsp;·&nbsp; <a onclick="showForgotPw()">Forgot Password?</a></div>
-
       <hr class="login-divider">
       <div class="login-dept-hint" id="dept-hint">Select a department above to see available accounts.</div>
     </div>
 
-    <!-- ─── FORGOT PASSWORD CARD ─── -->
+    <!-- FORGOT PASSWORD CARD -->
     <div class="login-card" id="forgotpw-card" style="display:none;">
       <button class="fp-back" onclick="hideForgotPw()">← Back to Sign In</button>
       <div class="login-card-title">Reset Password</div>
       <div class="login-card-sub">A 6-digit code will be sent to your registered Gmail.</div>
       <div class="login-error" id="fp-error"><span>⚠</span><span id="fp-error-msg">Error</span></div>
       <div class="login-error" id="fp-ok" style="background:rgba(63,185,80,.1);border-color:rgba(63,185,80,.3);color:var(--accent2);"><span>✓</span><span id="fp-ok-msg">Password reset!</span></div>
-
-      <!-- Step 1: Select account & send OTP -->
       <div class="fp-step active" id="fp-step1">
         <div class="fp-info-box">Select your account. A <strong>6-digit verification code</strong> will be sent to your registered Gmail address.</div>
         <div class="login-field">
@@ -374,62 +385,41 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         </div>
         <div class="login-field">
           <label>Username</label>
-          <select id="fp-username" disabled>
-            <option value="">— Select department first —</option>
-          </select>
+          <select id="fp-username" disabled><option value="">— Select department first —</option></select>
         </div>
         <button class="login-btn" onclick="fpSendOtp()" id="fp-send-btn">Send Verification Code →</button>
       </div>
-
-      <!-- Step 2: Enter OTP -->
       <div class="fp-step" id="fp-step2">
-        <div class="fp-info-box">
-          A 6-digit code was sent to <strong id="fp-email-hint">your email</strong>.<br>
-          It expires in <strong id="fp-otp-timer" style="font-family:'DM Mono',monospace;">5:00</strong>. Check your spam folder if you don't see it.
-        </div>
-        <!-- Shown only when email sending fails -->
+        <div class="fp-info-box">A 6-digit code was sent to <strong id="fp-email-hint">your email</strong>.<br>It expires in <strong id="fp-otp-timer" style="font-family:'DM Mono',monospace;">5:00</strong>. Check your spam folder if you don't see it.</div>
         <div id="fp-otp-fallback" style="display:none;background:rgba(227,179,65,.1);border:1px solid rgba(227,179,65,.3);color:var(--accent4);border-radius:8px;padding:12px 14px;font-size:13px;font-weight:600;margin-bottom:12px;font-family:'DM Mono',monospace;letter-spacing:.05em;"></div>
         <div class="login-field">
           <label>Verification Code</label>
           <input type="text" id="fp-otp" placeholder="Enter 6-digit code" maxlength="6" style="letter-spacing:.2em;font-size:20px;font-family:'DM Mono',monospace;text-align:center;" onkeydown="if(event.key==='Enter')fpVerifyOtp()">
         </div>
         <button class="login-btn" onclick="fpVerifyOtp()" id="fp-otp-btn">Verify Code →</button>
-        <div style="margin-top:10px;text-align:center;">
-          <button class="fp-back" onclick="fpGoBack()" style="display:inline-flex;">← Try a different account</button>
-        </div>
+        <div style="margin-top:10px;text-align:center;"><button class="fp-back" onclick="fpGoBack()" style="display:inline-flex;">← Try a different account</button></div>
       </div>
-
-      <!-- Step 3: Set new password -->
       <div class="fp-step" id="fp-step3">
         <div class="fp-info-box">✓ Identity confirmed: <strong id="fp-verified-label">—</strong><br>Now set your new password below.</div>
         <div class="login-field">
           <label>New Password</label>
-          <div class="field-wrap">
-            <input type="password" id="fp-pw" placeholder="Minimum 6 characters">
-            <button class="pw-toggle" onclick="toggleFpPw('fp-pw','fp-pw-eye')" type="button" id="fp-pw-eye">👁</button>
-          </div>
+          <div class="field-wrap"><input type="password" id="fp-pw" placeholder="Minimum 6 characters"><button class="pw-toggle" onclick="toggleFpPw('fp-pw','fp-pw-eye')" type="button" id="fp-pw-eye">👁</button></div>
         </div>
         <div class="login-field">
           <label>Confirm New Password</label>
-          <div class="field-wrap">
-            <input type="password" id="fp-pw2" placeholder="Re-enter new password">
-            <button class="pw-toggle" onclick="toggleFpPw('fp-pw2','fp-pw2-eye')" type="button" id="fp-pw2-eye">👁</button>
-          </div>
+          <div class="field-wrap"><input type="password" id="fp-pw2" placeholder="Re-enter new password"><button class="pw-toggle" onclick="toggleFpPw('fp-pw2','fp-pw2-eye')" type="button" id="fp-pw2-eye">👁</button></div>
         </div>
         <button class="login-btn" onclick="fpResetPassword()" id="fp-reset-btn" style="background:var(--accent2);color:#0d1117;">Reset Password ✓</button>
       </div>
     </div>
 
-    <!-- ─── SIGN UP CARD ─── -->
+    <!-- SIGN UP CARD -->
     <div class="login-card" id="signup-card" style="display:none;">
       <div class="login-card-title">Create New Account</div>
       <div class="login-card-sub">Select your department and set your own username and password.</div>
       <div class="login-error" id="signup-error"><span>⚠</span><span id="signup-error-msg">Error</span></div>
       <div class="login-error" id="signup-ok" style="background:rgba(63,185,80,.1);border-color:rgba(63,185,80,.3);color:var(--accent2);"><span>✓</span><span id="signup-ok-msg">Account created!</span></div>
-      <div class="login-field">
-        <label>Full Name</label>
-        <input type="text" id="su-name" placeholder="e.g. Juan dela Cruz">
-      </div>
+      <div class="login-field"><label>Full Name</label><input type="text" id="su-name" placeholder="e.g. Juan dela Cruz"></div>
       <div class="login-field">
         <label>Department</label>
         <select id="su-dept" onchange="onSuDeptChange()">
@@ -445,16 +435,10 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         <input type="text" id="su-username" placeholder="Type your preferred username" autocomplete="off" style="text-transform:lowercase;">
         <div style="font-size:10px;color:var(--muted);margin-top:4px;">Letters, numbers, dots and underscores only. e.g. <span style="font-family:'DM Mono',monospace;color:var(--accent)">juan.delacruz</span></div>
       </div>
-      <div class="login-field">
-        <label>Gmail Address</label>
-        <input type="email" id="su-email" placeholder="e.g. juan@gmail.com">
-      </div>
+      <div class="login-field"><label>Gmail Address</label><input type="email" id="su-email" placeholder="e.g. juan@gmail.com"></div>
       <div class="login-field">
         <label>Password</label>
-        <div class="field-wrap">
-          <input type="password" id="su-pw" placeholder="Choose a password">
-          <button class="pw-toggle" onclick="toggleSuPw()" type="button" id="su-eye">👁</button>
-        </div>
+        <div class="field-wrap"><input type="password" id="su-pw" placeholder="Choose a password"><button class="pw-toggle" onclick="toggleSuPw()" type="button" id="su-eye">👁</button></div>
       </div>
       <div class="login-field"><label>Confirm Password</label><input type="password" id="su-pw2" placeholder="Re-enter password"></div>
       <button class="login-btn" onclick="doSignUp()" style="background:var(--accent2);color:#0d1117;" id="signup-btn">Create Account ✓</button>
@@ -521,6 +505,9 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       <div class="tab" onclick="tryGoTab('mor-dsd')" id="tab-mor-dsd">MOR-DSD</div>
       <div class="tab" onclick="tryGoTab('export')" id="tab-export">⬇ Export</div>
       <div class="tab" onclick="tryGoTab('audit')" id="tab-audit">📋 Audit Log</div>
+      <div style="margin-left:auto;display:flex;align-items:center;padding:0 14px;">
+        <button onclick="refreshPage()" title="Refresh data (stays logged in)" id="refresh-btn" style="background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;font-size:15px;padding:4px 10px;line-height:1;transition:all .15s;display:flex;align-items:center;gap:5px;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><span id="refresh-icon">↻</span></button>
+      </div>
     </div>
   </div>
 
@@ -528,7 +515,7 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
     <div class="alert alert-success" id="alert-ok">✓ &nbsp;<span id="alert-msg">Saved</span></div>
     <div class="alert alert-error" id="alert-err">⚠ &nbsp;<span id="alert-emsg">Error</span></div>
 
-    <!-- ====== DU PROFILE ====== -->
+    <!-- DU PROFILE -->
     <div id="pane-profile">
       <div class="section-header">
         <div class="section-title">DU General Information (DU-PROFILE)</div>
@@ -546,10 +533,7 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
           <table class="xls">
             <thead>
               <tr class="col-nums">
-                <th class="row-num-head">#</th>
-                <th class="col-label-head">Field Name</th>
-                <th class="col-type-head">Data Type</th>
-                <th>Value</th>
+                <th class="row-num-head">#</th><th class="col-label-head">Field Name</th><th class="col-type-head">Data Type</th><th>Value</th>
               </tr>
             </thead>
             <tbody>
@@ -565,16 +549,16 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
               <tr><td class="row-num">8</td><td class="field-label is-required">8 – Telephone Number</td><td class="type-cell">Alphanumeric</td><td class="has-val" data-label="Telephone Number"><input type="text" id="p_tel" value="047-603-0858/ 09083800859" style="min-width:220px" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
               <tr><td class="row-num">9</td><td class="field-label is-required">9 – Physical Address</td><td class="type-cell">Alphanumeric</td><td class="has-val" data-label="Physical Address"><input type="text" id="p_addr" value="PUROK 1/ BARANGAY TITION/ PALAUIG/ ZAMBALES" style="min-width:320px" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
               <tr class="section-row"><td class="row-num">—</td><td class="field-label" colspan="10">Key Performance Indicators (Cols 10–19)</td></tr>
-              <tr><td class="row-num">10</td><td class="field-label is-required">10 – No. of Employees</td><td class="type-cell">Integers</td><td class="has-val" data-label="No. of Employees"><input type="number" id="p_emp" value="159" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">11</td><td class="field-label is-required">11 – Connections/Employees</td><td class="type-cell">Integers</td><td class="has-val" data-label="Connections/Employees"><input type="number" id="p_conemp" value="546" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">12</td><td class="field-label is-required">12 – Circuit km of Lines</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Circuit km of Lines"><input type="number" id="p_circ" step="0.0001" value="2426.4817" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">13</td><td class="field-label is-required">13 – Consumer Density/km</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Consumer Density/km"><input type="number" id="p_density" step="0.0001" value="45.2886" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">14</td><td class="field-label is-required">14 – SAIDI</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="SAIDI"><input type="number" id="p_saidi" step="0.0001" value="7.5468" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">15</td><td class="field-label is-required">15 – SAIFI</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="SAIFI"><input type="number" id="p_saifi" step="0.0001" value="0.4328" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">16</td><td class="field-label is-required">16 – Collection Efficiency (%)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Collection Efficiency"><input type="number" id="p_collect" step="0.0001" value="0.969" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">17</td><td class="field-label is-required">17 – Load Factor (%)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Load Factor"><input type="number" id="p_load" step="0.0001" value="0.725" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">18</td><td class="field-label is-required">18 – No. of Substations</td><td class="type-cell">Integers</td><td class="has-val" data-label="No. of Substations"><input type="number" id="p_subs" value="5" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">19</td><td class="field-label is-required">19 – Total Capacity (kVA)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Total Capacity (kVA)"><input type="number" id="p_kva" step="0.0001" value="55000" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">10</td><td class="field-label is-required">10 – No. of Employees</td><td class="type-cell">Integers</td><td class="has-val" data-label="No. of Employees"><input type="number" id="p_emp" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">11</td><td class="field-label is-required">11 – Connections/Employees</td><td class="type-cell">Integers</td><td class="has-val" data-label="Connections/Employees"><input type="number" id="p_conemp" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">12</td><td class="field-label is-required">12 – Circuit km of Lines</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Circuit km of Lines"><input type="number" id="p_circ" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">13</td><td class="field-label is-required">13 – Consumer Density/km</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Consumer Density/km"><input type="number" id="p_density" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">14</td><td class="field-label is-required">14 – SAIDI</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="SAIDI"><input type="number" id="p_saidi" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">15</td><td class="field-label is-required">15 – SAIFI</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="SAIFI"><input type="number" id="p_saifi" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">16</td><td class="field-label is-required">16 – Collection Efficiency (%)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Collection Efficiency"><input type="number" id="p_collect" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">17</td><td class="field-label is-required">17 – Load Factor (%)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Load Factor"><input type="number" id="p_load" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">18</td><td class="field-label is-required">18 – No. of Substations</td><td class="type-cell">Integers</td><td class="has-val" data-label="No. of Substations"><input type="number" id="p_subs" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">19</td><td class="field-label is-required">19 – Total Capacity (kVA)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Total Capacity (kVA)"><input type="number" id="p_kva" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
               <tr class="eof"><td class="row-num">—</td><td class="field-label">EOF</td><td colspan="10"></td></tr>
             </tbody>
           </table>
@@ -586,7 +570,7 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       </div>
     </div>
 
-    <!-- ====== MOR-UR ====== -->
+    <!-- MOR-UR -->
     <div id="pane-mor-ur" class="hidden">
       <div class="section-header">
         <div class="section-title">MOR-UR – Monthly Unbundled Rates</div>
@@ -612,13 +596,23 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
           </table>
         </div>
       </div>
+      <div class="csv-preview-wrap" id="csvprev-mor-ur">
+        <div class="csv-preview-header" onclick="toggleCsvPreview('mor-ur')">
+          <div class="csv-ph-left"><span class="csv-ph-toggle" id="csvtoggle-mor-ur">▾</span><span>📄 CSV Preview – MOR_UR</span><span style="font-size:10px;color:var(--accent4);font-weight:400;text-transform:none;letter-spacing:0;">Live preview of the export file</span></div>
+          <button class="csv-refresh-btn" onclick="event.stopPropagation();renderCsvPreview('mor-ur')" title="Refresh preview">↻ Refresh</button>
+        </div>
+        <div class="csv-preview-body" id="csvbody-mor-ur">
+          <div class="csv-preview-scroll"><div id="csvtable-mor-ur" style="padding:12px 14px;color:var(--muted);font-size:11px;">Click ▾ to expand preview.</div></div>
+          <div class="csv-preview-footer"><span id="csvinfo-mor-ur" style="font-family:'DM Mono',monospace;">—</span></div>
+        </div>
+      </div>
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="goTab('profile')">← DU Profile</button>
         <button class="btn btn-primary" onclick="saveSection('mor-ur')">✓ Save MOR-UR</button>
       </div>
     </div>
 
-    <!-- ====== MOR-WCD ====== -->
+    <!-- MOR-WCD -->
     <div id="pane-mor-wcd" class="hidden">
       <div class="section-header">
         <div class="section-title">MOR-WCD – Wheeling Customer Data</div>
@@ -639,13 +633,23 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         </div>
         <button class="add-row-btn" onclick="addWCDRow()">＋ Add Row</button>
       </div>
+      <div class="csv-preview-wrap" id="csvprev-mor-wcd">
+        <div class="csv-preview-header" onclick="toggleCsvPreview('mor-wcd')">
+          <div class="csv-ph-left"><span class="csv-ph-toggle" id="csvtoggle-mor-wcd">▾</span><span>📄 CSV Preview – MOR_WCD</span><span style="font-size:10px;color:var(--accent4);font-weight:400;text-transform:none;letter-spacing:0;">Live preview of the export file</span></div>
+          <button class="csv-refresh-btn" onclick="event.stopPropagation();renderCsvPreview('mor-wcd')" title="Refresh preview">↻ Refresh</button>
+        </div>
+        <div class="csv-preview-body" id="csvbody-mor-wcd">
+          <div class="csv-preview-scroll"><div id="csvtable-mor-wcd" style="padding:12px 14px;color:var(--muted);font-size:11px;">Click ▾ to expand preview.</div></div>
+          <div class="csv-preview-footer"><span id="csvinfo-mor-wcd" style="font-family:'DM Mono',monospace;">—</span></div>
+        </div>
+      </div>
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="goTab('profile')">← DU Profile</button>
         <button class="btn btn-primary" onclick="saveSection('mor-wcd')">✓ Save MOR-WCD</button>
       </div>
     </div>
 
-    <!-- ====== MOR-DTD ====== -->
+    <!-- MOR-DTD -->
     <div id="pane-mor-dtd" class="hidden">
       <div class="section-header">
         <div class="section-title">MOR-DTD – DU Technical Data</div>
@@ -656,19 +660,27 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         <div class="grid-scroll">
           <table class="xls">
             <thead>
-              <tr class="col-nums">
-                <th class="row-num-head">#</th><th class="col-label-head">Field Name</th><th class="col-type-head">Data Type</th><th>Value</th>
-              </tr>
+              <tr class="col-nums"><th class="row-num-head">#</th><th class="col-label-head">Field Name</th><th class="col-type-head">Data Type</th><th>Value</th></tr>
             </thead>
             <tbody>
-              <tr><td class="row-num">3</td><td class="field-label is-required">3 – Maximum Load (kW)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Maximum Load"><input type="number" id="dtd_ml" step="0.0001" value="32064.0286" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">4</td><td class="field-label is-required">4 – Company Use (MWh)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Company Use"><input type="number" id="dtd_cu" step="0.0001" value="26161" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">5</td><td class="field-label is-required">5 – System Loss (MWh)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="System Loss"><input type="number" id="dtd_sl" step="0.0001" value="1542.101" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">6</td><td class="field-label is-required">6 – Total No. of Barangays</td><td class="type-cell">Integers</td><td class="has-val" data-label="Total Barangays"><input type="number" id="dtd_tb" value="118" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">7</td><td class="field-label is-required">7 – Total Energized Barangays</td><td class="type-cell">Integers</td><td class="has-val" data-label="Energized Barangays"><input type="number" id="dtd_eb" value="118" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">3</td><td class="field-label is-required">3 – Maximum Load (kW)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Maximum Load"><input type="number" id="dtd_ml" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">4</td><td class="field-label is-required">4 – Company Use (MWh)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Company Use"><input type="number" id="dtd_cu" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">5</td><td class="field-label is-required">5 – System Loss (MWh)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="System Loss"><input type="number" id="dtd_sl" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">6</td><td class="field-label is-required">6 – Total No. of Barangays</td><td class="type-cell">Integers</td><td class="has-val" data-label="Total Barangays"><input type="number" id="dtd_tb" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">7</td><td class="field-label is-required">7 – Total Energized Barangays</td><td class="type-cell">Integers</td><td class="has-val" data-label="Energized Barangays"><input type="number" id="dtd_eb" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
               <tr class="eof"><td class="row-num">—</td><td class="field-label">EOF</td><td colspan="5"></td></tr>
             </tbody>
           </table>
+        </div>
+      </div>
+      <div class="csv-preview-wrap" id="csvprev-mor-dtd">
+        <div class="csv-preview-header" onclick="toggleCsvPreview('mor-dtd')">
+          <div class="csv-ph-left"><span class="csv-ph-toggle" id="csvtoggle-mor-dtd">▾</span><span>📄 CSV Preview – MOR_DTD</span><span style="font-size:10px;color:var(--accent4);font-weight:400;text-transform:none;letter-spacing:0;">Live preview of the export file</span></div>
+          <button class="csv-refresh-btn" onclick="event.stopPropagation();renderCsvPreview('mor-dtd')" title="Refresh preview">↻ Refresh</button>
+        </div>
+        <div class="csv-preview-body" id="csvbody-mor-dtd">
+          <div class="csv-preview-scroll"><div id="csvtable-mor-dtd" style="padding:12px 14px;color:var(--muted);font-size:11px;">Click ▾ to expand preview.</div></div>
+          <div class="csv-preview-footer"><span id="csvinfo-mor-dtd" style="font-family:'DM Mono',monospace;">—</span></div>
         </div>
       </div>
       <div class="btn-row">
@@ -677,7 +689,7 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       </div>
     </div>
 
-    <!-- ====== MOR-CSD ====== -->
+    <!-- MOR-CSD -->
     <div id="pane-mor-csd" class="hidden">
       <div class="section-header">
         <div class="section-title">MOR-CSD – Customer Sales Data</div>
@@ -697,13 +709,23 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
           </table>
         </div>
       </div>
+      <div class="csv-preview-wrap" id="csvprev-mor-csd">
+        <div class="csv-preview-header" onclick="toggleCsvPreview('mor-csd')">
+          <div class="csv-ph-left"><span class="csv-ph-toggle" id="csvtoggle-mor-csd">▾</span><span>📄 CSV Preview – MOR_CSD</span><span style="font-size:10px;color:var(--accent4);font-weight:400;text-transform:none;letter-spacing:0;">Live preview of the export file</span></div>
+          <button class="csv-refresh-btn" onclick="event.stopPropagation();renderCsvPreview('mor-csd')" title="Refresh preview">↻ Refresh</button>
+        </div>
+        <div class="csv-preview-body" id="csvbody-mor-csd">
+          <div class="csv-preview-scroll"><div id="csvtable-mor-csd" style="padding:12px 14px;color:var(--muted);font-size:11px;">Click ▾ to expand preview.</div></div>
+          <div class="csv-preview-footer"><span id="csvinfo-mor-csd" style="font-family:'DM Mono',monospace;">—</span></div>
+        </div>
+      </div>
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="goTab('profile')">← DU Profile</button>
         <button class="btn btn-primary" onclick="saveSection('mor-csd')">✓ Save MOR-CSD</button>
       </div>
     </div>
 
-    <!-- ====== MOR-DSD ====== -->
+    <!-- MOR-DSD -->
     <div id="pane-mor-dsd" class="hidden">
       <div class="section-header">
         <div class="section-title">MOR-DSD – DU Supply Data</div>
@@ -716,7 +738,9 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
             <thead>
               <tr class="col-nums">
                 <th class="row-num-head">#</th><th class="col-label-head">3 – Power Supplier</th><th class="col-type-head">Type</th>
-                <th>4 – Gen Affiliated (Y/N)</th><th>5 – Contract Start (yyyy-mm-dd)</th><th>6 – Contract End (yyyy-mm-dd)</th>
+                <th>4 – Gen Affiliated (Y/N)</th>
+                <th>5 – Contract Start<br><small style="font-size:9px;color:var(--accent4);">type numbers only</small></th>
+                <th>6 – Contract End<br><small style="font-size:9px;color:var(--accent4);">type numbers only</small></th>
                 <th>7 – Contracted Capacity (MW)</th><th>8 – Contracted Energy (MWh)</th>
                 <th>9 – Purchased Electricity (MWh)</th><th>10 – Generation Cost (PhP/kWh)</th><th style="min-width:50px"></th>
               </tr>
@@ -726,13 +750,23 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         </div>
         <button class="add-row-btn" onclick="addDSDRow()">＋ Add Supplier Row</button>
       </div>
+      <div class="csv-preview-wrap" id="csvprev-mor-dsd">
+        <div class="csv-preview-header" onclick="toggleCsvPreview('mor-dsd')">
+          <div class="csv-ph-left"><span class="csv-ph-toggle" id="csvtoggle-mor-dsd">▾</span><span>📄 CSV Preview – MOR_DSD</span><span style="font-size:10px;color:var(--accent4);font-weight:400;text-transform:none;letter-spacing:0;">Live preview of the export file</span></div>
+          <button class="csv-refresh-btn" onclick="event.stopPropagation();renderCsvPreview('mor-dsd')" title="Refresh preview">↻ Refresh</button>
+        </div>
+        <div class="csv-preview-body" id="csvbody-mor-dsd">
+          <div class="csv-preview-scroll"><div id="csvtable-mor-dsd" style="padding:12px 14px;color:var(--muted);font-size:11px;">Click ▾ to expand preview.</div></div>
+          <div class="csv-preview-footer"><span id="csvinfo-mor-dsd" style="font-family:'DM Mono',monospace;">—</span></div>
+        </div>
+      </div>
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="goTab('profile')">← DU Profile</button>
         <button class="btn btn-primary" onclick="saveSection('mor-dsd')">✓ Save MOR-DSD</button>
       </div>
     </div>
 
-    <!-- ====== EXPORT ====== -->
+    <!-- EXPORT -->
     <div id="pane-export" class="hidden">
       <div class="section-header">
         <div class="section-title">Export CSV Files</div>
@@ -757,22 +791,18 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       </div>
     </div>
 
-    <!-- ====== AUDIT LOG ====== -->
+    <!-- AUDIT LOG -->
     <div id="pane-audit" class="hidden">
       <div class="section-header">
         <div class="section-title">Audit Log</div>
         <div class="section-desc">Full activity history — sign-ins, data saves, exports, and failed attempts. Admin-only.</div>
       </div>
-
-      <!-- Stats row -->
       <div class="log-stats">
         <div class="log-stat ls-login"><div class="ls-val" id="ls-logins">0</div><div class="ls-lbl">Sign-Ins</div></div>
         <div class="log-stat ls-save"><div class="ls-val" id="ls-saves">0</div><div class="ls-lbl">Data Saves</div></div>
         <div class="log-stat ls-export"><div class="ls-val" id="ls-exports">0</div><div class="ls-lbl">CSV Exports</div></div>
         <div class="log-stat ls-fail"><div class="ls-val" id="ls-fails">0</div><div class="ls-lbl">Failed Logins</div></div>
       </div>
-
-      <!-- Toolbar -->
       <div class="log-toolbar">
         <input class="log-search" type="text" id="log-search" placeholder="🔍  Search by user, dept, action…" oninput="renderLog()">
         <button class="log-filter-btn active" data-filter="all" onclick="setLogFilter('all')">All</button>
@@ -780,31 +810,26 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         <button class="log-filter-btn" data-filter="SAVE" onclick="setLogFilter('SAVE')">Saves</button>
         <button class="log-filter-btn" data-filter="EXPORT" onclick="setLogFilter('EXPORT')">Exports</button>
         <button class="log-filter-btn" data-filter="FAIL" onclick="setLogFilter('FAIL')">Failures</button>
-        <button class="log-clear-btn" onclick="confirmClearLog()">🗑 Clear Log</button>
+        <button class="del-selected-btn" id="del-selected-btn" onclick="deleteSelectedEntries()">🗑 Delete Selected (<span id="del-selected-count">0</span>)</button>
       </div>
-
       <div class="log-table-wrap">
         <table class="log-table">
           <thead>
             <tr>
-              <th style="width:150px">Timestamp</th>
-              <th style="width:70px">Event</th>
-              <th>User / Account</th>
-              <th>Department</th>
-              <th>Details</th>
+              <th style="width:32px;text-align:center;"><input type="checkbox" class="log-cb-head" id="log-cb-all" onclick="toggleSelectAll(this)" title="Select all"></th>
+              <th style="width:150px">Timestamp</th><th style="width:70px">Event</th>
+              <th>User / Account</th><th>Department</th><th>Details</th><th style="width:36px"></th>
             </tr>
           </thead>
           <tbody id="log-tbody"></tbody>
         </table>
       </div>
-
       <div class="log-export-bar">
         <button class="btn btn-secondary" style="font-size:11px;padding:7px 14px;" onclick="exportLogCSV()">⬇ Export Log as CSV</button>
       </div>
     </div>
 
-
-    <!-- ====== CHANGE PASSWORD ====== -->
+    <!-- CHANGE PASSWORD -->
     <div id="pane-changepw" class="hidden">
       <div class="section-header">
         <div class="section-title">Change Password</div>
@@ -814,18 +839,9 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         <h3>🔑 Update Your Password</h3>
         <p>Logged in as: <strong id="cpw-username-label">—</strong></p>
         <div class="changepw-msg" id="cpw-msg"></div>
-        <div class="changepw-field">
-          <label>Current Password</label>
-          <div class="fw"><input type="password" id="cpw-old" placeholder="Enter current password"><button class="eye" onclick="toggleCpwVis('cpw-old','cpw-eye0')" id="cpw-eye0">👁</button></div>
-        </div>
-        <div class="changepw-field">
-          <label>New Password</label>
-          <div class="fw"><input type="password" id="cpw-new" placeholder="Enter new password"><button class="eye" onclick="toggleCpwVis('cpw-new','cpw-eye1')" id="cpw-eye1">👁</button></div>
-        </div>
-        <div class="changepw-field">
-          <label>Confirm New Password</label>
-          <div class="fw"><input type="password" id="cpw-new2" placeholder="Re-enter new password"><button class="eye" onclick="toggleCpwVis('cpw-new2','cpw-eye2')" id="cpw-eye2">👁</button></div>
-        </div>
+        <div class="changepw-field"><label>Current Password</label><div class="fw"><input type="password" id="cpw-old" placeholder="Enter current password"><button class="eye" onclick="toggleCpwVis('cpw-old','cpw-eye0')" id="cpw-eye0">👁</button></div></div>
+        <div class="changepw-field"><label>New Password</label><div class="fw"><input type="password" id="cpw-new" placeholder="Enter new password"><button class="eye" onclick="toggleCpwVis('cpw-new','cpw-eye1')" id="cpw-eye1">👁</button></div></div>
+        <div class="changepw-field"><label>Confirm New Password</label><div class="fw"><input type="password" id="cpw-new2" placeholder="Re-enter new password"><button class="eye" onclick="toggleCpwVis('cpw-new2','cpw-eye2')" id="cpw-eye2">👁</button></div></div>
         <div class="btn-row" style="margin-top:6px;">
           <button class="btn btn-primary" onclick="doChangePassword()">✓ Update Password</button>
           <button class="btn btn-secondary" onclick="clearCpwForm()">✕ Clear</button>
@@ -833,14 +849,14 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       </div>
     </div>
 
-    <!-- ====== USER MANAGEMENT (Admin only) ====== -->
+    <!-- USER MANAGEMENT -->
     <div id="pane-users" class="hidden">
       <div class="section-header">
         <div class="section-title">User Management</div>
-        <div class="section-desc">All registered accounts — built-in and signed-up users. Passwords are visible to admin. Admin-only.</div>
+        <div class="section-desc">All registered accounts — built-in and signed-up users. Admin-only.</div>
       </div>
       <div style="padding:12px 16px;background:rgba(227,179,65,.06);border:1px solid rgba(227,179,65,.2);border-radius:var(--radius);font-size:12px;color:var(--muted);margin-bottom:16px;">
-        🔐 &nbsp;<strong style="color:var(--text)">Admin View:</strong> Click the 👁 icon to reveal a user's password. Signed-up passwords are stored and visible here.
+        🔐 &nbsp;<strong style="color:var(--text)">Admin View:</strong> Click the 👁 icon to reveal a user's password.
       </div>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
         <input class="log-search" type="text" id="uman-search" placeholder="🔍  Search users…" oninput="renderUserTable()" style="max-width:300px;">
@@ -848,20 +864,15 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       </div>
       <div class="uman-table-wrap">
         <table class="uman-table">
-          <thead>
-            <tr>
-              <th>#</th><th>Username</th><th>Full Name</th><th>Department</th><th>Role</th><th>Password</th><th>Source</th><th>Action</th>
-            </tr>
-          </thead>
+          <thead><tr><th>#</th><th>Username</th><th>Full Name</th><th>Department</th><th>Role</th><th>Password</th><th>Source</th><th>Action</th></tr></thead>
           <tbody id="uman-tbody"></tbody>
         </table>
       </div>
     </div>
 
-
   </div>
-</div><!-- /main -->
-</div><!-- /app -->
+</div>
+</div>
 
 <script>
 // ── CONSTANTS ──
@@ -870,78 +881,53 @@ const MONTH_SHORT=['jan','feb','mar','apr','may','june','july','aug','sep','oct'
 const MONTH_DAYS=[31,28,31,30,31,30,31,31,30,31,30,31];
 const CT=['Residential-Lifeline-Grid','Residential-Non-Lifeline','Commercial-LV','Industrial-HV','Public-Building-LV','Streetlights-LV','Special-Lighting'];
 
+// ── AUTO-DATE FORMATTER ──
+function autoDate(inp) {
+  let digits = inp.value.replace(/\D/g, '').substring(0, 8);
+  let formatted = digits;
+  if (digits.length > 4) formatted = digits.substring(0,4) + '-' + digits.substring(4);
+  if (digits.length > 6) formatted = digits.substring(0,4) + '-' + digits.substring(4,6) + '-' + digits.substring(6);
+  inp.value = formatted;
+}
+function dateKeydown(e) {
+  const allowed=['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab','Enter','Home','End'];
+  if (allowed.includes(e.key)) return;
+  if (!/^\d$/.test(e.key)) e.preventDefault();
+}
+
 // ── AUTH SYSTEM ──
-// Department user accounts with role-based access
-// Passwords are stored as SHA-256 hashes for security
-// Plain-text reference (for setup only): see LOGIN_HINT_MAP below
 const USER_DB = {
-  // ── Administration ──
-  'admin': {
-    name: 'System Administrator',
-    dept: 'Administration',
-    deptKey: 'admin',
-    role: 'admin',
-    pwHash: '421aac374dc3e405bb9289bdedf0127de6e25c432a8ddf2711def50a31c88819', // zameco2025
-  },
+  'admin': { name:'System Administrator', dept:'Administration', deptKey:'admin', role:'admin', pwHash:'421aac374dc3e405bb9289bdedf0127de6e25c432a8ddf2711def50a31c88819' },
 };
-
-// Department → list of usernames for the dropdown
-const DEPT_USERS = {
-  'finance':      [],
-  'tsd':          [],
-  'power-trading':[],
-  'admin':        ['admin'],
-};
-
-// Friendly labels for the user dropdown
-const USER_LABELS = {
-  'admin': 'System Administrator',
-};
-
-// Per-department credential hint shown below sign-in card
+const DEPT_USERS = { 'finance':[], 'tsd':[], 'power-trading':[], 'admin':['admin'] };
+const USER_LABELS = { 'admin':'System Administrator' };
 const DEPT_HINTS = {
   'finance':       '<strong>Finance Dept.</strong> — Select an account and use your assigned password.',
   'tsd':           '<strong>Technical Services Dept.</strong> — Manages DU Technical Data (DTD) forms.',
   'power-trading': '<strong>Power Trading Dept.</strong> — Manages Supply Data (DSD) and Wheeling Data (WCD).',
   'admin':         '<strong>Administration</strong> — Full access to all sections and CSV export.',
 };
+const _CREDS_REF = { 'admin':'zameco2025' };
 
-// Quick reference (printed only in dev console — remove for production)
-const _CREDS_REF = {
-  'admin': 'zameco2025',
-};
-
-// ── Brute-force lockout ──
 let loginAttempts = 0;
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_SECS = 30;
 let lockTimer = null;
 
-// ── SHA-256 via Web Crypto ──
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 
-// ── Login UI helpers ──
 function onDeptChange() {
   const dept = document.getElementById('login-dept').value;
   const userSel = document.getElementById('login-user');
   const hint = document.getElementById('dept-hint');
   userSel.innerHTML = '';
-  if (!dept) {
-    userSel.innerHTML = '<option value="">— Select department first —</option>';
-    userSel.disabled = true;
-    hint.innerHTML = 'Select a department above to see available accounts.';
-    return;
-  }
+  if (!dept) { userSel.innerHTML='<option value="">— Select department first —</option>'; userSel.disabled=true; hint.innerHTML='Select a department above to see available accounts.'; return; }
   const users = DEPT_USERS[dept] || [];
   userSel.innerHTML = '<option value="">— Select account —</option>';
-  users.forEach(u => {
-    const opt = document.createElement('option');
-    opt.value = u; opt.textContent = USER_LABELS[u] || u;
-    userSel.appendChild(opt);
-  });
+  users.forEach(u => { const opt=document.createElement('option'); opt.value=u; opt.textContent=USER_LABELS[u]||u; userSel.appendChild(opt); });
   userSel.disabled = false;
   hint.innerHTML = DEPT_HINTS[dept] || '';
   document.getElementById('login-error').classList.remove('show');
@@ -951,163 +937,99 @@ function onDeptChange() {
 
 function togglePwVis() {
   const inp = document.getElementById('login-pw');
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-  document.getElementById('pw-eye').textContent = inp.type === 'password' ? '👁' : '🙈';
+  inp.type = inp.type==='password'?'text':'password';
+  document.getElementById('pw-eye').textContent = inp.type==='password'?'👁':'🙈';
 }
+function showLoginError(msg) { const el=document.getElementById('login-error'); document.getElementById('login-error-msg').textContent=msg; el.classList.add('show'); document.getElementById('login-pw').classList.add('err'); }
+function clearLoginError() { document.getElementById('login-error').classList.remove('show'); document.getElementById('login-pw').classList.remove('err'); }
 
-function showLoginError(msg) {
-  const el = document.getElementById('login-error');
-  document.getElementById('login-error-msg').textContent = msg;
-  el.classList.add('show');
-  document.getElementById('login-pw').classList.add('err');
-}
-
-function clearLoginError() {
-  document.getElementById('login-error').classList.remove('show');
-  document.getElementById('login-pw').classList.remove('err');
-}
-
-// ── Lockout handling ──
 function triggerLockout() {
-  const overlay = document.getElementById('lock-overlay');
-  const countdown = document.getElementById('lock-countdown');
-  overlay.classList.add('show');
-  let remaining = LOCKOUT_SECS;
-  countdown.textContent = remaining;
-  lockTimer = setInterval(() => {
-    remaining--;
-    countdown.textContent = remaining;
-    if (remaining <= 0) {
-      clearInterval(lockTimer);
-      overlay.classList.remove('show');
-      loginAttempts = 0;
-      document.getElementById('login-btn').disabled = false;
-      document.getElementById('login-pw').value = '';
-      clearLoginError();
-    }
-  }, 1000);
+  const overlay=document.getElementById('lock-overlay'), countdown=document.getElementById('lock-countdown');
+  overlay.classList.add('show'); let remaining=LOCKOUT_SECS; countdown.textContent=remaining;
+  lockTimer=setInterval(()=>{ remaining--; countdown.textContent=remaining; if(remaining<=0){clearInterval(lockTimer);overlay.classList.remove('show');loginAttempts=0;document.getElementById('login-btn').disabled=false;document.getElementById('login-pw').value='';clearLoginError();}},1000);
 }
 
-// ── Main login handler ──
 async function doLogin() {
-  if (loginAttempts >= MAX_ATTEMPTS) return;
-  const username = document.getElementById('login-user').value;
-  const password = document.getElementById('login-pw').value;
-  const dept     = document.getElementById('login-dept').value;
-
+  if (loginAttempts>=MAX_ATTEMPTS) return;
+  const username=document.getElementById('login-user').value, password=document.getElementById('login-pw').value, dept=document.getElementById('login-dept').value;
   clearLoginError();
-
   if (!dept) { showLoginError('Please select a department.'); return; }
   if (!username) { showLoginError('Please select an account.'); return; }
   if (!password) { showLoginError('Please enter your password.'); document.getElementById('login-pw').focus(); return; }
-
-  // Disable button while hashing
-  const btn = document.getElementById('login-btn');
-  btn.disabled = true;
-  btn.textContent = 'Signing in…';
-
-  // Hash the input and compare
-  const hash = await sha256(password);
-  const user = USER_DB[username];
-
-  if (!user || hash !== user.pwHash) {
+  const btn=document.getElementById('login-btn'); btn.disabled=true; btn.textContent='Signing in…';
+  const hash=await sha256(password), user=USER_DB[username];
+  if (!user||hash!==user.pwHash) {
     loginAttempts++;
-    const remaining = MAX_ATTEMPTS - loginAttempts;
-    // Log the failed attempt (pre-login, so use addLogAnon)
-    addLogAnon('FAIL', `Failed login attempt for account "${username}" · ${remaining} attempt(s) remaining`, username, USER_LABELS[username]||username, (USER_DB[username]?.dept)||'Unknown');
+    const remaining=MAX_ATTEMPTS-loginAttempts;
+    addLogAnon('FAIL',`Failed login attempt for account "${username}" · ${remaining} attempt(s) remaining`,username,USER_LABELS[username]||username,(USER_DB[username]?.dept)||'Unknown');
     renderLog();
-    if (remaining <= 0) {
-      showLoginError('Too many failed attempts. Account locked temporarily.');
-      addLogAnon('LOCK', `Account temporarily locked after ${MAX_ATTEMPTS} failed attempts · Username: ${username}`, username, USER_LABELS[username]||username, (USER_DB[username]?.dept)||'Unknown');
-      renderLog();
-      triggerLockout();
-    } else {
-      showLoginError(`Incorrect password. ${remaining} attempt${remaining===1?'':'s'} remaining.`);
-      btn.disabled = false;
-      btn.textContent = 'Sign In →';
-    }
-    document.getElementById('login-pw').value = '';
-    document.getElementById('login-pw').focus();
-    return;
+    if (remaining<=0) { showLoginError('Too many failed attempts. Account locked temporarily.'); addLogAnon('LOCK',`Account temporarily locked after ${MAX_ATTEMPTS} failed attempts · Username: ${username}`,username,USER_LABELS[username]||username,(USER_DB[username]?.dept)||'Unknown'); renderLog(); triggerLockout(); }
+    else { showLoginError(`Incorrect password. ${remaining} attempt${remaining===1?'':'s'} remaining.`); btn.disabled=false; btn.textContent='Sign In →'; }
+    document.getElementById('login-pw').value=''; document.getElementById('login-pw').focus(); return;
   }
-
-  // ── Successful login ──
-  loginAttempts = 0;
-  enterSession(username, user);
+  loginAttempts=0;
+  enterSession(username,user);
 }
 
 function enterSession(username, user) {
-  // Set active session
   currentUser = { username, ...user };
+  try { sessionStorage.setItem('depdms_session', JSON.stringify({ username, user })); } catch(e) {}
 
-  // Hide login, show app
-  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display='none';
   document.getElementById('app').classList.add('visible');
+  document.getElementById('session-name').textContent=user.name;
+  document.getElementById('session-dept').textContent=user.dept;
 
-  // Update session UI
-  document.getElementById('session-name').textContent = user.name;
-  document.getElementById('session-dept').textContent = user.dept;
-
-  // Apply role + permissions (reuse existing ROLE_CONFIG)
-  currentRole = user.role;
-  const cfg = ROLE_CONFIG[user.role];
-  const pill = document.getElementById('sidebar-role-pill');
-  pill.textContent = cfg.pill;
-  pill.style.setProperty('--pill-color', cfg.color);
-  pill.style.setProperty('--pill-bg', cfg.bg);
-  pill.style.setProperty('--pill-border', cfg.border);
+  currentRole=user.role;
+  const cfg=ROLE_CONFIG[user.role];
+  const pill=document.getElementById('sidebar-role-pill');
+  pill.textContent=cfg.pill;
+  pill.style.setProperty('--pill-color',cfg.color);
+  pill.style.setProperty('--pill-bg',cfg.bg);
+  pill.style.setProperty('--pill-border',cfg.border);
   applyPermissions(cfg.allow);
-  document.getElementById('profile-role-badge').textContent = cfg.label + ' · ' + user.name;
+  document.getElementById('profile-role-badge').textContent=cfg.label+' · '+user.name;
 
-  // ── LOG sign-in ──
-  addLog('LOGIN', `Signed in as "${user.name}" · Role: ${cfg.label} · Dept: ${user.dept}`);
+  addLog('LOGIN',`Signed in as "${user.name}" · Role: ${cfg.label} · Dept: ${user.dept}`);
   renderLog();
-
   goTab('profile');
   updatePeriod();
-  _currentPeriodKey = getMonth() + '_' + getYear();
-  // Load shared form data from Google Sheets for current period
-  loadFormDataGS();
-  // Note: loadAuditLogGS() is intentionally NOT called here.
-  // addLog('LOGIN') above already calls _mergeAndSaveAuditLog() which:
-  //   1. Fetches current GS log
-  //   2. Merges this login entry on top
-  //   3. Saves back to GS
-  //   4. Updates auditLog in memory
-  // Calling loadAuditLogGS() here would race against that and overwrite the result.
+  _currentPeriodKey=getMonth()+'_'+getYear();
 
-  // Reset login form for next time
-  document.getElementById('login-dept').value = '';
-  document.getElementById('login-user').innerHTML = '<option value="">— Select department first —</option>';
-  document.getElementById('login-user').disabled = true;
-  document.getElementById('login-pw').value = '';
-  document.getElementById('login-pw').type = 'password';
-  document.getElementById('pw-eye').textContent = '👁';
-  document.getElementById('login-btn').disabled = false;
-  document.getElementById('login-btn').textContent = 'Sign In →';
+  // ── FIX 3: Parallelise login fetches (form data + audit log simultaneously) ──
+  Promise.all([
+    loadFormDataGS(),
+    GS_URL ? gsCall('getAuditLog').then(res => {
+      if (res?.ok && Array.isArray(res.data)) { auditLog=res.data; updateLogStats(); renderLog(); }
+    }).catch(()=>{}) : Promise.resolve()
+  ]);
+
+  // Reset login UI
+  document.getElementById('login-dept').value='';
+  document.getElementById('login-user').innerHTML='<option value="">— Select department first —</option>';
+  document.getElementById('login-user').disabled=true;
+  document.getElementById('login-pw').value='';
+  document.getElementById('login-pw').type='password';
+  document.getElementById('pw-eye').textContent='👁';
+  document.getElementById('login-btn').disabled=false;
+  document.getElementById('login-btn').textContent='Sign In →';
   document.getElementById('login-error').classList.remove('show');
-  document.getElementById('dept-hint').innerHTML = 'Select a department above to see available accounts.';
+  document.getElementById('dept-hint').innerHTML='Select a department above to see available accounts.';
 }
 
 function doLogout() {
-  // Auto-save current period data before logging out
-  if (currentUser && _currentPeriodKey) {
-    saveAllSectionsLocal(_currentPeriodKey);
-  }
-  addLog('LOGOUT', `Signed out from "${currentUser?.name||'—'}" · Dept: ${currentUser?.dept||'—'}`);
+  try { sessionStorage.removeItem('depdms_session'); } catch(e) {}
+  if (currentUser&&_currentPeriodKey) saveAllSectionsLocal(_currentPeriodKey);
+  addLog('LOGOUT',`Signed out from "${currentUser?.name||'—'}" · Dept: ${currentUser?.dept||'—'}`);
   renderLog();
-  // Nullify session AFTER log entry is created (addLog reads currentUser)
-  setTimeout(() => {
-    currentRole = null;
-    currentUser = null;
-  }, 100);
-  document.getElementById('login-screen').style.display = 'flex';
+  setTimeout(()=>{ currentRole=null; currentUser=null; },100);
+  document.getElementById('login-screen').style.display='flex';
   document.getElementById('app').classList.remove('visible');
-  document.getElementById('signin-card').style.display = 'block';
-  document.getElementById('signup-card').style.display = 'none';
-  document.getElementById('login-dept').value = '';
+  document.getElementById('signin-card').style.display='block';
+  document.getElementById('signup-card').style.display='none';
+  document.getElementById('login-dept').value='';
   onDeptChange();
-  document.getElementById('login-pw').value = '';
+  document.getElementById('login-pw').value='';
 }
 
 // ── ROLE CONFIG ──
@@ -1120,64 +1042,37 @@ const ROLE_CONFIG={
   'admin':{label:'Administrator',   pill:'🔐 ADMIN',   color:'#e3b341',bg:'rgba(227,179,65,.12)', border:'rgba(227,179,65,.3)', allow:['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','export','audit','users']},
 };
 const ALL_PANES=['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','export','audit','changepw','users'];
-let currentRole=null;
-let currentUser=null; // active user object
+let currentRole=null, currentUser=null;
 
 // ── AUDIT LOG ENGINE ──
-let auditLog = [];       // {ts, type, username, name, dept, role, detail}
-let logFilter = 'all';
+let auditLog=[];
+let logFilter='all';
 
 function getTS() {
-  const now = new Date();
-  return now.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'2-digit'})
-    + ' ' + now.toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
+  const now=new Date();
+  return now.toLocaleDateString('en-PH',{year:'numeric',month:'short',day:'2-digit'})+' '+now.toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
 }
 
 function addLog(type, detail) {
-  const entry = {
-    ts: getTS(),
-    tsRaw: Date.now(),
-    type,
-    username: currentUser?.username || '—',
-    name: currentUser?.name || '—',
-    dept: currentUser?.dept || '—',
-    role: currentUser?.role || '—',
-    detail,
-  };
+  const entry={ ts:getTS(), tsRaw:Date.now(), type, username:currentUser?.username||'—', name:currentUser?.name||'—', dept:currentUser?.dept||'—', role:currentUser?.role||'—', detail };
   auditLog.unshift(entry);
   updateLogStats();
-  // Merge with GS log before saving so we never overwrite other users' entries
-  _mergeAndSaveAuditLog(entry);
+  // ── FIX 1: fire-and-forget — no redundant GET before save ──
+  _saveAuditLogToGS();
 }
 
-async function _mergeAndSaveAuditLog(newEntry) {
+// ── FIX 1: Just POST the current in-memory log — no pre-fetch needed ──
+function _saveAuditLogToGS() {
   if (!GS_URL) return;
-  try {
-    const res = await gsCall('getAuditLog');
-    const existing = (res?.ok && Array.isArray(res.data)) ? res.data : [];
-    // Merge: new entry on top + all GS entries, deduplicated by ts+username+type
-    const merged = [newEntry, ...existing.filter(e =>
-      !(e.ts === newEntry.ts && e.username === newEntry.username && e.type === newEntry.type)
-    )].slice(0, 500);
-    auditLog = merged;
-    updateLogStats();
-    renderLog();
-    // Save the fully merged log back to GS atomically
-    await gsCall('saveAuditLog', { data: merged });
-  } catch(e) {
-    console.warn('Audit log merge failed:', e);
-  }
+  gsCall('saveAuditLog', { data: auditLog.slice(0, 500) }).catch(() => {});
 }
 
 function addLogAnon(type, detail, username, name, dept) {
-  // For pre-login events (failed logins, lockouts, signups)
-  const entry = {
-    ts: getTS(), tsRaw: Date.now(),
-    type, username: username||'—', name: name||'—', dept: dept||'—', role:'—', detail,
-  };
+  const entry={ ts:getTS(), tsRaw:Date.now(), type, username:username||'—', name:name||'—', dept:dept||'—', role:'—', detail };
   auditLog.unshift(entry);
   updateLogStats();
-  _mergeAndSaveAuditLog(entry);
+  // ── FIX 1: fire-and-forget ──
+  _saveAuditLogToGS();
 }
 
 function updateLogStats() {
@@ -1188,75 +1083,73 @@ function updateLogStats() {
 }
 
 function setLogFilter(f) {
-  logFilter = f;
-  document.querySelectorAll('.log-filter-btn').forEach(b=>{
-    b.classList.toggle('active', b.dataset.filter === f);
-  });
+  logFilter=f;
+  document.querySelectorAll('.log-filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.filter===f));
   renderLog();
 }
 
-const LOG_BADGE_CLASS = {
-  LOGIN:'lb-login', LOGOUT:'lb-logout', SAVE:'lb-save',
-  EXPORT:'lb-export', FAIL:'lb-fail', LOCK:'lb-lock', FIELD:'lb-field',
-};
-const LOG_ICON = {
-  LOGIN:'🔑', LOGOUT:'🚪', SAVE:'💾', EXPORT:'⬇', FAIL:'⚠', LOCK:'🔒', FIELD:'✏',
-};
+const LOG_BADGE_CLASS={ LOGIN:'lb-login',LOGOUT:'lb-logout',SAVE:'lb-save',EXPORT:'lb-export',FAIL:'lb-fail',LOCK:'lb-lock',FIELD:'lb-field' };
+const LOG_ICON={ LOGIN:'🔑',LOGOUT:'🚪',SAVE:'💾',EXPORT:'⬇',FAIL:'⚠',LOCK:'🔒',FIELD:'✏' };
 
 function renderLog() {
-  const tbody = document.getElementById('log-tbody');
-  const search = (document.getElementById('log-search')?.value||'').toLowerCase();
-  let rows = auditLog;
-
-  if (logFilter !== 'all') rows = rows.filter(e => e.type === logFilter);
-  if (search) rows = rows.filter(e =>
-    [e.username,e.name,e.dept,e.role,e.detail,e.type].some(v=>(v||'').toLowerCase().includes(search))
-  );
-
-  if (rows.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" class="log-empty">No log entries match the current filter.</td></tr>`;
-    return;
-  }
-
-  tbody.innerHTML = rows.map((e,i) => `
-    <tr>
+  const tbody=document.getElementById('log-tbody');
+  const search=(document.getElementById('log-search')?.value||'').toLowerCase();
+  let rows=auditLog;
+  if (logFilter!=='all') rows=rows.filter(e=>e.type===logFilter);
+  if (search) rows=rows.filter(e=>[e.username,e.name,e.dept,e.role,e.detail,e.type].some(v=>(v||'').toLowerCase().includes(search)));
+  const cbAll=document.getElementById('log-cb-all'); if(cbAll) cbAll.checked=false;
+  updateDelSelectedBtn();
+  if (rows.length===0) { tbody.innerHTML=`<tr><td colspan="7" class="log-empty">No log entries match the current filter.</td></tr>`; return; }
+  tbody.innerHTML=rows.map(e=>{
+    const key=e.tsRaw+'|'+e.username+'|'+e.type, safeKey=escHtml(key);
+    return `<tr data-key="${safeKey}">
+      <td style="text-align:center;"><input type="checkbox" class="log-cb" data-key="${safeKey}" onchange="onLogCbChange()"></td>
       <td class="log-time">${e.ts}</td>
       <td><span class="log-badge ${LOG_BADGE_CLASS[e.type]||'lb-login'}">${LOG_ICON[e.type]||''} ${e.type}</span></td>
-      <td>
-        <div class="log-user">${escHtml(e.name)}</div>
-        <div class="log-dept">${escHtml(e.username)}</div>
-      </td>
+      <td><div class="log-user">${escHtml(e.name)}</div><div class="log-dept">${escHtml(e.username)}</div></td>
       <td class="log-dept" style="font-size:11px;">${escHtml(e.dept)}</td>
       <td class="log-detail">${escHtml(e.detail)}</td>
-    </tr>
-  `).join('');
+      <td><button class="log-del-btn" onclick="deleteLogEntry(${e.tsRaw},'${escHtml(e.username)}','${escHtml(e.type)}')" title="Delete">✕</button></td>
+    </tr>`;
+  }).join('');
 }
 
+function onLogCbChange() {
+  document.querySelectorAll('#log-tbody tr').forEach(tr=>{ const cb=tr.querySelector('.log-cb'); if(cb) tr.classList.toggle('log-selected',cb.checked); });
+  const all=document.querySelectorAll('#log-tbody .log-cb'), checked=document.querySelectorAll('#log-tbody .log-cb:checked');
+  const cbAll=document.getElementById('log-cb-all');
+  if(cbAll){cbAll.checked=all.length>0&&checked.length===all.length;cbAll.indeterminate=checked.length>0&&checked.length<all.length;}
+  updateDelSelectedBtn();
+}
+function toggleSelectAll(cbAll) { document.querySelectorAll('#log-tbody .log-cb').forEach(cb=>{cb.checked=cbAll.checked;cb.closest('tr').classList.toggle('log-selected',cbAll.checked);}); updateDelSelectedBtn(); }
+function updateDelSelectedBtn() { const count=document.querySelectorAll('#log-tbody .log-cb:checked').length,btn=document.getElementById('del-selected-btn'),cnt=document.getElementById('del-selected-count'); if(btn)btn.classList.toggle('visible',count>0); if(cnt)cnt.textContent=count; }
+
+function deleteSelectedEntries() {
+  const checked=document.querySelectorAll('#log-tbody .log-cb:checked');
+  if(checked.length===0) return;
+  if(!confirm('Permanently delete '+checked.length+' selected log entr'+(checked.length===1?'y':'ies')+'? This cannot be undone.')) return;
+  const keysToDelete=new Set(); checked.forEach(cb=>keysToDelete.add(cb.dataset.key));
+  auditLog=auditLog.filter(e=>{ const key=e.tsRaw+'|'+e.username+'|'+e.type; return !keysToDelete.has(key); });
+  updateLogStats(); renderLog();
+  if(GS_URL) gsCall('saveAuditLog',{data:auditLog.slice(0,500)}).catch(()=>{});
+}
+function deleteLogEntry(tsRaw,username,type) {
+  if(!confirm('Permanently delete this log entry?')) return;
+  auditLog=auditLog.filter(e=>!(e.tsRaw===tsRaw&&e.username===username&&e.type===type));
+  updateLogStats(); renderLog();
+  if(GS_URL) gsCall('saveAuditLog',{data:auditLog.slice(0,500)}).catch(()=>{});
+}
 function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-function confirmClearLog() {
-  if (confirm('Clear all audit log entries? This cannot be undone.')) {
-    auditLog = [];
-    updateLogStats();
-    renderLog();
-  }
-}
-
 function exportLogCSV() {
-  const rows = [['Timestamp','Event Type','Username','Full Name','Department','Role','Detail']];
-  auditLog.forEach(e => rows.push([e.ts,e.type,e.username,e.name,e.dept,e.role,e.detail]));
-  const csv = rows.map(r=>r.map(v=>{
-    const s=String(v||'');
-    return (s.includes(',')||s.includes('"')||s.includes('\n'))?'"'+s.replace(/"/g,'""')+'"':s;
-  }).join(',')).join('\r\n');
-  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download='DEPDMS_AuditLog_'+Date.now()+'.csv';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
-  addLog('EXPORT','Exported audit log to CSV');
-  renderLog();
+  const rows=[['Timestamp','Event Type','Username','Full Name','Department','Role','Detail']];
+  auditLog.forEach(e=>rows.push([e.ts,e.type,e.username,e.name,e.dept,e.role,e.detail]));
+  const csv=rows.map(r=>r.map(v=>{const s=String(v||'');return(s.includes(',')||s.includes('"')||s.includes('\n'))?'"'+s.replace(/"/g,'""')+'"':s;}).join(',')).join('\r\n');
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='DEPDMS_AuditLog_'+Date.now()+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  addLog('EXPORT','Exported audit log to CSV'); renderLog();
 }
 
+// ── TABLE DEFAULT DATA ──
 const UR_DEF={
   'Residential-Lifeline-Grid': [0.6366,0,0,0,1.1892,0,0.2669,0.5143,0,0,0.5828,0,0.3669,5,0.2508,0,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
   'Residential-Non-Lifeline':  [0.6366,0,0,0,1.1892,0,0.2669,0.5143,0,0,0.5828,0,0.3669,5,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
@@ -1266,131 +1159,46 @@ const UR_DEF={
   'Streetlights-LV':           [0.6366,0,0,0,1.2793,0,0.2669,0.5134,0,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
   'Special-Lighting':          [0.6366,0,0,0,1.2793,0,0.2669,0.5134,0,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
 };
-const CSD_DEF={
-  'Residential-Lifeline-Grid': [59,697,4.661,0],
-  'Residential-Non-Lifeline':  [72957,9405211.5,4.6735,0],
-  'Commercial-LV':             [5863,2803510.18,3.813,0],
-  'Industrial-HV':             [166,3507503.5,2.0203,10.564],
-  'Public-Building-LV':        [690,778522,3.813,0],
-  'Streetlights-LV':           [124,59621.04,3.813,0],
-  'Special-Lighting':          [48,26601,3.813,0],
-};
-const DSD_DEF=[['Net-Metering','N','','','','','',68580,4.341],['WESM','N','','','','','',17991610,3.3336],['SPARC','N','','','','','',439491,0]];
-const WCD_DEF=[['CAP-750kW',1,289.8,262.83],['CAP-Below 500kW',21,1344.698,262.83]];
+const CSD_DEF={ 'Residential-Lifeline-Grid':[0,0,0,0],'Residential-Non-Lifeline':[0,0,0,0],'Commercial-LV':[0,0,0,0],'Industrial-HV':[0,0,0,0],'Public-Building-LV':[0,0,0,0],'Streetlights-LV':[0,0,0,0],'Special-Lighting':[0,0,0,0] };
+const DSD_DEF=[['Net-Metering','N','','','','','','',''],['WESM','N','','','','','','',''],['SPARC','N','','','','','','','']];
+const WCD_DEF=[['CAP-750kW','','',''],['CAP-Below 500kW','','','']];
 const WCD_CATS=['CAP-750kW','CAP-Below 500kW','Small-Power Users','Contestable Customers'];
 
 // ── VALIDATION ──
-function validateField(inp) {
-  const td = inp.closest('td');
-  if (!td) return true;
-  const val = inp.value.trim();
-  if (val === '') {
-    td.classList.add('inp-error');
-    showTooltip(inp, td.dataset.label ? `Please fill in "${td.dataset.label}"` : 'This field is required. Please fill it in.');
-    return false;
-  } else {
-    td.classList.remove('inp-error');
-    return true;
-  }
-}
-function clearErr(inp) {
-  const td = inp.closest('td');
-  if (td) td.classList.remove('inp-error');
-  hideTooltip();
-}
+function validateField(inp) { const td=inp.closest('td'); if(!td) return true; const val=inp.value.trim(); if(val===''){ td.classList.add('inp-error'); showTooltip(inp,td.dataset.label?`Please fill in "${td.dataset.label}"`:'This field is required.'); return false; }else{ td.classList.remove('inp-error'); return true; } }
+function clearErr(inp) { const td=inp.closest('td'); if(td) td.classList.remove('inp-error'); hideTooltip(); }
 let tooltipTimer;
-function showTooltip(inp, msg) {
-  const tip = document.getElementById('val-tooltip');
-  tip.textContent = msg;
-  tip.style.display = 'block';
-  const rect = inp.getBoundingClientRect();
-  tip.style.left = (rect.left + window.scrollX) + 'px';
-  tip.style.top  = (rect.top  + window.scrollY - tip.offsetHeight - 10) + 'px';
-  clearTimeout(tooltipTimer);
-  tooltipTimer = setTimeout(hideTooltip, 3500);
-}
-function hideTooltip() {
-  document.getElementById('val-tooltip').style.display = 'none';
-}
-document.addEventListener('click', hideTooltip);
-
-// Validate all inputs inside a pane, returns list of empty field labels
-function validatePane(paneId) {
-  const pane = document.getElementById('pane-'+paneId);
-  if (!pane) return [];
-  const empties = [];
-  pane.querySelectorAll('input[type=text], input[type=number], input[type=email]').forEach(inp => {
-    const td = inp.closest('td');
-    if (!td) return;
-    if (inp.value.trim() === '') {
-      td.classList.add('inp-error');
-      const lbl = td.dataset.label || inp.id || 'Unknown field';
-      empties.push(lbl);
-    }
-  });
-  return empties;
-}
-
-function showModal(title, fields) {
-  document.getElementById('modal-title').textContent = title;
-  let html = 'Please fill in the following required fields:<ul>';
-  fields.forEach(f => html += `<li>${f}</li>`);
-  html += '</ul>';
-  document.getElementById('modal-body').innerHTML = html;
-  document.getElementById('val-modal').classList.add('show');
-}
+function showTooltip(inp,msg) { const tip=document.getElementById('val-tooltip'); tip.textContent=msg; tip.style.display='block'; const rect=inp.getBoundingClientRect(); tip.style.left=(rect.left+window.scrollX)+'px'; tip.style.top=(rect.top+window.scrollY-tip.offsetHeight-10)+'px'; clearTimeout(tooltipTimer); tooltipTimer=setTimeout(hideTooltip,3500); }
+function hideTooltip() { document.getElementById('val-tooltip').style.display='none'; }
+document.addEventListener('click',hideTooltip);
+function validatePane(paneId,markErrors=true) { const pane=document.getElementById('pane-'+paneId); if(!pane) return []; const empties=[]; pane.querySelectorAll('input[type=text],input[type=number],input[type=email]').forEach(inp=>{ const td=inp.closest('td'); if(!td) return; if(inp.value.trim()===''){ if(markErrors) td.classList.add('inp-error'); const lbl=td.dataset.label||inp.id||'Unknown field'; empties.push(lbl); } }); return empties; }
+function showModal(title,fields) { document.getElementById('modal-title').textContent=title; let html='Please fill in the following required fields:<ul>'; fields.forEach(f=>html+=`<li>${f}</li>`); html+='</ul>'; document.getElementById('modal-body').innerHTML=html; document.getElementById('val-modal').classList.add('show'); }
 function closeModal() { document.getElementById('val-modal').classList.remove('show'); }
 
 // ── PERMISSIONS ──
-function applyPermissions(allow){
+function applyPermissions(allow) {
   const tabMap={'ur':'mor-ur','wcd':'mor-wcd','dtd':'mor-dtd','csd':'mor-csd','dsd':'mor-dsd','export':'export','audit':'audit'};
-  ALL_PANES.forEach(pane=>{
-    if(pane==='changepw') return; // always unlocked
-    const allowed=allow.includes(pane);
-    const navEl=document.getElementById('nav-'+pane);
-    const tabEl=document.getElementById('tab-'+pane);
-    if(navEl) navEl.classList.toggle('locked',!allowed);
-    if(tabEl) tabEl.classList.toggle('tab-locked',!allowed);
-  });
-  ['ur','wcd','dtd','csd','dsd','export','audit','users'].forEach(k=>{
-    const pane=tabMap[k]||k;
-    const lockEl=document.getElementById('lock-'+k);
-    if(lockEl) lockEl.textContent=allow.includes(pane)?'':'🔒';
-  });
+  ALL_PANES.forEach(pane=>{ if(pane==='changepw') return; const allowed=allow.includes(pane); const navEl=document.getElementById('nav-'+pane),tabEl=document.getElementById('tab-'+pane); if(navEl) navEl.classList.toggle('locked',!allowed); if(tabEl) tabEl.classList.toggle('tab-locked',!allowed); });
+  ['ur','wcd','dtd','csd','dsd','export','audit','users'].forEach(k=>{ const pane=tabMap[k]||k; const lockEl=document.getElementById('lock-'+k); if(lockEl) lockEl.textContent=allow.includes(pane)?'':'🔒'; });
 }
-function tryGoTab(id){
-  if(id==='changepw'){goTab('changepw');return;}
-  const cfg=ROLE_CONFIG[currentRole];
-  if(!cfg||!cfg.allow.includes(id)){showErr('🔒 Access restricted. Your role: '+cfg.allow.filter(x=>x!=='profile').join(', '));return;}
-  goTab(id);
-}
-function goToMySection(){
-  const cfg=ROLE_CONFIG[currentRole];
-  const sec=cfg.allow.find(a=>a!=='profile');
-  if(sec) goTab(sec); else goTab('export');
-}
+function tryGoTab(id) { if(id==='changepw'){goTab('changepw');return;} const cfg=ROLE_CONFIG[currentRole]; if(!cfg||!cfg.allow.includes(id)){showErr('🔒 Access restricted. Your role: '+cfg.allow.filter(x=>x!=='profile').join(', '));return;} goTab(id); }
+function goToMySection() { const cfg=ROLE_CONFIG[currentRole]; const sec=cfg.allow.find(a=>a!=='profile'); if(sec) goTab(sec); else goTab('export'); }
+
 // ── HELPERS ──
 function getMonth(){return document.getElementById('month-select').value;}
 function getYear() {return document.getElementById('year-select').value;}
 function getMonthIdx(){return MONTHS.indexOf(getMonth());}
 function getDay()  {return MONTH_DAYS[getMonthIdx()];}
 function v(id)     {return document.getElementById(id)?.value||'';}
-function updatePeriod(){
+function updatePeriod() {
   const mi=getMonthIdx(),m=getMonth(),y=getYear();
-  // 1. Save current period data to localStorage BEFORE switching
-  if (currentUser && _currentPeriodKey) {
-    saveAllSectionsLocal(_currentPeriodKey);
-  }
-  // 2. Update displayed period
+  if(currentUser&&_currentPeriodKey) saveAllSectionsLocal(_currentPeriodKey);
   document.getElementById('period-badge').textContent=MONTH_SHORT[mi].toUpperCase()+' '+y;
   document.getElementById('period-display').textContent=getDay()+' '+m+' '+y;
-  // 3. Update the current period key
-  _currentPeriodKey = m + '_' + y;
-  // 4. Load new period's data
-  if (currentUser) loadFormDataGS();
+  _currentPeriodKey=m+'_'+y;
+  if(currentUser) loadFormDataGS();
 }
-// Tracks what period is currently loaded
-let _currentPeriodKey = null;
+let _currentPeriodKey=null;
 const TITLES={
   'profile':()=>`DU General Information (DU-PROFILE) as of ${getDay()} ${getMonth()} ${getYear()}`,
   'mor-ur': ()=>`MOR-UR – Unbundled Rates · ${getMonth()} ${getYear()}`,
@@ -1403,137 +1211,70 @@ const TITLES={
   'changepw':()=>'Change Password',
   'users':  ()=>'User Management · All Accounts',
 };
-function goTab(id){
-  ALL_PANES.forEach(p=>{
-    document.getElementById('pane-'+p).classList.toggle('hidden',p!==id);
-    const t=document.getElementById('tab-'+p);if(t)t.classList.toggle('active',p===id);
-    const n=document.getElementById('nav-'+p);if(n)n.classList.toggle('active',p===id);
-  });
+function goTab(id) {
+  ALL_PANES.forEach(p=>{ document.getElementById('pane-'+p).classList.toggle('hidden',p!==id); const t=document.getElementById('tab-'+p);if(t)t.classList.toggle('active',p===id); const n=document.getElementById('nav-'+p);if(n)n.classList.toggle('active',p===id); });
   document.getElementById('header-title').textContent=TITLES[id]();
   hideAlerts();
   if(id==='export') refreshExportStatus();
   if(id==='audit') { renderLog(); updateLogStats(); }
-  if(id==='changepw') { document.getElementById('cpw-username-label').textContent = currentUser?.name + ' (' + currentUser?.username + ')'; }
+  if(id==='changepw') { document.getElementById('cpw-username-label').textContent=currentUser?.name+' ('+currentUser?.username+')'; }
   if(id==='users') renderUserTable();
+  const _csvSections=['mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'];
+  if(_csvSections.includes(id)){ const _body=document.getElementById('csvbody-'+id); if(_body&&_body.classList.contains('open')) renderCsvPreview(id); }
 }
 function showOk(msg){const a=document.getElementById('alert-ok');document.getElementById('alert-msg').textContent=msg;a.classList.add('show');setTimeout(()=>a.classList.remove('show'),3000);}
 function showErr(msg){const a=document.getElementById('alert-err');document.getElementById('alert-emsg').textContent=msg;a.classList.add('show');setTimeout(()=>a.classList.remove('show'),4000);}
 function hideAlerts(){document.getElementById('alert-ok').classList.remove('show');document.getElementById('alert-err').classList.remove('show');}
 
-function saveSection(id){
-  const empties=validatePane(id);
-  if(empties.length>0){
-    showModal('⚠ Incomplete Fields in '+id.toUpperCase(),empties);
-    addLog('FIELD', `Attempted to save "${id.toUpperCase()}" but ${empties.length} field(s) were empty`);
-    renderLog();
-    return;
-  }
+function saveSection(id) {
+  const isAdmin=currentRole==='admin';
+  if(isAdmin){ const emptyCount=validatePane(id,false).length; document.getElementById('nav-'+id)?.classList.add('done'); if(emptyCount>0){showOk(id.toUpperCase()+' saved by Admin ('+emptyCount+' field(s) left blank) ✓');addLog('SAVE','Admin force-saved "'+id.toUpperCase()+'" with '+emptyCount+' empty field(s) — Period: '+getMonth()+' '+getYear());}else{showOk(id.toUpperCase()+' saved successfully! ✓');addLog('SAVE','Saved section "'+id.toUpperCase()+'" — Period: '+getMonth()+' '+getYear());} renderLog(); saveFormDataGS(id); return; }
+  const empties=validatePane(id,true);
+  if(empties.length>0){ showModal('⚠ Incomplete Fields in '+id.toUpperCase(),empties); addLog('FIELD','Attempted to save "'+id.toUpperCase()+'" but '+empties.length+' field(s) were empty'); renderLog(); return; }
   document.getElementById('nav-'+id)?.classList.add('done');
   showOk(id.toUpperCase()+' saved successfully! ✓');
-  addLog('SAVE', `Saved section "${id.toUpperCase()}" — Period: ${getMonth()} ${getYear()}`);
-  renderLog();
-  // Sync to Google Sheets
-  saveFormDataGS(id);
+  addLog('SAVE','Saved section "'+id.toUpperCase()+'" — Period: '+getMonth()+' '+getYear());
+  renderLog(); saveFormDataGS(id);
 }
 
 // ── BUILD TABLES ──
-function buildURTable(){
+function buildURTable() {
   const tbody=document.getElementById('ur-body');tbody.innerHTML='';
-  CT.forEach((ct,ri)=>{
-    const vals=UR_DEF[ct]||Array(29).fill('');
-    const tr=document.createElement('tr');
-    const cells=vals.map((v,i)=>`<td class="has-val" data-label="${ct} Col ${i+4}"><input type="number" step="0.0001" value="${v}" style="min-width:90px" oninput="clearErr(this)" onblur="validateField(this)"></td>`).join('');
-    tr.innerHTML=`<td class="row-num">${ri+1}</td><td class="field-label">${ct}</td><td class="type-cell">PhP/kWh</td>${cells}`;
-    tbody.appendChild(tr);
-  });
-  const eof=document.createElement('tr');eof.className='eof';
-  eof.innerHTML=`<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="32"></td>`;
-  tbody.appendChild(eof);
+  CT.forEach((ct,ri)=>{ const vals=UR_DEF[ct]||Array(29).fill(''); const tr=document.createElement('tr'); const cells=vals.map((v,i)=>`<td class="has-val" data-label="${ct} Col ${i+4}"><input type="number" step="0.0001" value="${v}" placeholder="0.0" style="min-width:90px" oninput="clearErr(this)" onblur="validateField(this)"></td>`).join(''); tr.innerHTML=`<td class="row-num">${ri+1}</td><td class="field-label">${ct}</td><td class="type-cell">PhP/kWh</td>${cells}`; tbody.appendChild(tr); });
+  const eof=document.createElement('tr');eof.className='eof';eof.innerHTML=`<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="32"></td>`;tbody.appendChild(eof);
 }
-function buildCSDTable(){
+function buildCSDTable() {
   const tbody=document.getElementById('csd-body');tbody.innerHTML='';
-  CT.forEach((ct,ri)=>{
-    const d=CSD_DEF[ct]||[0,0,0,0];
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td class="row-num">${ri+1}</td><td class="field-label">${ct}</td><td class="type-cell">—</td>
-      <td class="has-val" data-label="${ct} – No. of Customers"><input type="number" value="${d[0]}" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-      <td class="has-val" data-label="${ct} – Electricity Sales"><input type="number" step="0.0001" value="${d[1]}" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-      <td class="has-val" data-label="${ct} – Effective Rate"><input type="number" step="0.0001" value="${d[2]}" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-      <td class="has-val" data-label="${ct} – Capacity Alloc"><input type="number" step="0.0001" value="${d[3]}" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>`;
-    tbody.appendChild(tr);
-  });
-  const eof=document.createElement('tr');eof.className='eof';
-  eof.innerHTML=`<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="6"></td>`;
-  tbody.appendChild(eof);
+  CT.forEach((ct,ri)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td class="row-num">${ri+1}</td><td class="field-label">${ct}</td><td class="type-cell">—</td><td class="has-val" data-label="${ct} – No. of Customers"><input type="number" placeholder="0" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="${ct} – Electricity Sales"><input type="number" step="0.0001" placeholder="0.0" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="${ct} – Effective Rate"><input type="number" step="0.0001" placeholder="0.0" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="${ct} – Capacity Alloc"><input type="number" step="0.0001" placeholder="0.0" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>`; tbody.appendChild(tr); });
+  const eof=document.createElement('tr');eof.className='eof';eof.innerHTML=`<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="6"></td>`;tbody.appendChild(eof);
 }
-function buildWCDTable(){document.getElementById('wcd-body').innerHTML='';WCD_DEF.forEach(r=>addWCDRowData(r));}
-function addWCDRow(){addWCDRowData(['',0,0,0]);}
+function buildWCDTable(){document.getElementById('wcd-body').innerHTML='';wcdCount=0;WCD_DEF.forEach(r=>addWCDRowData(r));}
+function addWCDRow(){addWCDRowData(['','','','']);}
 let wcdCount=0;
 function addWCDRowData([cat,ncust,elec,rate]){
   wcdCount++;
   const tbody=document.getElementById('wcd-body');
   const opts=WCD_CATS.map(c=>`<option ${c===cat?'selected':''}>${c}</option>`).join('');
   const tr=document.createElement('tr');
-  tr.innerHTML=`<td class="row-num">${wcdCount}</td>
-    <td class="field-label" style="padding:3px 8px;"><select style="width:100%;min-width:180px;background:transparent;border:none;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;">${opts}</select></td>
-    <td class="type-cell">Category</td>
-    <td class="has-val" data-label="Row ${wcdCount} – No. of Customers"><input type="number" value="${ncust}" style="min-width:100px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-    <td class="has-val" data-label="Row ${wcdCount} – Elec. Wheeled"><input type="number" step="0.0001" value="${elec}" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-    <td class="has-val" data-label="Row ${wcdCount} – Wheeling Rate"><input type="number" step="0.0001" value="${rate}" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-    <td><button class="del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
+  tr.innerHTML=`<td class="row-num">${wcdCount}</td><td class="field-label" style="padding:3px 8px;"><select style="width:100%;min-width:180px;background:transparent;border:none;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;">${opts}</select></td><td class="type-cell">Category</td><td class="has-val" data-label="Row ${wcdCount} – No. of Customers"><input type="number" value="${ncust}" placeholder="0" style="min-width:100px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="Row ${wcdCount} – Elec. Wheeled"><input type="number" step="0.0001" value="${elec}" placeholder="0.0" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="Row ${wcdCount} – Wheeling Rate"><input type="number" step="0.0001" value="${rate}" placeholder="0.0" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td><td><button class="del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
   tbody.appendChild(tr);
 }
-function buildDSDTable(){document.getElementById('dsd-body').innerHTML='';DSD_DEF.forEach(r=>addDSDRowData(r));}
-function addDSDRow(){addDSDRowData(['','N','','','','','',0,0]);}
+function buildDSDTable(){document.getElementById('dsd-body').innerHTML='';dsdCount=0;DSD_DEF.forEach(r=>addDSDRowData(r));}
+function addDSDRow(){addDSDRowData(['','N','','','','','','','']);}
 let dsdCount=0;
 function addDSDRowData([supplier,gen,cstart,cend,ccap,cenergy,_,purch,cost]){
   dsdCount++;
   const tbody=document.getElementById('dsd-body');
   const tr=document.createElement('tr');
-  tr.innerHTML=`<td class="row-num">${dsdCount}</td>
-    <td class="field-label" style="padding:3px 8px;"><input type="text" value="${supplier}" placeholder="e.g. WESM" style="min-width:150px" oninput="clearErr(this)" onblur="validateField(this)" data-label="Supplier ${dsdCount} Name"></td>
-    <td class="type-cell">Supplier</td>
-    <td class="has-val"><select style="min-width:80px;background:transparent;border:none;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;"><option ${gen==='Y'?'selected':''}>Y</option><option ${gen!=='Y'?'selected':''}>N</option></select></td>
-    <td class="has-val" data-label="Supplier ${dsdCount} – Contract Start"><input type="text" value="${cstart}" placeholder="yyyy-mm-dd" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-    <td class="has-val" data-label="Supplier ${dsdCount} – Contract End"><input type="text" value="${cend}" placeholder="yyyy-mm-dd" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-    <td class="has-val" data-label="Supplier ${dsdCount} – Contracted Capacity"><input type="number" step="0.0001" value="${ccap}" style="min-width:110px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-    <td class="has-val" data-label="Supplier ${dsdCount} – Contracted Energy"><input type="number" step="0.0001" value="${cenergy}" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-    <td class="has-val" data-label="Supplier ${dsdCount} – Purchased Electricity"><input type="number" step="0.0001" value="${purch}" style="min-width:140px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-    <td class="has-val" data-label="Supplier ${dsdCount} – Generation Cost"><input type="number" step="0.0001" value="${cost}" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>
-    <td><button class="del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
+  tr.innerHTML=`<td class="row-num">${dsdCount}</td><td class="field-label" style="padding:3px 8px;"><input type="text" value="${supplier}" placeholder="e.g. WESM" style="min-width:150px" oninput="clearErr(this)" onblur="validateField(this)" data-label="Supplier ${dsdCount} Name"></td><td class="type-cell">Supplier</td><td class="has-val"><select style="min-width:80px;background:transparent;border:none;color:var(--text);font-family:'DM Mono',monospace;font-size:12px;outline:none;"><option ${gen==='Y'?'selected':''}>Y</option><option ${gen!=='Y'?'selected':''}>N</option></select></td><td class="has-val" data-label="Supplier ${dsdCount} – Contract Start"><input type="text" value="${cstart}" placeholder="yyyymmdd" maxlength="10" inputmode="numeric" style="min-width:120px" oninput="autoDate(this);clearErr(this)" onkeydown="dateKeydown(event)" onblur="validateField(this)"></td><td class="has-val" data-label="Supplier ${dsdCount} – Contract End"><input type="text" value="${cend}" placeholder="yyyymmdd" maxlength="10" inputmode="numeric" style="min-width:120px" oninput="autoDate(this);clearErr(this)" onkeydown="dateKeydown(event)" onblur="validateField(this)"></td><td class="has-val" data-label="Supplier ${dsdCount} – Contracted Capacity"><input type="number" step="0.0001" value="${ccap}" placeholder="0.0" style="min-width:110px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="Supplier ${dsdCount} – Contracted Energy"><input type="number" step="0.0001" value="${cenergy}" placeholder="0.0" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="Supplier ${dsdCount} – Purchased Electricity"><input type="number" step="0.0001" value="${purch}" placeholder="0.0" style="min-width:140px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="Supplier ${dsdCount} – Generation Cost"><input type="number" step="0.0001" value="${cost}" placeholder="0.0" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td><td><button class="del-btn" onclick="this.closest('tr').remove()">✕</button></td>`;
   tbody.appendChild(tr);
 }
 
 // ── EXPORT VALIDATION ──
-// Check if a pane has any empty text/number inputs
-function paneHasEmpty(paneId){
-  const pane=document.getElementById('pane-'+paneId);
-  if(!pane) return false;
-  let empty=false;
-  pane.querySelectorAll('input[type=text],input[type=number],input[type=email]').forEach(inp=>{
-    if(inp.value.trim()==='') empty=true;
-  });
-  return empty;
-}
-
+function paneHasEmpty(paneId){ const pane=document.getElementById('pane-'+paneId); if(!pane) return false; let empty=false; pane.querySelectorAll('input[type=text],input[type=number],input[type=email]').forEach(inp=>{if(inp.value.trim()==='') empty=true;}); return empty; }
 function refreshExportStatus(){
-  const map={
-    'profile':'profile','mor-ur':'ur','mor-wcd':'wcd','mor-dtd':'dtd','mor-csd':'csd','mor-dsd':'dsd'
-  };
-  Object.entries(map).forEach(([paneId,key])=>{
-    const card=document.getElementById('ec-'+key);
-    const stat=document.getElementById('es-'+key);
-    if(!card||!stat) return;
-    const hasEmpty=paneHasEmpty(paneId);
-    card.classList.toggle('blocked',hasEmpty);
-    if(hasEmpty){
-      stat.className='export-status err';
-      stat.textContent='⚠ Has empty fields';
-    } else {
-      stat.className='export-status ok';
-      stat.textContent='✓ Ready to export';
-    }
-  });
+  const map={'profile':'profile','mor-ur':'ur','mor-wcd':'wcd','mor-dtd':'dtd','mor-csd':'csd','mor-dsd':'dsd'};
+  Object.entries(map).forEach(([paneId,key])=>{ const card=document.getElementById('ec-'+key),stat=document.getElementById('es-'+key); if(!card||!stat) return; const hasEmpty=paneHasEmpty(paneId); card.classList.toggle('blocked',hasEmpty); if(hasEmpty){stat.className='export-status err';stat.textContent='⚠ Has empty fields';}else{stat.className='export-status ok';stat.textContent='✓ Ready to export';} });
 }
 
 // ── CSV ──
@@ -1550,925 +1291,205 @@ function buildDSDCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthl
 
 const CSV_BUILDERS={profile:buildProfileCSV,'mor-ur':buildURCSV,'mor-wcd':buildWCDCSV,'mor-dtd':buildDTDCSV,'mor-csd':buildCSDCSV,'mor-dsd':buildDSDCSV};
 const PANE_KEY={'profile':'profile','mor-ur':'ur','mor-wcd':'wcd','mor-dtd':'dtd','mor-csd':'csd','mor-dsd':'dsd'};
-
 function getFilename(type){const mi=getMonthIdx()+1,m=getMonth().toLowerCase(),y=getYear();return({'profile':`DU_PROFILE_template_${mi}${m}${y}.csv`,'mor-ur':`MOR_UR_template_${mi}${m}${y}.csv`,'mor-wcd':`MOR_WCD_template_${mi}${m}${y}.csv`,'mor-dtd':`MOR_DTD_template_${mi}${m}${y}.csv`,'mor-csd':`MOR_CSD_template_${mi}${m}${y}.csv`,'mor-dsd':`MOR_DSD_template_${mi}${m}${y}.csv`})[type];}
-function dlCSV(content,filename){const blob=new Blob(['\ufeff'+content],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}
-
+function dlCSV(content,filename){const blob=new Blob(['\ufeff'+content],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}
 function exportCSV(type){
-  // Check if pane has empty fields
-  if(paneHasEmpty(type)){
-    const empties=validatePane(type);
-    showModal('⚠ Cannot Export – Empty Fields Found in '+type.toUpperCase().replace('MOR-','MOR-'), empties.length>0?empties:['Some fields are empty. Please fill in all required data.']);
-    addLog('FIELD', `Blocked export of "${type.toUpperCase()}" — empty required fields`);
-    renderLog();
-    return;
-  }
-  dlCSV(CSV_BUILDERS[type](), getFilename(type));
+  if(paneHasEmpty(type)){ const empties=validatePane(type); showModal('⚠ Cannot Export – Empty Fields Found in '+type.toUpperCase().replace('MOR-','MOR-'),empties.length>0?empties:['Some fields are empty.']); addLog('FIELD',`Blocked export of "${type.toUpperCase()}" — empty required fields`); renderLog(); return; }
+  dlCSV(CSV_BUILDERS[type](),getFilename(type));
   const key=PANE_KEY[type]||type.replace('mor-','');
   const card=document.getElementById('ec-'+key)||document.getElementById('ec-'+type);
   if(card){card.classList.add('done');setTimeout(()=>{card.classList.remove('done');refreshExportStatus();},2000);}
-  showOk('Downloaded: '+getFilename(type));
-  addLog('EXPORT', `Downloaded CSV: "${getFilename(type)}" — Period: ${getMonth()} ${getYear()}`);
-  renderLog();
+  showOk('Downloaded: '+getFilename(type)); addLog('EXPORT',`Downloaded CSV: "${getFilename(type)}" — Period: ${getMonth()} ${getYear()}`); renderLog();
 }
-
 async function exportAll(){
   const types=['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'];
   const blocked=types.filter(t=>paneHasEmpty(t));
-  if(blocked.length>0){
-    showModal('⚠ Cannot Export All – Incomplete Sections',blocked.map(t=>t.toUpperCase()+' has empty fields'));
-    addLog('FIELD', `Blocked "Export All" — sections with empty fields: ${blocked.map(t=>t.toUpperCase()).join(', ')}`);
-    renderLog();
-    return;
-  }
+  if(blocked.length>0){ showModal('⚠ Cannot Export All – Incomplete Sections',blocked.map(t=>t.toUpperCase()+' has empty fields')); addLog('FIELD',`Blocked "Export All" — sections with empty fields: ${blocked.map(t=>t.toUpperCase()).join(', ')}`); renderLog(); return; }
   for(const t of types){dlCSV(CSV_BUILDERS[t](),getFilename(t));await new Promise(r=>setTimeout(r,300));}
-  showOk('All 6 CSV files downloaded successfully!');
-  addLog('EXPORT', `Downloaded ALL 6 CSV files — Period: ${getMonth()} ${getYear()}`);
-  renderLog();
+  showOk('All 6 CSV files downloaded successfully!'); addLog('EXPORT',`Downloaded ALL 6 CSV files — Period: ${getMonth()} ${getYear()}`); renderLog();
 }
 
-// ── INIT ──
-buildURTable();
-buildCSDTable();
-buildWCDTable();
-buildDSDTable();
+buildURTable(); buildCSDTable(); buildWCDTable(); buildDSDTable();
 
-// ═══════════════════════════════════════════════
-// ── SIGN UP SYSTEM ──────────────────────────────
-// ═══════════════════════════════════════════════
+// ── GOOGLE SHEETS INTEGRATION ──
+const GS_URL = 'https://script.google.com/macros/s/AKfycbzf2HnvqbYt4lQN4yWJYHV_1g0tJ7De23_FMow4WisEpEoZjimTWZLF_mDTGDTIz1YFMw/exec';
 
-// ═══════════════════════════════════════════════
-// ── GOOGLE SHEETS INTEGRATION ────────────────
-// ═══════════════════════════════════════════════
-// ══════════════════════════════════════════════════════════════
-// HOW TO FIX THE "⊘ Offline" SYNC STATUS:
-//
-// Your current URL was deployed as a LIBRARY — that won't work.
-// You need to deploy it as a WEB APP instead. Steps:
-//
-//   1. Go to https://script.google.com → open your project
-//   2. Click Deploy (top-right) → New Deployment
-//   3. Click the gear ⚙ icon → select "Web App"
-//   4. Set:  Execute as = Me
-//            Who has access = Anyone
-//   5. Click Deploy → Copy the new /exec URL
-//   6. Paste it below to replace YOUR_NEW_WEBAPP_URL_HERE
-//   7. Re-upload this HTML to GitHub Pages
-//
-// To verify it works: paste the URL in a browser — you should see:
-//   {"ok":true,"message":"DEPDMS Backend is running."}
-// ══════════════════════════════════════════════════════════════
-const GS_URL = 'https://script.google.com/macros/s/AKfycbwYQfAvq0saHuXh_WzLzsyYCe3ImyI41OtQGV1-XkAUskEGFKNK3q6tcGcyLZ0w7yxpEg/exec';
-
-// Shows a small sync indicator in the UI
 function setSyncStatus(state) {
-  // state: 'syncing' | 'ok' | 'error' | 'offline'
-  const el = document.getElementById('sync-status');
-  if (!el) return;
-  const map = {
-    syncing: { text: '⟳ Syncing…',  color: 'var(--accent4)' },
-    ok:      { text: '☁ Synced',    color: 'var(--accent2)' },
-    error:   { text: '✕ Sync fail', color: 'var(--danger)'  },
-    offline: { text: '⊘ Offline',   color: 'var(--muted)'   },
-  };
-  const s = map[state] || map.offline;
-  el.textContent = s.text;
-  el.style.color = s.color;
+  const el=document.getElementById('sync-status'); if(!el) return;
+  const map={syncing:{text:'⟳ Syncing…',color:'var(--accent4)'},ok:{text:'☁ Synced',color:'var(--accent2)'},error:{text:'✕ Sync fail',color:'var(--danger)'},offline:{text:'⊘ Offline',color:'var(--muted)'}};
+  const s=map[state]||map.offline; el.textContent=s.text; el.style.color=s.color;
 }
 
-// Generic Google Sheets API call
-async function gsCall(action, payload = {}) {
-  if (!GS_URL) return null; // no URL configured → offline
+// ── FIX 4: 8-second timeout on every gsCall so a dead GS never hangs the UI ──
+async function gsCall(action, payload={}) {
+  if (!GS_URL) return null;
   try {
+    const controller = new AbortController();
+    const timeoutId  = setTimeout(() => controller.abort(), 8000);
     const res = await fetch(GS_URL, {
-      method: 'POST',
+      method:  'POST',
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action, ...payload }),
+      body:    JSON.stringify({ action, ...payload }),
+      signal:  controller.signal,
     });
-    const json = await res.json();
-    return json;
-  } catch (e) {
+    clearTimeout(timeoutId);
+    return await res.json();
+  } catch(e) {
     console.warn('GS call failed:', e);
     return null;
   }
 }
 
-// ── SIGNUPS (users) ──
-function getSignups() {
-  try { return JSON.parse(localStorage.getItem('depdms_signups') || '[]'); }
-  catch(e) { return []; }
-}
+// ── SIGNUPS ──
+function getSignups() { try { return JSON.parse(localStorage.getItem('depdms_signups')||'[]'); } catch(e) { return []; } }
 function saveSignups(arr) {
   localStorage.setItem('depdms_signups', JSON.stringify(arr));
-  // Also push to Google Sheets
-  if (GS_URL) {
-    setSyncStatus('syncing');
-    gsCall('saveSignups', { data: arr })
-      .then(r => setSyncStatus(r?.ok ? 'ok' : 'error'))
-      .catch(() => setSyncStatus('error'));
-  }
+  if (GS_URL) { setSyncStatus('syncing'); gsCall('saveSignups',{data:arr}).then(r=>setSyncStatus(r?.ok?'ok':'error')).catch(()=>setSyncStatus('error')); }
 }
-
-// Load signups — try Google Sheets first, fall back to localStorage
 async function loadSignupsFromGS() {
   if (!GS_URL) { loadSignupsLocal(); setSyncStatus('offline'); return; }
   setSyncStatus('syncing');
-  const res = await gsCall('getSignups');
-  if (res?.ok && Array.isArray(res.data)) {
-    localStorage.setItem('depdms_signups', JSON.stringify(res.data));
-    setSyncStatus('ok');
-    applySignupsToRuntime(res.data);
-  } else {
-    setSyncStatus('error');
-    loadSignupsLocal();
-  }
+  const res=await gsCall('getSignups');
+  if (res?.ok&&Array.isArray(res.data)) { localStorage.setItem('depdms_signups',JSON.stringify(res.data)); setSyncStatus('ok'); applySignupsToRuntime(res.data); }
+  else { setSyncStatus('error'); loadSignupsLocal(); }
 }
-function loadSignupsLocal() {
-  applySignupsToRuntime(getSignups());
-}
+function loadSignupsLocal() { applySignupsToRuntime(getSignups()); }
 function applySignupsToRuntime(signups) {
-  signups.forEach(u => {
-    // Always update USER_DB so password changes and new users sync correctly
-    USER_DB[u.username] = { name: u.name, dept: u.dept, deptKey: u.deptKey, role: u.role, pwHash: u.pwHash };
-    if (!DEPT_USERS[u.deptKey]) DEPT_USERS[u.deptKey] = [];
-    if (!DEPT_USERS[u.deptKey].includes(u.username)) DEPT_USERS[u.deptKey].push(u.username);
-    USER_LABELS[u.username] = u.name;
-  });
+  signups.forEach(u=>{ USER_DB[u.username]={name:u.name,dept:u.dept,deptKey:u.deptKey,role:u.role,pwHash:u.pwHash}; if(!DEPT_USERS[u.deptKey]) DEPT_USERS[u.deptKey]=[]; if(!DEPT_USERS[u.deptKey].includes(u.username)) DEPT_USERS[u.deptKey].push(u.username); USER_LABELS[u.username]=u.name; });
 }
 
-// ── FORM DATA (profile + MOR sections) ──
-// Key: "Month_Year" e.g. "January_2025"
-function formDataKey() {
-  return getMonth() + '_' + getYear();
-}
-
-// ── COLLECT: reads ALL inputs/selects from a pane into a serialisable object ──
-// For panes with dynamic rows (WCD, DSD) we serialise the full table as an array.
+// ── FORM DATA ──
+function formDataKey(){ return getMonth()+'_'+getYear(); }
 function collectPane(paneId) {
-  if (paneId === 'mor-wcd') return { _rows: collectWCDRows() };
-  if (paneId === 'mor-dsd') return { _rows: collectDSDRows() };
-  const pane = document.getElementById('pane-' + paneId);
-  if (!pane) return {};
-  const data = {};
-  pane.querySelectorAll('input, select, textarea').forEach(el => {
-    if (el.id) data[el.id] = el.value;
-  });
-  // Also capture inputs WITHOUT ids (e.g. UR table) by positional index
-  let idx = 0;
-  pane.querySelectorAll('input:not([id]), select:not([id])').forEach(el => {
-    data['__anon_' + idx++] = el.value;
-  });
+  if(paneId==='mor-wcd') return{_rows:collectWCDRows()};
+  if(paneId==='mor-dsd') return{_rows:collectDSDRows()};
+  const pane=document.getElementById('pane-'+paneId); if(!pane) return {};
+  const data={};
+  pane.querySelectorAll('input,select,textarea').forEach(el=>{ if(el.id) data[el.id]=el.value; });
+  let idx=0; pane.querySelectorAll('input:not([id]),select:not([id])').forEach(el=>{ data['__anon_'+idx++]=el.value; });
   return data;
 }
+function collectWCDRows(){ const rows=[]; document.getElementById('wcd-body').querySelectorAll('tr').forEach(tr=>{ const cat=tr.querySelector('select')?.value||'',inps=tr.querySelectorAll('input'); rows.push({cat,n:inps[0]?.value||'',elec:inps[1]?.value||'',rate:inps[2]?.value||''}); }); return rows; }
+function collectDSDRows(){ const rows=[]; document.getElementById('dsd-body').querySelectorAll('tr').forEach(tr=>{ const sup=tr.querySelector('td.field-label input')?.value||'',gen=tr.querySelector('select')?.value||'N',inps=tr.querySelectorAll('td.has-val input'); rows.push({sup,gen,cstart:inps[0]?.value||'',cend:inps[1]?.value||'',ccap:inps[2]?.value||'',cenergy:inps[3]?.value||'',purch:inps[4]?.value||'',cost:inps[5]?.value||''}); }); return rows; }
 
-function collectWCDRows() {
-  const rows = [];
-  document.getElementById('wcd-body').querySelectorAll('tr').forEach(tr => {
-    const cat  = tr.querySelector('select')?.value || '';
-    const inps = tr.querySelectorAll('input');
-    rows.push({ cat, n: inps[0]?.value||'', elec: inps[1]?.value||'', rate: inps[2]?.value||'' });
-  });
-  return rows;
+function restorePane(paneId,data) {
+  if(!data) return;
+  if(paneId==='mor-wcd'&&Array.isArray(data._rows)){ document.getElementById('wcd-body').innerHTML='';wcdCount=0;data._rows.forEach(r=>addWCDRowData([r.cat,r.n,r.elec,r.rate]));return; }
+  if(paneId==='mor-dsd'&&Array.isArray(data._rows)){ document.getElementById('dsd-body').innerHTML='';dsdCount=0;data._rows.forEach(r=>addDSDRowData([r.sup,r.gen,r.cstart,r.cend,r.ccap,r.cenergy,'',r.purch,r.cost]));return; }
+  const pane=document.getElementById('pane-'+paneId); if(!pane) return;
+  Object.entries(data).forEach(([id,val])=>{ if(id.startsWith('__anon_')) return; const el=document.getElementById(id); if(el) el.value=val; });
+  const anonEntries=Object.entries(data).filter(([k])=>k.startsWith('__anon_'));
+  if(anonEntries.length){ const anons=pane.querySelectorAll('input:not([id]),select:not([id])'); anonEntries.forEach(([k,val])=>{ const idx=parseInt(k.replace('__anon_',''),10); if(anons[idx]) anons[idx].value=val; }); }
 }
-
-function collectDSDRows() {
-  const rows = [];
-  document.getElementById('dsd-body').querySelectorAll('tr').forEach(tr => {
-    const sup = tr.querySelector('td.field-label input')?.value || '';
-    const gen = tr.querySelector('select')?.value || 'N';
-    const inps = tr.querySelectorAll('td.has-val input');
-    rows.push({ sup, gen,
-      cstart: inps[0]?.value||'', cend: inps[1]?.value||'',
-      ccap: inps[2]?.value||'',   cenergy: inps[3]?.value||'',
-      purch: inps[4]?.value||'',  cost: inps[5]?.value||'' });
-  });
-  return rows;
-}
-
-// ── RESTORE: writes saved data back into pane inputs ──
-function restorePane(paneId, data) {
-  if (!data) return;
-
-  if (paneId === 'mor-wcd' && Array.isArray(data._rows)) {
-    document.getElementById('wcd-body').innerHTML = '';
-    wcdCount = 0;
-    data._rows.forEach(r => addWCDRowData([r.cat, r.n, r.elec, r.rate]));
-    return;
-  }
-  if (paneId === 'mor-dsd' && Array.isArray(data._rows)) {
-    document.getElementById('dsd-body').innerHTML = '';
-    dsdCount = 0;
-    data._rows.forEach(r => addDSDRowData([r.sup, r.gen, r.cstart, r.cend, r.ccap, r.cenergy, '', r.purch, r.cost]));
-    return;
-  }
-
-  const pane = document.getElementById('pane-' + paneId);
-  if (!pane) return;
-
-  // Restore by id first
-  Object.entries(data).forEach(([id, val]) => {
-    if (id.startsWith('__anon_')) return;
-    const el = document.getElementById(id);
-    if (el) el.value = val;
-  });
-  // Restore anonymous inputs (UR table rows) by position
-  const anonEntries = Object.entries(data).filter(([k]) => k.startsWith('__anon_'));
-  if (anonEntries.length) {
-    const anons = pane.querySelectorAll('input:not([id]), select:not([id])');
-    anonEntries.forEach(([k, val]) => {
-      const idx = parseInt(k.replace('__anon_', ''), 10);
-      if (anons[idx]) anons[idx].value = val;
-    });
-  }
-}
-
-// ── Save ALL sections for a given period key to localStorage (called on period switch) ──
 function saveAllSectionsLocal(periodKey) {
-  try {
-    const stored = JSON.parse(localStorage.getItem('depdms_formdata') || '{}');
-    if (!stored[periodKey]) stored[periodKey] = {};
-    ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s => {
-      stored[periodKey][s] = collectPane(s);
-    });
-    localStorage.setItem('depdms_formdata', JSON.stringify(stored));
-  } catch(e) {}
+  try { const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}'); if(!stored[periodKey]) stored[periodKey]={}; ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s=>{ stored[periodKey][s]=collectPane(s); }); localStorage.setItem('depdms_formdata',JSON.stringify(stored)); } catch(e) {}
 }
-
-// ── Save a single section to GS + localStorage (called on Save button) ──
 async function saveFormDataGS(section) {
-  const key = formDataKey();
-  const sectionData = collectPane(section);
-  // localStorage
-  try {
-    const stored = JSON.parse(localStorage.getItem('depdms_formdata') || '{}');
-    if (!stored[key]) stored[key] = {};
-    stored[key][section] = sectionData;
-    localStorage.setItem('depdms_formdata', JSON.stringify(stored));
-  } catch(e) {}
-  // Google Sheets
-  if (GS_URL && GS_URL !== 'YOUR_NEW_WEBAPP_URL_HERE') {
-    setSyncStatus('syncing');
-    const res = await gsCall('saveFormData', { section, key, data: sectionData });
-    setSyncStatus(res?.ok ? 'ok' : 'error');
-  }
+  const key=formDataKey(), sectionData=collectPane(section);
+  try { const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}'); if(!stored[key]) stored[key]={}; stored[key][section]=sectionData; localStorage.setItem('depdms_formdata',JSON.stringify(stored)); } catch(e) {}
+  if(GS_URL){ setSyncStatus('syncing'); const res=await gsCall('saveFormData',{section,key,data:sectionData}); setSyncStatus(res?.ok?'ok':'error'); }
 }
-
-// ── Load all sections for current period — GS first, localStorage fallback ──
 async function loadFormDataGS() {
-  const key = formDataKey();
-
-  // Always reset tables to defaults before restoring so stale data doesn't bleed over
-  buildURTable();
-  buildCSDTable();
-  buildWCDTable();
-  buildDSDTable();
-
-  // Try Google Sheets
-  if (GS_URL && GS_URL !== 'YOUR_NEW_WEBAPP_URL_HERE') {
+  const key=formDataKey();
+  buildURTable(); buildCSDTable(); buildWCDTable(); buildDSDTable();
+  if(GS_URL){
     setSyncStatus('syncing');
-    const res = await gsCall('getFormData', { key });
-
-    if (res === null) {
-      // Network/fetch failure — real error
-      setSyncStatus('error');
-    } else if (res?.ok) {
-      // GS responded fine — even if no data yet for this month, that's OK
+    const res=await gsCall('getFormData',{key});
+    if(res===null){ setSyncStatus('error'); }
+    else if(res?.ok){
       setSyncStatus('ok');
-      if (res.data && Object.keys(res.data).length > 0) {
-        ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s => {
-          if (res.data[s]) restorePane(s, res.data[s]);
-        });
-      }
-      // If no GS data, also check localStorage for this period
-      else {
-        try {
-          const stored = JSON.parse(localStorage.getItem('depdms_formdata') || '{}');
-          const periodData = stored[key];
-          if (periodData) {
-            ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s => {
-              if (periodData[s]) restorePane(s, periodData[s]);
-            });
-          }
-        } catch(e) {}
-      }
+      if(res.data&&Object.keys(res.data).length>0){ ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s=>{if(res.data[s]) restorePane(s,res.data[s]);});}
+      else{ try{const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}');const pd=stored[key];if(pd){ ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s=>{if(pd[s]) restorePane(s,pd[s]);});}}catch(e){} }
       return;
-    } else {
-      // GS returned ok:false — actual backend error
-      setSyncStatus('error');
-    }
-  } else {
-    setSyncStatus('offline');
-  }
-
-  // Fallback: localStorage only
-  try {
-    const stored = JSON.parse(localStorage.getItem('depdms_formdata') || '{}');
-    const periodData = stored[key];
-    if (periodData) {
-      ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s => {
-        if (periodData[s]) restorePane(s, periodData[s]);
-      });
-    }
-  } catch(e) {}
+    }else{ setSyncStatus('error'); }
+  }else{ setSyncStatus('offline'); }
+  try{const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}');const pd=stored[key];if(pd){ ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s=>{if(pd[s]) restorePane(s,pd[s]);});}}catch(e){}
 }
 
-// ── AUDIT LOG SYNC ──
-async function saveAuditLogGS() {
-  if (!GS_URL) return;
-  await gsCall('saveAuditLog', { data: auditLog.slice(0, 500) }); // keep last 500
-}
-async function loadAuditLogGS() {
-  if (!GS_URL) return;
-  const res = await gsCall('getAuditLog');
-  if (res?.ok && Array.isArray(res.data)) {
-    auditLog = res.data;
-    updateLogStats();
-    renderLog();
-  }
-}
+const DEPT_LABEL_MAP={'finance':'Finance Department','tsd':'Technical Services Dept.','power-trading':'Power Trading Dept.','admin':'Administration'};
 
-const DEPT_LABEL_MAP = {
-  'finance': 'Finance Department',
-  'tsd': 'Technical Services Dept.',
-  'power-trading': 'Power Trading Dept.',
-  'admin': 'Administration',
-};
+// ── FORGOT PASSWORD ──
+let _fpVerifiedUsername=null,_fpOtpCode=null,_fpOtpExpiry=null;
+function showForgotPw(){document.getElementById('signin-card').style.display='none';document.getElementById('signup-card').style.display='none';document.getElementById('forgotpw-card').style.display='block';_fpReset();}
+function hideForgotPw(){document.getElementById('forgotpw-card').style.display='none';document.getElementById('signin-card').style.display='block';_fpReset();}
+function _fpReset(){_fpVerifiedUsername=null;_fpOtpCode=null;_fpOtpExpiry=null;['fp-otp','fp-pw','fp-pw2'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});['fp-pw','fp-pw2'].forEach(id=>{const el=document.getElementById(id);if(el)el.type='password';});['fp-pw-eye','fp-pw2-eye'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='👁';});const uSel=document.getElementById('fp-username');if(uSel){uSel.innerHTML='<option value="">— Select department first —</option>';uSel.disabled=true;}document.getElementById('fp-error').classList.remove('show');document.getElementById('fp-ok').classList.remove('show');_fpGoToStep(1);}
+function _fpGoToStep(n){[1,2,3].forEach(i=>{const el=document.getElementById('fp-step'+i);if(el)el.classList.toggle('active',i===n);});}
+function fpGoBack(){_fpVerifiedUsername=null;_fpOtpCode=null;_fpOtpExpiry=null;document.getElementById('fp-otp').value='';document.getElementById('fp-pw').value='';document.getElementById('fp-pw2').value='';document.getElementById('fp-error').classList.remove('show');document.getElementById('fp-ok').classList.remove('show');_fpGoToStep(1);}
+function showFpErr(msg){document.getElementById('fp-error-msg').textContent=msg;document.getElementById('fp-error').classList.add('show');document.getElementById('fp-ok').classList.remove('show');}
+function showFpOk(msg){document.getElementById('fp-ok-msg').textContent=msg;document.getElementById('fp-ok').classList.add('show');document.getElementById('fp-error').classList.remove('show');}
+function onFpDeptChange(){const dept=document.getElementById('fp-dept').value,sel=document.getElementById('fp-username');sel.innerHTML='';document.getElementById('fp-error').classList.remove('show');if(!dept){sel.innerHTML='<option value="">— Select department first —</option>';sel.disabled=true;return;}const signups=getSignups(),deptSignups=signups.filter(u=>u.deptKey===dept&&u.email);if(deptSignups.length===0){sel.innerHTML='<option value="">— No registered accounts in this department —</option>';sel.disabled=true;return;}sel.innerHTML='<option value="">— Select your username —</option>';deptSignups.forEach(u=>{const opt=document.createElement('option');opt.value=u.username;opt.textContent=u.username;sel.appendChild(opt);});sel.disabled=false;}
+async function fpSendOtp(){const username=document.getElementById('fp-username').value.trim(),dept=document.getElementById('fp-dept').value;document.getElementById('fp-error').classList.remove('show');document.getElementById('fp-ok').classList.remove('show');if(!dept)return showFpErr('Please select your department.');if(!username)return showFpErr('Please select your username.');const btn=document.getElementById('fp-send-btn');btn.disabled=true;btn.textContent='Sending…';if(GS_URL){const res=await gsCall('getSignups');if(res?.ok&&Array.isArray(res.data)){localStorage.setItem('depdms_signups',JSON.stringify(res.data));applySignupsToRuntime(res.data);}}const signups=getSignups(),user=signups.find(u=>u.username===username);if(!user){btn.disabled=false;btn.textContent='Send Verification Code →';return showFpErr('Account not found.');}if(!user.email){btn.disabled=false;btn.textContent='Send Verification Code →';return showFpErr('No email registered for this account.');}const otp=Math.floor(100000+Math.random()*900000).toString();_fpOtpCode=otp;_fpOtpExpiry=Date.now()+5*60*1000;const res=await gsCall('sendOtp',{email:user.email,username:user.username,name:user.name,otp});btn.disabled=false;btn.textContent='Send Verification Code →';if(!res?.ok){const masked=user.email.replace(/^(.).+(@.+)$/,(_, a,b)=>a+'***'+b);document.getElementById('fp-email-hint').textContent=masked+' (email failed — code shown below)';_fpVerifiedUsername=username;_fpStartOtpTimer();_fpGoToStep(2);const otpHint=document.getElementById('fp-otp-fallback');if(otpHint){otpHint.style.display='block';otpHint.textContent='⚠ Email could not be sent. Your verification code is: '+otp;}addLogAnon('SAVE','OTP shown on-screen (email failed) for account "'+username+'"',username,user.name,user.dept);return;}const masked=user.email.replace(/^(.).+(@.+)$/,(_,a,b)=>a+'***'+b);document.getElementById('fp-email-hint').textContent=masked;_fpVerifiedUsername=username;_fpStartOtpTimer();_fpGoToStep(2);addLogAnon('SAVE','Password reset OTP sent to "'+masked+'" for account "'+username+'"',username,user.name,user.dept);}
+let _fpTimerInterval=null;
+function _fpStartOtpTimer(){clearInterval(_fpTimerInterval);_fpUpdateTimer();_fpTimerInterval=setInterval(()=>{if(!_fpUpdateTimer())clearInterval(_fpTimerInterval);},1000);}
+function _fpUpdateTimer(){const remaining=Math.max(0,Math.ceil((_fpOtpExpiry-Date.now())/1000)),el=document.getElementById('fp-otp-timer');if(!el)return false;const m=Math.floor(remaining/60),s=remaining%60;el.textContent=m+':'+String(s).padStart(2,'0');if(remaining===0){el.textContent='Expired';el.style.color='var(--danger)';return false;}el.style.color=remaining<60?'var(--accent4)':'var(--accent2)';return true;}
+function fpVerifyOtp(){const entered=document.getElementById('fp-otp').value.trim();document.getElementById('fp-error').classList.remove('show');document.getElementById('fp-ok').classList.remove('show');if(!entered)return showFpErr('Please enter the 6-digit code.');if(entered.length!==6||!/^\d+$/.test(entered))return showFpErr('The code must be exactly 6 digits.');if(Date.now()>_fpOtpExpiry)return showFpErr('This code has expired.');if(entered!==_fpOtpCode){addLogAnon('FAIL','Wrong OTP entered for account "'+_fpVerifiedUsername+'"',_fpVerifiedUsername,'','');return showFpErr('Incorrect code.');}clearInterval(_fpTimerInterval);const signups=getSignups(),user=signups.find(u=>u.username===_fpVerifiedUsername);document.getElementById('fp-verified-label').textContent=(user?.name||_fpVerifiedUsername)+' ('+_fpVerifiedUsername+')';_fpGoToStep(3);}
+async function fpResetPassword(){if(!_fpVerifiedUsername)return showFpErr('Session expired. Please start over.');const pw=document.getElementById('fp-pw').value,pw2=document.getElementById('fp-pw2').value;document.getElementById('fp-error').classList.remove('show');document.getElementById('fp-ok').classList.remove('show');if(!pw)return showFpErr('Please enter a new password.');if(pw.length<6)return showFpErr('Password must be at least 6 characters.');if(pw!==pw2)return showFpErr('Passwords do not match.');const btn=document.getElementById('fp-reset-btn');btn.disabled=true;btn.textContent='Saving…';const newHash=await sha256(pw),signups=getSignups(),idx=signups.findIndex(u=>u.username===_fpVerifiedUsername);if(idx===-1){btn.disabled=false;btn.textContent='Reset Password ✓';return showFpErr('Account not found.');}signups[idx].pwHash=newHash;signups[idx].password=pw;saveSignups(signups);if(USER_DB[_fpVerifiedUsername])USER_DB[_fpVerifiedUsername].pwHash=newHash;addLogAnon('SAVE','Password successfully reset via OTP for account "'+_fpVerifiedUsername+'"',_fpVerifiedUsername,signups[idx].name,signups[idx].dept);btn.disabled=false;btn.textContent='Reset Password ✓';showFpOk('Password reset successfully! Redirecting to sign in…');setTimeout(()=>hideForgotPw(),2500);}
+function toggleFpPw(inputId,btnId){const inp=document.getElementById(inputId);inp.type=inp.type==='password'?'text':'password';document.getElementById(btnId).textContent=inp.type==='password'?'👁':'🙈';}
 
-// ═══════════════════════════════════════════════
-// ── FORGOT PASSWORD (Email OTP) ─────────────────
-// ═══════════════════════════════════════════════
+// ── SIGN UP ──
+function showSignUp(){document.getElementById('signin-card').style.display='none';document.getElementById('signup-card').style.display='block';document.getElementById('login-error').classList.remove('show');document.getElementById('signup-error').classList.remove('show');document.getElementById('signup-ok').classList.remove('show');}
+function hideSignUp(){document.getElementById('signup-card').style.display='none';document.getElementById('signin-card').style.display='block';}
+function toggleSuPw(){const inp=document.getElementById('su-pw');inp.type=inp.type==='password'?'text':'password';document.getElementById('su-eye').textContent=inp.type==='password'?'👁':'🙈';}
+const DEPT_DEFAULT_ROLE={'finance':'ur','tsd':'dtd','power-trading':'dsd','admin':'admin'};
+function onSuDeptChange(){document.getElementById('signup-error').classList.remove('show');}
+function showSignupErr(msg){const el=document.getElementById('signup-error');document.getElementById('signup-error-msg').textContent=msg;el.classList.add('show');document.getElementById('signup-ok').classList.remove('show');}
+function showSignupOk(msg){const el=document.getElementById('signup-ok');document.getElementById('signup-ok-msg').textContent=msg;el.classList.add('show');document.getElementById('signup-error').classList.remove('show');}
+async function doSignUp(){const name=document.getElementById('su-name').value.trim(),rawUser=document.getElementById('su-username').value.trim(),username=rawUser.toLowerCase().replace(/\s+/g,'.').replace(/[^a-z0-9._]/g,''),dept=document.getElementById('su-dept').value,email=document.getElementById('su-email').value.trim().toLowerCase(),pw=document.getElementById('su-pw').value,pw2=document.getElementById('su-pw2').value;document.getElementById('signup-error').classList.remove('show');document.getElementById('signup-ok').classList.remove('show');if(!name)return showSignupErr('Full name is required.');if(!dept)return showSignupErr('Please select a department.');if(!rawUser)return showSignupErr('Username is required.');if(username.length<3)return showSignupErr('Username must be at least 3 characters.');if(username!==rawUser.toLowerCase())document.getElementById('su-username').value=username;if(!email)return showSignupErr('Gmail address is required.');if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))return showSignupErr('Please enter a valid email address.');if(!pw)return showSignupErr('Password is required.');if(pw.length<6)return showSignupErr('Password must be at least 6 characters.');if(pw!==pw2)return showSignupErr('Passwords do not match.');if(USER_DB[username])return showSignupErr('Username "'+username+'" is already taken.');const signups=getSignups();if(signups.find(u=>u.username===username))return showSignupErr('Username "'+username+'" is already taken.');const btn=document.getElementById('signup-btn');btn.disabled=true;btn.textContent='Creating…';const role=DEPT_DEFAULT_ROLE[dept]||'ur',pwHash=await sha256(pw),newUser={username,name,email,dept:DEPT_LABEL_MAP[dept]||dept,deptKey:dept,role,password:pw,pwHash,createdAt:new Date().toISOString(),source:'signup'};signups.push(newUser);saveSignups(signups);USER_DB[username]={name:newUser.name,dept:newUser.dept,deptKey:dept,role,pwHash};if(!DEPT_USERS[dept])DEPT_USERS[dept]=[];if(!DEPT_USERS[dept].includes(username))DEPT_USERS[dept].push(username);USER_LABELS[username]=name;addLogAnon('LOGIN','New account created via Sign Up: "'+name+'" · Username: '+username+' · Dept: '+newUser.dept,username,name,newUser.dept);renderLog();btn.disabled=false;btn.textContent='Create Account ✓';showSignupOk('Account created! You can now sign in as "'+username+'".');['su-name','su-username','su-email','su-pw','su-pw2'].forEach(id=>document.getElementById(id).value='');document.getElementById('su-dept').value='';}
 
-let _fpVerifiedUsername = null; // confirmed after OTP
-let _fpOtpCode          = null; // 6-digit code sent to email
-let _fpOtpExpiry        = null; // expiry timestamp (5 min)
-
-function showForgotPw() {
-  document.getElementById('signin-card').style.display   = 'none';
-  document.getElementById('signup-card').style.display   = 'none';
-  document.getElementById('forgotpw-card').style.display = 'block';
-  _fpReset();
-}
-
-function hideForgotPw() {
-  document.getElementById('forgotpw-card').style.display = 'none';
-  document.getElementById('signin-card').style.display   = 'block';
-  _fpReset();
-}
-
-function _fpReset() {
-  _fpVerifiedUsername = null;
-  _fpOtpCode          = null;
-  _fpOtpExpiry        = null;
-  ['fp-dept','fp-name'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
-  ['fp-otp','fp-pw','fp-pw2'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
-  ['fp-pw','fp-pw2'].forEach(id => { const el = document.getElementById(id); if(el) el.type = 'password'; });
-  ['fp-pw-eye','fp-pw2-eye'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = '👁'; });
-  const uSel = document.getElementById('fp-username');
-  if (uSel) { uSel.innerHTML = '<option value="">— Select department first —</option>'; uSel.disabled = true; }
-  document.getElementById('fp-error').classList.remove('show');
-  document.getElementById('fp-ok').classList.remove('show');
-  _fpGoToStep(1);
-}
-
-function _fpGoToStep(n) {
-  [1,2,3].forEach(i => {
-    const el = document.getElementById('fp-step' + i);
-    if (el) el.classList.toggle('active', i === n);
-  });
-}
-
-function fpGoBack() {
-  _fpVerifiedUsername = null;
-  _fpOtpCode          = null;
-  _fpOtpExpiry        = null;
-  document.getElementById('fp-otp').value = '';
-  document.getElementById('fp-pw').value  = '';
-  document.getElementById('fp-pw2').value = '';
-  document.getElementById('fp-error').classList.remove('show');
-  document.getElementById('fp-ok').classList.remove('show');
-  _fpGoToStep(1);
-}
-
-function showFpErr(msg) {
-  document.getElementById('fp-error-msg').textContent = msg;
-  document.getElementById('fp-error').classList.add('show');
-  document.getElementById('fp-ok').classList.remove('show');
-}
-function showFpOk(msg) {
-  document.getElementById('fp-ok-msg').textContent = msg;
-  document.getElementById('fp-ok').classList.add('show');
-  document.getElementById('fp-error').classList.remove('show');
-}
-
-function onFpDeptChange() {
-  const dept = document.getElementById('fp-dept').value;
-  const sel  = document.getElementById('fp-username');
-  sel.innerHTML = '';
-  document.getElementById('fp-error').classList.remove('show');
-  if (!dept) {
-    sel.innerHTML = '<option value="">— Select department first —</option>';
-    sel.disabled = true;
-    return;
-  }
-  // Only show signed-up accounts (they have a registered email)
-  const signups = getSignups();
-  const deptSignups = signups.filter(u => u.deptKey === dept && u.email);
-  if (deptSignups.length === 0) {
-    sel.innerHTML = '<option value="">— No registered accounts in this department —</option>';
-    sel.disabled = true;
-    return;
-  }
-  sel.innerHTML = '<option value="">— Select your username —</option>';
-  deptSignups.forEach(u => {
-    const opt = document.createElement('option');
-    opt.value = u.username;
-    opt.textContent = u.username;
-    sel.appendChild(opt);
-  });
-  sel.disabled = false;
-}
-
-// ── STEP 1: Send OTP to registered email ──
-async function fpSendOtp() {
-  const username = document.getElementById('fp-username').value.trim();
-  const dept     = document.getElementById('fp-dept').value;
-
-  document.getElementById('fp-error').classList.remove('show');
-  document.getElementById('fp-ok').classList.remove('show');
-
-  if (!dept)     return showFpErr('Please select your department.');
-  if (!username) return showFpErr('Please select your username.');
-
-  const btn = document.getElementById('fp-send-btn');
-  btn.disabled = true; btn.textContent = 'Sending…';
-
-  // Reload signups from GS to get latest email
-  if (GS_URL) {
-    const res = await gsCall('getSignups');
-    if (res?.ok && Array.isArray(res.data)) {
-      localStorage.setItem('depdms_signups', JSON.stringify(res.data));
-      applySignupsToRuntime(res.data);
-    }
-  }
-
-  const signups = getSignups();
-  const user = signups.find(u => u.username === username);
-
-  if (!user) {
-    btn.disabled = false; btn.textContent = 'Send Verification Code →';
-    return showFpErr('Account not found. Only signed-up accounts can reset their password.');
-  }
-  if (!user.email) {
-    btn.disabled = false; btn.textContent = 'Send Verification Code →';
-    return showFpErr('No email registered for this account. Please contact the admin to reset your password.');
-  }
-
-  // Generate 6-digit OTP
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  _fpOtpCode    = otp;
-  _fpOtpExpiry  = Date.now() + 5 * 60 * 1000; // 5 minutes
-
-  // Send OTP via Google Apps Script
-  const res = await gsCall('sendOtp', {
-    email:    user.email,
-    username: user.username,
-    name:     user.name,
-    otp:      otp,
-  });
-
-  btn.disabled = false; btn.textContent = 'Send Verification Code →';
-
-  if (!res?.ok) {
-    // Email failed — show OTP directly on screen as fallback
-    // This happens when Apps Script MailApp isn't authorized yet
-    const masked = user.email.replace(/^(.).+(@.+)$/, (_, a, b) => a + '***' + b);
-    document.getElementById('fp-email-hint').textContent = masked + ' (email failed — code shown below)';
-    document.getElementById('fp-step2-username').textContent = username;
-    _fpVerifiedUsername = username;
-    _fpStartOtpTimer();
-    _fpGoToStep(2);
-    // Show OTP on screen as fallback
-    const otpHint = document.getElementById('fp-otp-fallback');
-    if (otpHint) {
-      otpHint.style.display = 'block';
-      otpHint.textContent = '⚠ Email could not be sent. Your verification code is: ' + otp;
-    }
-    addLogAnon('SAVE', 'OTP shown on-screen (email failed) for account "' + username + '"', username, user.name, user.dept);
-    return;
-  }
-
-  // Mask the email for display: j***@gmail.com
-  const masked = user.email.replace(/^(.).+(@.+)$/, (_, a, b) => a + '***' + b);
-  document.getElementById('fp-email-hint').textContent = masked;
-  document.getElementById('fp-step2-username').textContent = username;
-
-  // Start 5-minute countdown
-  _fpVerifiedUsername = username; // store for step 2
-  _fpStartOtpTimer();
-
-  _fpGoToStep(2);
-  addLogAnon('SAVE', 'Password reset OTP sent to "' + masked + '" for account "' + username + '"', username, user.name, user.dept);
-}
-
-let _fpTimerInterval = null;
-function _fpStartOtpTimer() {
-  clearInterval(_fpTimerInterval);
-  _fpUpdateTimer();
-  _fpTimerInterval = setInterval(() => {
-    if (!_fpUpdateTimer()) clearInterval(_fpTimerInterval);
-  }, 1000);
-}
-function _fpUpdateTimer() {
-  const remaining = Math.max(0, Math.ceil((_fpOtpExpiry - Date.now()) / 1000));
-  const el = document.getElementById('fp-otp-timer');
-  if (!el) return false;
-  const m = Math.floor(remaining / 60);
-  const s = remaining % 60;
-  el.textContent = m + ':' + String(s).padStart(2,'0');
-  if (remaining === 0) {
-    el.textContent = 'Expired';
-    el.style.color = 'var(--danger)';
-    return false;
-  }
-  el.style.color = remaining < 60 ? 'var(--accent4)' : 'var(--accent2)';
-  return true;
-}
-
-// ── STEP 2: Verify OTP ──
-function fpVerifyOtp() {
-  const entered = document.getElementById('fp-otp').value.trim();
-
-  document.getElementById('fp-error').classList.remove('show');
-  document.getElementById('fp-ok').classList.remove('show');
-
-  if (!entered) return showFpErr('Please enter the 6-digit code from your email.');
-  if (entered.length !== 6 || !/^\d+$/.test(entered)) return showFpErr('The code must be exactly 6 digits.');
-
-  if (Date.now() > _fpOtpExpiry) {
-    return showFpErr('This code has expired. Please go back and request a new one.');
-  }
-  if (entered !== _fpOtpCode) {
-    addLogAnon('FAIL', 'Wrong OTP entered for account "' + _fpVerifiedUsername + '"', _fpVerifiedUsername, '', '');
-    return showFpErr('Incorrect code. Please check your email and try again.');
-  }
-
-  // OTP is correct — move to step 3
-  clearInterval(_fpTimerInterval);
-  const signups = getSignups();
-  const user = signups.find(u => u.username === _fpVerifiedUsername);
-  document.getElementById('fp-verified-label').textContent = (user?.name || _fpVerifiedUsername) + ' (' + _fpVerifiedUsername + ')';
-  _fpGoToStep(3);
-}
-
-// ── STEP 3: Set new password ──
-async function fpResetPassword() {
-  if (!_fpVerifiedUsername) return showFpErr('Session expired. Please start over.');
-
-  const pw  = document.getElementById('fp-pw').value;
-  const pw2 = document.getElementById('fp-pw2').value;
-
-  document.getElementById('fp-error').classList.remove('show');
-  document.getElementById('fp-ok').classList.remove('show');
-
-  if (!pw)           return showFpErr('Please enter a new password.');
-  if (pw.length < 6) return showFpErr('Password must be at least 6 characters.');
-  if (pw !== pw2)    return showFpErr('Passwords do not match.');
-
-  const btn = document.getElementById('fp-reset-btn');
-  btn.disabled = true; btn.textContent = 'Saving…';
-
-  const newHash = await sha256(pw);
-  const signups = getSignups();
-  const idx = signups.findIndex(u => u.username === _fpVerifiedUsername);
-
-  if (idx === -1) {
-    btn.disabled = false; btn.textContent = 'Reset Password ✓';
-    return showFpErr('Account not found. Please contact the admin.');
-  }
-
-  signups[idx].pwHash   = newHash;
-  signups[idx].password = pw;
-  saveSignups(signups);
-
-  if (USER_DB[_fpVerifiedUsername]) USER_DB[_fpVerifiedUsername].pwHash = newHash;
-
-  addLogAnon('SAVE',
-    'Password successfully reset via OTP for account "' + _fpVerifiedUsername + '" · Dept: ' + signups[idx].dept,
-    _fpVerifiedUsername, signups[idx].name, signups[idx].dept
-  );
-
-  btn.disabled = false; btn.textContent = 'Reset Password ✓';
-  showFpOk('Password reset successfully! Redirecting to sign in…');
-  setTimeout(() => hideForgotPw(), 2500);
-}
-
-function toggleFpPw(inputId, btnId) {
-  const inp = document.getElementById(inputId);
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-  document.getElementById(btnId).textContent = inp.type === 'password' ? '👁' : '🙈';
-}
-
-function showSignUp() {
-  document.getElementById('signin-card').style.display = 'none';
-  document.getElementById('signup-card').style.display = 'block';
-  document.getElementById('login-error').classList.remove('show');
-  document.getElementById('signup-error').classList.remove('show');
-  document.getElementById('signup-ok').classList.remove('show');
-}
-function hideSignUp() {
-  document.getElementById('signup-card').style.display = 'none';
-  document.getElementById('signin-card').style.display = 'block';
-}
-function toggleSuPw() {
-  const inp = document.getElementById('su-pw');
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-  document.getElementById('su-eye').textContent = inp.type === 'password' ? '👁' : '🙈';
-}
-
-// Predefined username slots per department (available to sign up)
-const DEPT_USERNAMES = {
-  'finance':       ['finance.head','finance.encoder','finance.officer','finance.staff'],
-  'tsd':           ['tsd.engineer','tsd.encoder','tsd.officer','tsd.staff'],
-  'power-trading': ['pt.analyst','pt.encoder','pt.wheeling','pt.officer','pt.staff'],
-  'admin':         ['admin.officer','admin.staff','admin.encoder'],
-};
-
-// Role auto-assigned per department
-const DEPT_DEFAULT_ROLE = {
-  'finance':       'ur',
-  'tsd':           'dtd',
-  'power-trading': 'dsd',
-  'admin':         'admin',
-};
-
-function onSuDeptChange() {
-  // Username is now a free-text field — no dropdown to update
-  document.getElementById('signup-error').classList.remove('show');
-}
-
-function showSignupErr(msg) {
-  const el = document.getElementById('signup-error');
-  document.getElementById('signup-error-msg').textContent = msg;
-  el.classList.add('show');
-  document.getElementById('signup-ok').classList.remove('show');
-}
-function showSignupOk(msg) {
-  const el = document.getElementById('signup-ok');
-  document.getElementById('signup-ok-msg').textContent = msg;
-  el.classList.add('show');
-  document.getElementById('signup-error').classList.remove('show');
-}
-
-async function doSignUp() {
-  const name     = document.getElementById('su-name').value.trim();
-  const rawUser  = document.getElementById('su-username').value.trim();
-  const username = rawUser.toLowerCase().replace(/\s+/g, '.').replace(/[^a-z0-9._]/g, '');
-  const dept     = document.getElementById('su-dept').value;
-  const email    = document.getElementById('su-email').value.trim().toLowerCase();
-  const pw       = document.getElementById('su-pw').value;
-  const pw2      = document.getElementById('su-pw2').value;
-
-  document.getElementById('signup-error').classList.remove('show');
-  document.getElementById('signup-ok').classList.remove('show');
-
-  if (!name)     return showSignupErr('Full name is required.');
-  if (!dept)     return showSignupErr('Please select a department.');
-  if (!rawUser)  return showSignupErr('Username is required.');
-  if (username.length < 3) return showSignupErr('Username must be at least 3 characters.');
-  if (username !== rawUser.toLowerCase()) {
-    // Auto-corrected — show user what it will be
-    document.getElementById('su-username').value = username;
-  }
-  if (!email)    return showSignupErr('Gmail address is required.');
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return showSignupErr('Please enter a valid email address.');
-  if (!pw)       return showSignupErr('Password is required.');
-  if (pw.length < 6) return showSignupErr('Password must be at least 6 characters.');
-  if (pw !== pw2) return showSignupErr('Passwords do not match.');
-
-  if (USER_DB[username]) return showSignupErr('Username "' + username + '" is already taken. Please choose another.');
-  const signups = getSignups();
-  if (signups.find(u => u.username === username)) return showSignupErr('Username "' + username + '" is already taken. Choose another.');
-
-  const btn = document.getElementById('signup-btn');
-  btn.disabled = true; btn.textContent = 'Creating…';
-
-  const role   = DEPT_DEFAULT_ROLE[dept] || 'ur';
-  const pwHash = await sha256(pw);
-  const newUser = {
-    username, name, email,
-    dept: DEPT_LABEL_MAP[dept] || dept,
-    deptKey: dept, role,
-    password: pw, pwHash,
-    createdAt: new Date().toISOString(),
-    source: 'signup',
-  };
-  signups.push(newUser);
-  saveSignups(signups);
-
-  USER_DB[username] = { name: newUser.name, dept: newUser.dept, deptKey: dept, role, pwHash };
-  if (!DEPT_USERS[dept]) DEPT_USERS[dept] = [];
-  if (!DEPT_USERS[dept].includes(username)) DEPT_USERS[dept].push(username);
-  USER_LABELS[username] = name;
-
-  addLogAnon('LOGIN', 'New account created via Sign Up: "' + name + '" · Username: ' + username + ' · Dept: ' + newUser.dept, username, name, newUser.dept);
-  renderLog();
-
-  btn.disabled = false; btn.textContent = 'Create Account ✓';
-  showSignupOk('Account created! You can now sign in as "' + username + '".');
-
-  document.getElementById('su-name').value     = '';
-  document.getElementById('su-username').value = '';
-  document.getElementById('su-email').value    = '';
-  document.getElementById('su-pw').value       = '';
-  document.getElementById('su-pw2').value      = '';
-  document.getElementById('su-dept').value     = '';
-}
-
-// Load signed-up users on page load (GS first, then localStorage fallback)
 loadSignupsFromGS();
 
-// ═══════════════════════════════════════════════
-// ── CHANGE PASSWORD ──────────────────────────────
-// ═══════════════════════════════════════════════
+// ── SESSION RESTORE ──
+(function restoreSession(){
+  try{
+    const saved=sessionStorage.getItem('depdms_session'); if(!saved) return;
+    const{username,user}=JSON.parse(saved); if(!username||!user) return;
+    loadSignupsFromGS().then(()=>{ const freshUser=USER_DB[username]; const mergedUser=freshUser?{...user,pwHash:freshUser.pwHash,email:freshUser.email}:user; enterSession(username,mergedUser); });
+  }catch(e){}
+})();
 
-function toggleCpwVis(inputId, btnId) {
-  const inp = document.getElementById(inputId);
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-  document.getElementById(btnId).textContent = inp.type === 'password' ? '👁' : '🙈';
-}
-function clearCpwForm() {
-  ['cpw-old','cpw-new','cpw-new2'].forEach(id => document.getElementById(id).value = '');
-  const msg = document.getElementById('cpw-msg');
-  msg.className = 'changepw-msg'; msg.textContent = '';
-}
-function cpwMsg(text, isErr) {
-  const msg = document.getElementById('cpw-msg');
-  msg.textContent = text;
-  msg.className = 'changepw-msg ' + (isErr ? 'err' : 'ok');
-}
+// ── FIX 2: refreshPage — parallel fetches ──
+function refreshPage() {
+  if (!currentUser) return;
+  const icon = document.getElementById('refresh-icon');
+  if (icon) icon.style.animation = 'spin .7s linear infinite';
+  setSyncStatus('syncing');
 
-async function doChangePassword() {
-  const oldPw   = document.getElementById('cpw-old').value;
-  const newPw   = document.getElementById('cpw-new').value;
-  const newPw2  = document.getElementById('cpw-new2').value;
-
-  if (!oldPw)  return cpwMsg('Enter your current password.', true);
-  if (!newPw)  return cpwMsg('Enter a new password.', true);
-  if (newPw.length < 6) return cpwMsg('New password must be at least 6 characters.', true);
-  if (newPw !== newPw2) return cpwMsg('New passwords do not match.', true);
-
-  const oldHash = await sha256(oldPw);
-  const user = USER_DB[currentUser.username];
-  if (!user || oldHash !== user.pwHash) return cpwMsg('Current password is incorrect.', true);
-
-  const newHash = await sha256(newPw);
-
-  // Update in runtime USER_DB
-  user.pwHash = newHash;
-
-  // Update in localStorage signups if they're a signed-up user
-  const signups = getSignups();
-  const idx = signups.findIndex(u => u.username === currentUser.username);
-  if (idx !== -1) {
-    signups[idx].pwHash = newHash;
-    signups[idx].password = newPw;   // keep plain-text in sync for admin view
-    saveSignups(signups);
-  }
-
-  addLog('SAVE', 'Password changed for account "' + currentUser.username + '"');
-  renderLog();
-  cpwMsg('✓ Password updated successfully!', false);
-  clearCpwForm();
-  setTimeout(() => { const m = document.getElementById('cpw-msg'); m.className = 'changepw-msg'; m.textContent=''; }, 4000);
-}
-
-// ═══════════════════════════════════════════════
-// ── ADMIN USER MANAGEMENT ────────────────────────
-// ═══════════════════════════════════════════════
-
-// Built-in plain-text credentials for admin reference
-const BUILTIN_PW = {
-  'finance.head':'finance@2025','finance.encoder':'encode2025',
-  'tsd.engineer':'tsd@2025','tsd.encoder':'encode2025',
-  'pt.analyst':'power@2025','pt.encoder':'encode2025','pt.wheeling':'power@2025',
-  'admin':'zameco2025','admin.csd':'zameco2025',
-};
-
-function getAllUsers() {
-  const signups = getSignups();
-  const signupMap = {};
-  signups.forEach(u => signupMap[u.username] = u);
-
-  const builtIn = Object.keys(USER_DB)
-    .filter(k => !signupMap[k])
-    .map(k => ({
-      username: k,
-      name: USER_DB[k].name,
-      dept: USER_DB[k].dept,
-      role: USER_DB[k].role,
-      password: BUILTIN_PW[k] || '(built-in)',
-      source: 'built-in',
-    }));
-
-  const signedUp = signups.map(u => ({
-    username: u.username,
-    name: u.name,
-    dept: u.dept,
-    role: u.role,
-    password: u.password,
-    source: 'signup',
-  }));
-
-  return [...builtIn, ...signedUp];
-}
-
-function renderUserTable() {
-  const tbody = document.getElementById('uman-tbody');
-  if (!tbody) return;
-  // Show loading state
-  tbody.innerHTML = '<tr><td colspan="8" class="log-empty" style="color:var(--accent4);">⟳ Loading users…</td></tr>';
-  // Always reload from GS first so admin sees all users across all devices
-  _renderUserTableFromGS();
-}
-
-async function _renderUserTableFromGS() {
-  const tbody = document.getElementById('uman-tbody');
-  if (!tbody) return;
-
-  // Try to pull latest signups from GS
-  if (GS_URL && GS_URL !== 'YOUR_NEW_WEBAPP_URL_HERE') {
-    const res = await gsCall('getSignups');
-    if (res?.ok && Array.isArray(res.data)) {
-      // Sync GS signups into localStorage and runtime
-      localStorage.setItem('depdms_signups', JSON.stringify(res.data));
-      applySignupsToRuntime(res.data);
-    }
-  }
-
-  const search = (document.getElementById('uman-search')?.value || '').toLowerCase();
-  let users = getAllUsers();
-  if (search) users = users.filter(u =>
-    [u.username, u.name, u.dept, u.role].some(v => (v||'').toLowerCase().includes(search))
-  );
-
-  if (users.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="8" class="log-empty">No users found.</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = users.map((u, i) => {
-    const safePw = escHtml(u.password || '');
-    const roleLabel = (ROLE_CONFIG[u.role]?.label) || u.role;
-    const sourceBadge = u.source === 'signup'
-      ? '<span class="uman-source-badge signed-up">Signed Up</span>'
-      : '<span class="uman-source-badge built-in">Built-in</span>';
-    const deleteBtn = u.source === 'signup'
-      ? '<button class="uman-delete-btn" onclick="deleteSignupUser(\'' + escHtml(u.username) + '\')">🗑 Delete</button>'
-      : '<span style="color:var(--muted);font-size:10px">—</span>';
-
-    return [
-      '<tr>',
-      '<td style="color:var(--muted);font-size:11px;">' + (i+1) + '</td>',
-      '<td style="font-family:monospace;font-size:12px;font-weight:600;">' + escHtml(u.username) + '</td>',
-      '<td>' + escHtml(u.name) + '</td>',
-      '<td style="font-size:11px;color:var(--muted);">' + escHtml(u.dept) + '</td>',
-      '<td style="font-size:11px;">' + escHtml(roleLabel) + '</td>',
-      '<td class="uman-pw-cell">',
-        '<span class="uman-pw-mask" id="pw-mask-' + i + '" onclick="revealPw(' + i + ')" title="Click to reveal">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span>',
-        '<span class="uman-pw-reveal" id="pw-rev-' + i + '" style="display:none;">' + safePw + '</span>',
-        '<button class="eye" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;margin-left:4px;" onclick="revealPw(' + i + ')" title="Show/hide">&#128065;</button>',
-      '</td>',
-      '<td>' + sourceBadge + '</td>',
-      '<td>' + deleteBtn + '</td>',
-      '</tr>',
-    ].join('');
-  }).join('');
-}
-
-function revealPw(idx) {
-  const mask = document.getElementById('pw-mask-' + idx);
-  const rev  = document.getElementById('pw-rev-'  + idx);
-  if (!mask || !rev) return;
-  const showing = rev.style.display !== 'none';
-  mask.style.display = showing ? '' : 'none';
-  rev.style.display  = showing ? 'none' : '';
-}
-
-function deleteSignupUser(username) {
-  if (!confirm('Delete signed-up user "' + username + '"? This cannot be undone.')) return;
-  const signups = getSignups().filter(u => u.username !== username);
-  saveSignups(signups);
-  // Remove from runtime
-  delete USER_DB[username];
-  delete USER_LABELS[username];
-  Object.keys(DEPT_USERS).forEach(k => {
-    DEPT_USERS[k] = DEPT_USERS[k].filter(u => u !== username);
+  Promise.all([
+    loadSignupsFromGS(),
+    loadFormDataGS(),
+    GS_URL ? gsCall('getAuditLog').then(res => {
+      if (res?.ok && Array.isArray(res.data)) {
+        auditLog = res.data;
+        updateLogStats();
+        renderLog();
+      }
+    }).catch(() => {}) : Promise.resolve()
+  ]).finally(() => {
+    if (icon) icon.style.animation = '';
   });
-  addLog('SAVE', 'Admin deleted signed-up user "' + username + '"');
-  renderLog();
-  renderUserTable();
 }
 
+// ── CHANGE PASSWORD ──
+function toggleCpwVis(inputId,btnId){const inp=document.getElementById(inputId);inp.type=inp.type==='password'?'text':'password';document.getElementById(btnId).textContent=inp.type==='password'?'👁':'🙈';}
+function clearCpwForm(){['cpw-old','cpw-new','cpw-new2'].forEach(id=>document.getElementById(id).value='');const msg=document.getElementById('cpw-msg');msg.className='changepw-msg';msg.textContent='';}
+function cpwMsg(text,isErr){const msg=document.getElementById('cpw-msg');msg.textContent=text;msg.className='changepw-msg '+(isErr?'err':'ok');}
+async function doChangePassword(){const oldPw=document.getElementById('cpw-old').value,newPw=document.getElementById('cpw-new').value,newPw2=document.getElementById('cpw-new2').value;if(!oldPw)return cpwMsg('Enter your current password.',true);if(!newPw)return cpwMsg('Enter a new password.',true);if(newPw.length<6)return cpwMsg('New password must be at least 6 characters.',true);if(newPw!==newPw2)return cpwMsg('New passwords do not match.',true);const oldHash=await sha256(oldPw),user=USER_DB[currentUser.username];if(!user||oldHash!==user.pwHash)return cpwMsg('Current password is incorrect.',true);const newHash=await sha256(newPw);user.pwHash=newHash;const signups=getSignups(),idx=signups.findIndex(u=>u.username===currentUser.username);if(idx!==-1){signups[idx].pwHash=newHash;signups[idx].password=newPw;saveSignups(signups);}addLog('SAVE','Password changed for account "'+currentUser.username+'"');renderLog();cpwMsg('✓ Password updated successfully!',false);clearCpwForm();setTimeout(()=>{const m=document.getElementById('cpw-msg');m.className='changepw-msg';m.textContent='';},4000);}
+
+// ── USER MANAGEMENT ──
+const BUILTIN_PW={'admin':'zameco2025'};
+function getAllUsers(){const signups=getSignups(),signupMap={};signups.forEach(u=>signupMap[u.username]=u);const builtIn=Object.keys(USER_DB).filter(k=>!signupMap[k]).map(k=>({username:k,name:USER_DB[k].name,dept:USER_DB[k].dept,role:USER_DB[k].role,password:BUILTIN_PW[k]||'(built-in)',source:'built-in'}));const signedUp=signups.map(u=>({username:u.username,name:u.name,dept:u.dept,role:u.role,password:u.password,source:'signup'}));return[...builtIn,...signedUp];}
+function renderUserTable(){const tbody=document.getElementById('uman-tbody');if(!tbody)return;tbody.innerHTML='<tr><td colspan="8" class="log-empty" style="color:var(--accent4);">⟳ Loading users…</td></tr>';_renderUserTableFromGS();}
+async function _renderUserTableFromGS(){const tbody=document.getElementById('uman-tbody');if(!tbody)return;if(GS_URL){const res=await gsCall('getSignups');if(res?.ok&&Array.isArray(res.data)){localStorage.setItem('depdms_signups',JSON.stringify(res.data));applySignupsToRuntime(res.data);}}const search=(document.getElementById('uman-search')?.value||'').toLowerCase();let users=getAllUsers();if(search)users=users.filter(u=>[u.username,u.name,u.dept,u.role].some(v=>(v||'').toLowerCase().includes(search)));if(users.length===0){tbody.innerHTML='<tr><td colspan="8" class="log-empty">No users found.</td></tr>';return;}tbody.innerHTML=users.map((u,i)=>{const safePw=escHtml(u.password||''),roleLabel=(ROLE_CONFIG[u.role]?.label)||u.role,sourceBadge=u.source==='signup'?'<span class="uman-source-badge signed-up">Signed Up</span>':'<span class="uman-source-badge built-in">Built-in</span>',deleteBtn=u.source==='signup'?'<button class="uman-delete-btn" onclick="deleteSignupUser(\''+escHtml(u.username)+'\')">🗑 Delete</button>':'<span style="color:var(--muted);font-size:10px">—</span>';return['<tr>','<td style="color:var(--muted);font-size:11px;">'+(i+1)+'</td>','<td style="font-family:monospace;font-size:12px;font-weight:600;">'+escHtml(u.username)+'</td>','<td>'+escHtml(u.name)+'</td>','<td style="font-size:11px;color:var(--muted);">'+escHtml(u.dept)+'</td>','<td style="font-size:11px;">'+escHtml(roleLabel)+'</td>','<td class="uman-pw-cell"><span class="uman-pw-mask" id="pw-mask-'+i+'" onclick="revealPw('+i+')" title="Click to reveal">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span><span class="uman-pw-reveal" id="pw-rev-'+i+'" style="display:none;">'+safePw+'</span><button class="eye" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;margin-left:4px;" onclick="revealPw('+i+')" title="Show/hide">&#128065;</button></td>','<td>'+sourceBadge+'</td>','<td>'+deleteBtn+'</td>','</tr>'].join('');}).join('');}
+function revealPw(idx){const mask=document.getElementById('pw-mask-'+idx),rev=document.getElementById('pw-rev-'+idx);if(!mask||!rev)return;const showing=rev.style.display!=='none';mask.style.display=showing?'':'none';rev.style.display=showing?'none':'';}
+function deleteSignupUser(username){if(!confirm('Delete signed-up user "'+username+'"? This cannot be undone.'))return;const signups=getSignups().filter(u=>u.username!==username);saveSignups(signups);delete USER_DB[username];delete USER_LABELS[username];Object.keys(DEPT_USERS).forEach(k=>{DEPT_USERS[k]=DEPT_USERS[k].filter(u=>u!==username);});addLog('SAVE','Admin deleted signed-up user "'+username+'"');renderLog();renderUserTable();}
+
+// ── CSV PREVIEW ENGINE ──
+const CSV_PREVIEW_SECTIONS=['mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'];
+function parseCsvToRows(csvStr){return csvStr.split(/\r?\n/).map(line=>{const cells=[];let inQ=false,cur='';for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}else if(c===','&&!inQ){cells.push(cur);cur='';}else cur+=c;}cells.push(cur);return cells;}).filter(r=>r.length>0&&!(r.length===1&&r[0]===''));}
+function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function renderCsvTable(rows){if(!rows||rows.length===0)return'<div style="padding:14px;color:var(--muted);font-size:11px;">No data to preview.</div>';let html='<table class="csv-tbl">';rows.forEach((row,ri)=>{const isEof=row[0]==='EOF',isData=ri>=3&&!isEof,cls=isEof?'csv-eof-row':(isData?'csv-data-row':'');html+='<tr'+(cls?' class="'+cls+'"':'')+'>'; row.forEach(cell=>{const isEmpty=cell.trim()==='';html+='<td class="'+(isEmpty&&isData?'csv-empty':'')+'">'+( isEmpty&&isData?'—':escH(cell))+'</td>';});html+='</tr>';});html+='</table>';return html;}
+function renderCsvPreview(sectionId){const builder=CSV_BUILDERS[sectionId];if(!builder)return;const tableDiv=document.getElementById('csvtable-'+sectionId),infoEl=document.getElementById('csvinfo-'+sectionId);if(!tableDiv)return;tableDiv.innerHTML='<div style="padding:12px 14px;color:var(--accent4);font-size:11px;">⟳ Generating preview…</div>';setTimeout(()=>{try{const csvStr=builder(),rows=parseCsvToRows(csvStr),dataRows=Math.max(0,rows.length-4);tableDiv.innerHTML=renderCsvTable(rows);if(infoEl){const cols=rows[1]?rows[1].length:0;infoEl.textContent='📊 '+dataRows+' data row(s) · '+cols+' column(s) · '+getFilename(sectionId);}}catch(e){tableDiv.innerHTML='<div style="padding:12px 14px;color:var(--danger);font-size:11px;">⚠ Preview error: '+escH(String(e))+'</div>';}},30);}
+function toggleCsvPreview(sectionId){const body=document.getElementById('csvbody-'+sectionId),chevron=document.getElementById('csvtoggle-'+sectionId);if(!body)return;const isOpen=body.classList.toggle('open');if(chevron)chevron.classList.toggle('open',isOpen);if(isOpen)renderCsvPreview(sectionId);}
 </script>
 </body>
 </html>

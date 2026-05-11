@@ -23,6 +23,16 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-he
 .login-logo .logo-title{font-size:22px;font-weight:700;letter-spacing:.04em;margin-top:8px;}
 .login-logo .logo-sub{font-size:12px;color:var(--muted);margin-top:3px;}
 .login-logo .logo-tag{display:inline-block;margin-top:10px;font-size:11px;font-weight:600;color:var(--accent);background:var(--tag-bg);border:1px solid rgba(31,111,235,.3);padding:3px 14px;border-radius:20px;font-family:'DM Mono',monospace;letter-spacing:.06em;}
+.login-logo .logo-credits{margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.login-logo .credits-label{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:500;}
+.login-logo .credits-name{font-size:12px;font-weight:700;color:var(--text);font-family:'DM Mono',monospace;letter-spacing:.04em;background:linear-gradient(90deg,var(--accent),#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+/* ── CREDITS BADGE (below sign-in box) ── */
+.login-credits-fixed{position:fixed;bottom:28px;right:28px;z-index:1001;}
+.lcf-inner{display:inline-flex;align-items:center;gap:7px;background:rgba(22,27,34,0.5);border:1px solid rgba(31,111,235,.15);border-radius:8px;padding:6px 11px;backdrop-filter:blur(8px);}
+.lcf-icon{font-size:13px;}
+.lcf-label{font-size:7px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:600;margin-bottom:1px;}
+.lcf-name{font-size:10px;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:.02em;background:linear-gradient(90deg,#58a6ff,#79c0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;}
+.lcf-role{font-size:8px;color:var(--muted);margin-top:1px;font-family:'Sora',sans-serif;}
 .login-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px 28px 24px;box-shadow:0 16px 56px rgba(0,0,0,.4);}
 .login-card-title{font-size:14px;font-weight:700;margin-bottom:4px;}
 .login-card-sub{font-size:11px;color:var(--muted);margin-bottom:22px;}
@@ -70,7 +80,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-he
 .nav-item .dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;}
 .nav-item.done .dot{background:var(--accent2);}
 .nav-item.active .dot{background:var(--accent);}
-.nav-item.locked{opacity:.35;cursor:not-allowed;}
+.nav-item.locked{opacity:.35;cursor:not-allowed;pointer-events:none;}
 .nav-item.locked .dot{background:var(--danger);opacity:.4;}
 .lock-icon{font-size:10px;margin-left:auto;opacity:.5;}
 .sidebar-footer{margin-top:auto;padding:14px 18px;border-top:1px solid var(--border);font-size:10px;color:var(--muted);}
@@ -85,7 +95,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-he
 .tab{padding:9px 18px;cursor:pointer;font-size:12px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0;}
 .tab:hover:not(.tab-locked){color:var(--text);}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent);}
-.tab.tab-locked{opacity:.3;cursor:not-allowed;}
+.tab.tab-locked{opacity:.3;cursor:not-allowed;pointer-events:none;}
 .content{flex:1;overflow:auto;padding:24px 28px;}
 .section-header{margin-bottom:18px;}
 .section-title{font-size:15px;font-weight:700;margin-bottom:3px;}
@@ -120,6 +130,20 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);min-he
 .xls td.has-val{background:rgba(63,185,80,.03);}
 .xls td.is-required{border-left:2px solid rgba(31,111,235,.4);}
 .xls tr.eof td{background:rgba(218,54,51,.06);color:var(--danger);font-size:11px;font-weight:700;letter-spacing:.1em;padding:6px 12px;}
+.xls td.ur-auto input{color:var(--muted)!important;font-style:italic;}
+.btn-paste-ur{background:rgba(31,111,235,.15);border:1px solid rgba(31,111,235,.35);color:#58a6ff;font-size:11px;font-weight:600;padding:4px 12px;border-radius:6px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.04em;transition:background .15s;}
+.btn-paste-ur:hover{background:rgba(31,111,235,.28);}
+.paste-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;display:flex;align-items:center;justify-content:center;}
+.paste-modal{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px 28px;width:520px;max-width:95vw;box-shadow:0 12px 40px rgba(0,0,0,.5);}
+.paste-modal h3{margin:0 0 6px;font-size:15px;color:var(--text);}
+.paste-modal p{margin:0 0 14px;font-size:12px;color:var(--muted);line-height:1.6;}
+.paste-modal textarea{width:100%;height:140px;background:rgba(139,148,158,.08);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:11px;padding:10px;resize:vertical;box-sizing:border-box;}
+.paste-modal-btns{display:flex;gap:8px;margin-top:14px;justify-content:flex-end;}
+.paste-ok-btn{background:var(--accent);color:#fff;border:none;padding:7px 18px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;}
+.paste-cancel-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:7px 14px;border-radius:7px;font-size:13px;cursor:pointer;}
+.paste-result{font-size:11px;margin-top:10px;padding:7px 10px;border-radius:6px;display:none;}
+.paste-result.ok{background:rgba(63,185,80,.12);color:#3fb950;border:1px solid rgba(63,185,80,.3);}
+.paste-result.err{background:rgba(218,54,51,.1);color:#f85149;border:1px solid rgba(218,54,51,.3);}
 .xls tr.eof td.field-label{color:var(--danger);background:rgba(218,54,51,.1);}
 .xls tr.section-row td{background:rgba(31,111,235,.08);color:var(--accent);font-size:11px;font-weight:700;padding:7px 12px;border-bottom:1px solid rgba(31,111,235,.2);letter-spacing:.05em;}
 .xls tr.section-row td.row-num{background:rgba(31,111,235,.14);}
@@ -301,6 +325,14 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
 .csv-refresh-btn:hover{border-color:var(--accent);color:var(--accent);}
 .date-hint{font-size:9px;color:var(--accent4);margin-top:2px;font-family:'Sora',sans-serif;display:block;letter-spacing:.02em;}
 .xls input[type=number]::placeholder,.xls input[type=text]::placeholder{color:rgba(139,148,158,0.5);font-style:italic;}
+/* ── DU Profile column permissions ── */
+.xls td.col-locked{background:rgba(139,148,158,.04);}
+.xls td.col-locked input,.xls td.col-locked select{color:var(--muted);cursor:not-allowed;opacity:.45;pointer-events:none;}
+.xls td.col-unlocked{background:rgba(31,111,235,.04);}
+.col-owner-badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:middle;}
+.col-owner-badge.tsd{background:rgba(88,166,255,.15);color:#58a6ff;border:1px solid rgba(88,166,255,.3);}
+.col-owner-badge.finance{background:rgba(227,179,65,.15);color:#e3b341;border:1px solid rgba(227,179,65,.3);}
+.col-owner-badge.admin{background:rgba(63,185,80,.12);color:#3fb950;border:1px solid rgba(63,185,80,.3);}
 </style>
 </head>
 <body>
@@ -444,6 +476,18 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       <button class="login-btn" onclick="doSignUp()" style="background:var(--accent2);color:#0d1117;" id="signup-btn">Create Account ✓</button>
       <div class="login-toggle-row">Already have an account? <a onclick="hideSignUp()">Sign In</a></div>
     </div>
+
+    <!-- Credits badge – below sign-in box -->
+    <div class="login-credits-fixed">
+      <div class="lcf-inner">
+        <div class="lcf-icon">💻</div>
+        <div class="lcf-text">
+          <div class="lcf-label">Developed by</div>
+          <div class="lcf-name">Jhon Mark D. Fredeluces</div>
+          <div class="lcf-role">Systems Programmer</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -462,6 +506,7 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
   <div class="nav-item" onclick="tryGoTab('mor-dtd')" id="nav-mor-dtd"><div class="dot"></div>MOR-DTD · Technical Data<span class="lock-icon" id="lock-dtd"></span></div>
   <div class="nav-item" onclick="tryGoTab('mor-csd')" id="nav-mor-csd"><div class="dot"></div>MOR-CSD · Customer Sales<span class="lock-icon" id="lock-csd"></span></div>
   <div class="nav-item" onclick="tryGoTab('mor-dsd')" id="nav-mor-dsd"><div class="dot"></div>MOR-DSD · Supply Data<span class="lock-icon" id="lock-dsd"></span></div>
+  <div class="nav-item" onclick="tryGoTab('dor-off-dd')" id="nav-dor-off-dd"><div class="dot"></div>DOR-OFF-DD · Off-Grid Demand<span class="lock-icon" id="lock-dor-off-dd"></span></div>
   <div class="nav-section">Output</div>
   <div class="nav-item" onclick="tryGoTab('export')" id="nav-export"><div class="dot"></div>Export CSV Files<span class="lock-icon" id="lock-export"></span></div>
   <div class="nav-item" onclick="tryGoTab('audit')" id="nav-audit"><div class="dot"></div>Audit Log<span class="lock-icon" id="lock-audit"></span></div>
@@ -490,9 +535,7 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
           <option>May</option><option>June</option><option>July</option><option>August</option>
           <option>September</option><option>October</option><option>November</option><option>December</option>
         </select>
-        <select class="small" id="year-select" onchange="updatePeriod()">
-          <option>2025</option><option>2026</option><option>2027</option>
-        </select>
+        <select class="small" id="year-select" onchange="onYearSelectChange()"></select>
         <span class="badge" id="period-badge">JAN 2025</span>
       </div>
     </div>
@@ -503,6 +546,7 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       <div class="tab" onclick="tryGoTab('mor-dtd')" id="tab-mor-dtd">MOR-DTD</div>
       <div class="tab" onclick="tryGoTab('mor-csd')" id="tab-mor-csd">MOR-CSD</div>
       <div class="tab" onclick="tryGoTab('mor-dsd')" id="tab-mor-dsd">MOR-DSD</div>
+      <div class="tab" onclick="tryGoTab('dor-off-dd')" id="tab-dor-off-dd">DOR-OFF-DD</div>
       <div class="tab" onclick="tryGoTab('export')" id="tab-export">⬇ Export</div>
       <div class="tab" onclick="tryGoTab('audit')" id="tab-audit">📋 Audit Log</div>
       <div style="margin-left:auto;display:flex;align-items:center;padding:0 14px;">
@@ -551,14 +595,14 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
               <tr class="section-row"><td class="row-num">—</td><td class="field-label" colspan="10">Key Performance Indicators (Cols 10–19)</td></tr>
               <tr><td class="row-num">10</td><td class="field-label is-required">10 – No. of Employees</td><td class="type-cell">Integers</td><td class="has-val" data-label="No. of Employees"><input type="number" id="p_emp" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
               <tr><td class="row-num">11</td><td class="field-label is-required">11 – Connections/Employees</td><td class="type-cell">Integers</td><td class="has-val" data-label="Connections/Employees"><input type="number" id="p_conemp" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">12</td><td class="field-label is-required">12 – Circuit km of Lines</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Circuit km of Lines"><input type="number" id="p_circ" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">13</td><td class="field-label is-required">13 – Consumer Density/km</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Consumer Density/km"><input type="number" id="p_density" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">14</td><td class="field-label is-required">14 – SAIDI</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="SAIDI"><input type="number" id="p_saidi" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">15</td><td class="field-label is-required">15 – SAIFI</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="SAIFI"><input type="number" id="p_saifi" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">16</td><td class="field-label is-required">16 – Collection Efficiency (%)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Collection Efficiency"><input type="number" id="p_collect" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">17</td><td class="field-label is-required">17 – Load Factor (%)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Load Factor"><input type="number" id="p_load" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">18</td><td class="field-label is-required">18 – No. of Substations</td><td class="type-cell">Integers</td><td class="has-val" data-label="No. of Substations"><input type="number" id="p_subs" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">19</td><td class="field-label is-required">19 – Total Capacity (kVA)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Total Capacity (kVA)"><input type="number" id="p_kva" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">12</td><td class="field-label is-required">12 – Circuit km of Lines <span class="col-owner-badge tsd">TSD</span></td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Circuit km of Lines"><input type="number" id="p_circ" step="0.0001" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">13</td><td class="field-label is-required">13 – Consumer Density/km <span class="col-owner-badge tsd">TSD</span></td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Consumer Density/km"><input type="number" id="p_density" step="0.0001" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">14</td><td class="field-label is-required">14 – SAIDI <span class="col-owner-badge tsd">TSD</span></td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="SAIDI"><input type="number" id="p_saidi" step="0.0001" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">15</td><td class="field-label is-required">15 – SAIFI <span class="col-owner-badge tsd">TSD</span></td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="SAIFI"><input type="number" id="p_saifi" step="0.0001" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">16</td><td class="field-label is-required">16 – Collection Efficiency (%) <span class="col-owner-badge finance">Finance</span></td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Collection Efficiency"><input type="number" id="p_collect" step="0.0001" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">17</td><td class="field-label is-required">17 – Load Factor (%) <span class="col-owner-badge tsd">TSD</span></td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Load Factor"><input type="number" id="p_load" step="0.0001" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">18</td><td class="field-label is-required">18 – No. of Substations <span class="col-owner-badge tsd">TSD</span></td><td class="type-cell">Integers</td><td class="has-val" data-label="No. of Substations"><input type="number" id="p_subs" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">19</td><td class="field-label is-required">19 – Total Capacity (kVA) <span class="col-owner-badge tsd">TSD</span></td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Total Capacity (kVA)"><input type="number" id="p_kva" step="0.0001" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
               <tr class="eof"><td class="row-num">—</td><td class="field-label">EOF</td><td colspan="10"></td></tr>
             </tbody>
           </table>
@@ -577,7 +621,13 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         <div class="section-desc">Rate charges per customer type. Values in PhP/kWh (up to 4 decimal places).</div>
       </div>
       <div class="grid-wrap">
-        <div class="grid-header-bar"><span>Unbundled Rate Data · 7 Customer Types × 29 Rate Columns</span><span style="color:var(--accent)">32 Columns</span></div>
+        <div class="grid-header-bar">
+          <span>Unbundled Rate Data · 7 Customer Types × 32 Rate Columns</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button class="btn-paste-ur" id="btn-paste-ur" onclick="pasteURFromClipboard()" title="Copy rows from Excel/Sheets then click this" style="display:none">📋 Paste from Clipboard</button>
+            <span style="color:var(--accent)">35 Columns</span>
+          </div>
+        </div>
         <div class="grid-scroll">
           <table class="xls" id="ur-table">
             <thead>
@@ -589,7 +639,8 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
                 <th>16–Met Sys</th><th>17–Met Retail</th><th>18–RFSC</th><th>19–Lifeline</th>
                 <th>20–SC Sub</th><th>21–UCME-SPUG</th><th>22–UCME-REDCI</th><th>23–UC-EC</th>
                 <th>24–UC-SCC</th><th>25–UC-SD</th><th>26–FIT-All</th><th>27–Franchise</th>
-                <th>28–RealProp</th><th>29–Gen VAT</th><th>30–Tx VAT</th><th>31–Dist VAT</th><th>32–Other VAT</th>
+                <th>28–RealProp</th><th>29–Gen VAT</th><th>30–Tx VAT</th><th>31–Dist VAT</th>
+                <th>32–Distribution VAT</th><th>33–Other VAT</th><th>34–REC Rate</th><th>35–GEA All</th>
               </tr>
             </thead>
             <tbody id="ur-body"></tbody>
@@ -619,7 +670,13 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         <div class="section-desc">Number of wheeling customers, total electricity wheeled, and wheeling rate.</div>
       </div>
       <div class="grid-wrap">
-        <div class="grid-header-bar"><span>Wheeling Customer Data · 6 Columns</span><span style="color:var(--accent)">Per Row = 1 Category</span></div>
+        <div class="grid-header-bar">
+          <span>Wheeling Customer Data · 6 Columns</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button class="btn-paste-ur" id="btn-paste-wcd" onclick="pasteTableFromClipboard('wcd')" style="display:none">📋 Paste from Clipboard</button>
+            <span style="color:var(--accent)">Per Row = 1 Category</span>
+          </div>
+        </div>
         <div class="grid-scroll">
           <table class="xls" id="wcd-table">
             <thead>
@@ -663,9 +720,9 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
               <tr class="col-nums"><th class="row-num-head">#</th><th class="col-label-head">Field Name</th><th class="col-type-head">Data Type</th><th>Value</th></tr>
             </thead>
             <tbody>
-              <tr><td class="row-num">3</td><td class="field-label is-required">3 – Maximum Load (kW)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Maximum Load"><input type="number" id="dtd_ml" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">4</td><td class="field-label is-required">4 – Company Use (MWh)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Company Use"><input type="number" id="dtd_cu" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
-              <tr><td class="row-num">5</td><td class="field-label is-required">5 – System Loss (MWh)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="System Loss"><input type="number" id="dtd_sl" step="0.0001" placeholder="0.0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">3</td><td class="field-label is-required">3 – Maximum Load (kW)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Maximum Load"><input type="number" id="dtd_ml" step="0.0001" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">4</td><td class="field-label is-required">4 – Company Use (MWh)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="Company Use"><input type="number" id="dtd_cu" step="0.0001" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
+              <tr><td class="row-num">5</td><td class="field-label is-required">5 – System Loss (MWh)</td><td class="type-cell">Numeric (4 dec.)</td><td class="has-val" data-label="System Loss"><input type="number" id="dtd_sl" step="0.0001" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
               <tr><td class="row-num">6</td><td class="field-label is-required">6 – Total No. of Barangays</td><td class="type-cell">Integers</td><td class="has-val" data-label="Total Barangays"><input type="number" id="dtd_tb" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
               <tr><td class="row-num">7</td><td class="field-label is-required">7 – Total Energized Barangays</td><td class="type-cell">Integers</td><td class="has-val" data-label="Energized Barangays"><input type="number" id="dtd_eb" placeholder="0" oninput="clearErr(this)" onblur="validateField(this)"></td></tr>
               <tr class="eof"><td class="row-num">—</td><td class="field-label">EOF</td><td colspan="5"></td></tr>
@@ -696,7 +753,13 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         <div class="section-desc">Number of customers, electricity sales, effective rate, and capacity allocation per type.</div>
       </div>
       <div class="grid-wrap">
-        <div class="grid-header-bar"><span>Customer Sales Data · 7 Columns</span><span style="color:var(--accent)">7 Customer Types</span></div>
+        <div class="grid-header-bar">
+          <span>Customer Sales Data · 7 Columns</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button class="btn-paste-ur" id="btn-paste-csd" onclick="pasteTableFromClipboard('csd')" style="display:none">📋 Paste from Clipboard</button>
+            <span style="color:var(--accent)">7 Customer Types</span>
+          </div>
+        </div>
         <div class="grid-scroll">
           <table class="xls" id="csd-table">
             <thead>
@@ -732,7 +795,13 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         <div class="section-desc">Power supplier contracts and purchased electricity per source.</div>
       </div>
       <div class="grid-wrap">
-        <div class="grid-header-bar"><span>Supply Data · 10 Columns</span><span style="color:var(--accent)">1 Row per Supplier</span></div>
+        <div class="grid-header-bar">
+          <span>Supply Data · 10 Columns</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button class="btn-paste-ur" id="btn-paste-dsd" onclick="pasteTableFromClipboard('dsd')" style="display:none">📋 Paste from Clipboard</button>
+            <span style="color:var(--accent)">1 Row per Supplier</span>
+          </div>
+        </div>
         <div class="grid-scroll">
           <table class="xls" id="dsd-table">
             <thead>
@@ -766,6 +835,67 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
       </div>
     </div>
 
+    <!-- DOR-OFF-DD -->
+    <div id="pane-dor-off-dd" class="hidden">
+      <div class="section-header">
+        <div class="section-title">DOR-OFF-DD – Daily Operations Report (Off-Grid Daily Demand)</div>
+        <div class="section-desc">Hourly demand data per time interval for off-grid areas. 24 rows (one per hour).</div>
+      </div>
+      <div class="info-strip" style="margin-bottom:16px;">
+        <div class="item">
+          <label>Day</label>
+          <select id="dor-day-select" class="small" onchange="onDorDayChange()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:6px 10px;font-family:'Sora',sans-serif;font-size:12px;outline:none;min-width:70px;"></select>
+        </div>
+        <div class="item"><label>Month</label><div class="val" id="dor-month-display" style="font-family:'DM Mono',monospace;">—</div></div>
+        <div class="item"><label>Year</label><div class="val" id="dor-year-display" style="font-family:'DM Mono',monospace;">—</div></div>
+        <div class="item"><label>Reporting Date</label><div class="val" id="dor-date-display" style="color:var(--accent4);">—</div></div>
+      </div>
+      <div class="grid-wrap">
+        <div class="grid-header-bar">
+          <span>Off-Grid Daily Demand · 6 Columns · 24 Hourly Rows</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button class="btn-paste-ur" id="btn-paste-dor-off-dd" onclick="pasteDorOffDdFromClipboard()" style="display:none">📋 Paste from Clipboard</button>
+            <span style="color:var(--accent)">24 Time Intervals</span>
+          </div>
+        </div>
+        <div class="grid-scroll">
+          <table class="xls" id="dor-off-dd-table">
+            <thead>
+              <tr class="col-nums">
+                <th class="row-num-head">#</th>
+                <th class="col-label-head">1 – Time Interval</th>
+                <th class="col-type-head">Type</th>
+                <th>2 – Region</th>
+                <th>3 – Province</th>
+                <th>4 – SIIG</th>
+                <th>5 – Scenario</th>
+                <th>6 – Demand</th>
+              </tr>
+            </thead>
+            <tbody id="dor-off-dd-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="csv-preview-wrap" id="csvprev-dor-off-dd">
+        <div class="csv-preview-header" onclick="toggleCsvPreview('dor-off-dd')">
+          <div class="csv-ph-left"><span class="csv-ph-toggle" id="csvtoggle-dor-off-dd">▾</span><span>📄 CSV Preview – DOR_OFF_DD</span><span style="font-size:10px;color:var(--accent4);font-weight:400;text-transform:none;letter-spacing:0;">Live preview of the export file</span></div>
+          <div style="display:flex;align-items:center;gap:8px;" onclick="event.stopPropagation()">
+            <span style="font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">AM/PM</span>
+            <button id="ampm-toggle-btn" onclick="toggleAmPmFormat()" title="Toggle AM/PM format" style="display:flex;align-items:center;gap:6px;background:rgba(31,111,235,.15);border:1px solid rgba(31,111,235,.35);color:#58a6ff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:6px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.04em;transition:background .15s;">✓ With AM/PM</button>
+            <button class="csv-refresh-btn" onclick="renderCsvPreview('dor-off-dd')" title="Refresh preview">↻ Refresh</button>
+          </div>
+        </div>
+        <div class="csv-preview-body" id="csvbody-dor-off-dd">
+          <div class="csv-preview-scroll"><div id="csvtable-dor-off-dd" style="padding:12px 14px;color:var(--muted);font-size:11px;">Click ▾ to expand preview.</div></div>
+          <div class="csv-preview-footer"><span id="csvinfo-dor-off-dd" style="font-family:'DM Mono',monospace;">—</span></div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goTab('profile')">← DU Profile</button>
+        <button class="btn btn-primary" onclick="saveSection('dor-off-dd')">✓ Save DOR-OFF-DD</button>
+      </div>
+    </div>
+
     <!-- EXPORT -->
     <div id="pane-export" class="hidden">
       <div class="section-header">
@@ -782,6 +912,13 @@ input[type=text].small:focus,select.small:focus{border-color:var(--accent);}
         <div class="export-card" id="ec-dtd" onclick="exportCSV('mor-dtd')"><div class="export-icon">📡</div><div class="export-name">MOR_DTD</div><div class="export-desc">DU Technical Data</div><div class="export-status" id="es-dtd"></div></div>
         <div class="export-card" id="ec-csd" onclick="exportCSV('mor-csd')"><div class="export-icon">👥</div><div class="export-name">MOR_CSD</div><div class="export-desc">Customer Sales Data</div><div class="export-status" id="es-csd"></div></div>
         <div class="export-card" id="ec-dsd" onclick="exportCSV('mor-dsd')"><div class="export-icon">🏭</div><div class="export-name">MOR_DSD</div><div class="export-desc">DU Supply Data</div><div class="export-status" id="es-dsd"></div></div>
+        <div class="export-card" id="ec-dor-off-dd" onclick="exportCSV('dor-off-dd')">
+          <div class="export-icon">🌐</div>
+          <div class="export-name">DOR_OFF_DD</div>
+          <div class="export-desc">Off-Grid Daily Demand</div>
+          <div id="dor-ampm-export-badge" style="display:inline-flex;align-items:center;gap:4px;margin-top:5px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;background:rgba(31,111,235,.12);color:#58a6ff;border:1px solid rgba(31,111,235,.3);">🕐 With AM/PM</div>
+          <div class="export-status" id="es-dor-off-dd"></div>
+        </div>
       </div>
       <div class="btn-row" style="margin-top:24px">
         <button class="btn btn-success" onclick="exportAll()">⬇ Download All 6 CSV Files</button>
@@ -899,6 +1036,7 @@ function dateKeydown(e) {
 const USER_DB = {
   'admin': { name:'System Administrator', dept:'Administration', deptKey:'admin', role:'admin', pwHash:'421aac374dc3e405bb9289bdedf0127de6e25c432a8ddf2711def50a31c88819' },
 };
+const BUILTIN_PW = { 'admin':'zameco2025' };
 const DEPT_USERS = { 'finance':[], 'tsd':[], 'power-trading':[], 'admin':['admin'] };
 const USER_LABELS = { 'admin':'System Administrator' };
 const DEPT_HINTS = {
@@ -958,7 +1096,7 @@ async function doLogin() {
   if (!password) { showLoginError('Please enter your password.'); document.getElementById('login-pw').focus(); return; }
   const btn=document.getElementById('login-btn'); btn.disabled=true; btn.textContent='Signing in…';
   const hash=await sha256(password), user=USER_DB[username];
-  if (!user||hash!==user.pwHash) {
+  if (!user||(hash!==user.pwHash&&hash!==(user.pwHash||'').trim())) {
     loginAttempts++;
     const remaining=MAX_ATTEMPTS-loginAttempts;
     addLogAnon('FAIL',`Failed login attempt for account "${username}" · ${remaining} attempt(s) remaining`,username,USER_LABELS[username]||username,(USER_DB[username]?.dept)||'Unknown');
@@ -980,14 +1118,18 @@ function enterSession(username, user) {
   document.getElementById('session-name').textContent=user.name;
   document.getElementById('session-dept').textContent=user.dept;
 
-  currentRole=user.role;
-  const cfg=ROLE_CONFIG[user.role];
+  // ALWAYS derive role from deptKey — never trust stored role value
+  currentRole = DEPT_DEFAULT_ROLE[user.deptKey] || 'finance';
+  currentUser.role = currentRole;
+  const cfg=ROLE_CONFIG[currentRole];
   const pill=document.getElementById('sidebar-role-pill');
   pill.textContent=cfg.pill;
   pill.style.setProperty('--pill-color',cfg.color);
   pill.style.setProperty('--pill-bg',cfg.bg);
   pill.style.setProperty('--pill-border',cfg.border);
   applyPermissions(cfg.allow);
+  applyProfilePermissions();
+  populateYearSelect();
   document.getElementById('profile-role-badge').textContent=cfg.label+' · '+user.name;
 
   addLog('LOGIN',`Signed in as "${user.name}" · Role: ${cfg.label} · Dept: ${user.dept}`);
@@ -1034,14 +1176,12 @@ function doLogout() {
 
 // ── ROLE CONFIG ──
 const ROLE_CONFIG={
-  'ur':   {label:'MOR-UR Encoder',  pill:'⚡ MOR-UR',  color:'#1f6feb',bg:'rgba(31,111,235,.12)',border:'rgba(31,111,235,.3)', allow:['profile','mor-ur']},
-  'wcd':  {label:'MOR-WCD Encoder', pill:'🔄 MOR-WCD', color:'#3fb950',bg:'rgba(63,185,80,.12)', border:'rgba(63,185,80,.3)',  allow:['profile','mor-wcd']},
-  'dtd':  {label:'MOR-DTD Encoder', pill:'📡 MOR-DTD', color:'#58a6ff',bg:'rgba(88,166,255,.12)',border:'rgba(88,166,255,.3)', allow:['profile','mor-dtd']},
-  'csd':  {label:'MOR-CSD Encoder', pill:'👥 MOR-CSD', color:'#a371f7',bg:'rgba(163,113,247,.12)',border:'rgba(163,113,247,.3)',allow:['profile','mor-csd']},
-  'dsd':  {label:'MOR-DSD Encoder', pill:'🏭 MOR-DSD', color:'#f78166',bg:'rgba(247,129,102,.12)',border:'rgba(247,129,102,.3)',allow:['profile','mor-dsd']},
-  'admin':{label:'Administrator',   pill:'🔐 ADMIN',   color:'#e3b341',bg:'rgba(227,179,65,.12)', border:'rgba(227,179,65,.3)', allow:['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','export','audit','users']},
+  'finance':{label:'Finance Dept.',     pill:'💰 FINANCE',  color:'#a371f7',bg:'rgba(163,113,247,.12)',border:'rgba(163,113,247,.3)', allow:['profile','mor-csd']},
+  'tsd':    {label:'Technical Services',pill:'📡 TSD',      color:'#58a6ff',bg:'rgba(88,166,255,.12)', border:'rgba(88,166,255,.3)',  allow:['profile','mor-dtd','dor-off-dd']},
+  'pt':     {label:'Power Trading',     pill:'⚡ PWR-TRD',  color:'#3fb950',bg:'rgba(63,185,80,.12)',  border:'rgba(63,185,80,.3)',   allow:['profile','mor-ur','mor-wcd','mor-csd','mor-dsd','dor-off-dd']},
+  'admin':  {label:'Administrator',     pill:'🔐 ADMIN',    color:'#e3b341',bg:'rgba(227,179,65,.12)', border:'rgba(227,179,65,.3)',  allow:['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','dor-off-dd','export','audit','users']},
 };
-const ALL_PANES=['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','export','audit','changepw','users'];
+const ALL_PANES=['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','dor-off-dd','export','audit','changepw','users'];
 let currentRole=null, currentUser=null;
 
 // ── AUDIT LOG ENGINE ──
@@ -1151,13 +1291,13 @@ function exportLogCSV() {
 
 // ── TABLE DEFAULT DATA ──
 const UR_DEF={
-  'Residential-Lifeline-Grid': [0.6366,0,0,0,1.1892,0,0.2669,0.5143,0,0,0.5828,0,0.3669,5,0.2508,0,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
-  'Residential-Non-Lifeline':  [0.6366,0,0,0,1.1892,0,0.2669,0.5143,0,0,0.5828,0,0.3669,5,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
-  'Commercial-LV':             [0.6366,0,0,0,1.2793,0,0.2669,0.5134,0,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
-  'Industrial-HV':             [0.6366,0,0,0,0,356.98,0.2669,0,190.03,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
-  'Public-Building-LV':        [0.6366,0,0,0,1.2793,0,0.2669,0.5134,0,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
-  'Streetlights-LV':           [0.6366,0,0,0,1.2793,0,0.2669,0.5134,0,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
-  'Special-Lighting':          [0.6366,0,0,0,1.2793,0,0.2669,0.5134,0,0,0,41.61,0,31.19,0.2508,0.0125,0,0.1805,0.0017,0,0,0.0428,0.0838,0,0,0.2811,0.0886,0.1369,0.0381],
+  'Residential-Lifeline-Grid': Array(32).fill(''),
+  'Residential-Non-Lifeline':  Array(32).fill(''),
+  'Commercial-LV':             Array(32).fill(''),
+  'Industrial-HV':             Array(32).fill(''),
+  'Public-Building-LV':        Array(32).fill(''),
+  'Streetlights-LV':           Array(32).fill(''),
+  'Special-Lighting':          Array(32).fill(''),
 };
 const CSD_DEF={ 'Residential-Lifeline-Grid':[0,0,0,0],'Residential-Non-Lifeline':[0,0,0,0],'Commercial-LV':[0,0,0,0],'Industrial-HV':[0,0,0,0],'Public-Building-LV':[0,0,0,0],'Streetlights-LV':[0,0,0,0],'Special-Lighting':[0,0,0,0] };
 const DSD_DEF=[['Net-Metering','N','','','','','','',''],['WESM','N','','','','','','',''],['SPARC','N','','','','','','','']];
@@ -1177,9 +1317,32 @@ function closeModal() { document.getElementById('val-modal').classList.remove('s
 
 // ── PERMISSIONS ──
 function applyPermissions(allow) {
-  const tabMap={'ur':'mor-ur','wcd':'mor-wcd','dtd':'mor-dtd','csd':'mor-csd','dsd':'mor-dsd','export':'export','audit':'audit'};
-  ALL_PANES.forEach(pane=>{ if(pane==='changepw') return; const allowed=allow.includes(pane); const navEl=document.getElementById('nav-'+pane),tabEl=document.getElementById('tab-'+pane); if(navEl) navEl.classList.toggle('locked',!allowed); if(tabEl) tabEl.classList.toggle('tab-locked',!allowed); });
-  ['ur','wcd','dtd','csd','dsd','export','audit','users'].forEach(k=>{ const pane=tabMap[k]||k; const lockEl=document.getElementById('lock-'+k); if(lockEl) lockEl.textContent=allow.includes(pane)?'':'🔒'; });
+  ALL_PANES.forEach(pane => {
+    if (pane === 'changepw') return;
+    const allowed = allow.includes(pane);
+    const navEl = document.getElementById('nav-' + pane);
+    const tabEl = document.getElementById('tab-' + pane);
+    if (navEl) {
+      navEl.classList.toggle('locked', !allowed);
+      navEl.style.pointerEvents = allowed ? '' : 'none';
+    }
+    if (tabEl) {
+      tabEl.classList.toggle('tab-locked', !allowed);
+      tabEl.style.pointerEvents = allowed ? '' : 'none';
+    }
+  });
+  // Update lock icons in nav
+  const iconMap = {'mor-ur':'ur','mor-wcd':'wcd','mor-dtd':'dtd','mor-csd':'csd','mor-dsd':'dsd','dor-off-dd':'dor-off-dd','export':'export','audit':'audit','users':'users'};
+  Object.entries(iconMap).forEach(([pane, key]) => {
+    const el = document.getElementById('lock-' + key);
+    if (el) el.textContent = allow.includes(pane) ? '' : '🔒';
+  });
+  // Show paste buttons only for Power Trading
+  const canPaste = currentRole === 'pt';
+  ['ur','wcd','csd','dsd','dor-off-dd'].forEach(s => {
+    const btn = document.getElementById('btn-paste-' + s);
+    if (btn) btn.style.display = canPaste ? '' : 'none';
+  });
 }
 function tryGoTab(id) { if(id==='changepw'){goTab('changepw');return;} const cfg=ROLE_CONFIG[currentRole]; if(!cfg||!cfg.allow.includes(id)){showErr('🔒 Access restricted. Your role: '+cfg.allow.filter(x=>x!=='profile').join(', '));return;} goTab(id); }
 function goToMySection() { const cfg=ROLE_CONFIG[currentRole]; const sec=cfg.allow.find(a=>a!=='profile'); if(sec) goTab(sec); else goTab('export'); }
@@ -1187,6 +1350,25 @@ function goToMySection() { const cfg=ROLE_CONFIG[currentRole]; const sec=cfg.all
 // ── HELPERS ──
 function getMonth(){return document.getElementById('month-select').value;}
 function getYear() {return document.getElementById('year-select').value;}
+
+function populateYearSelect() {
+  const sel = document.getElementById('year-select');
+  const currentYear = new Date().getFullYear();
+  const selected = sel.value || String(currentYear);
+  sel.innerHTML = '';
+  for (let y = currentYear; y <= currentYear + 29; y++) {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y;
+    if (String(y) === selected) opt.selected = true;
+    sel.appendChild(opt);
+  }
+  if (!sel.value) sel.value = String(currentYear);
+}
+
+function onYearSelectChange() {
+  updatePeriod();
+}
 function getMonthIdx(){return MONTHS.indexOf(getMonth());}
 function getDay()  {return MONTH_DAYS[getMonthIdx()];}
 function v(id)     {return document.getElementById(id)?.value||'';}
@@ -1195,6 +1377,7 @@ function updatePeriod() {
   if(currentUser&&_currentPeriodKey) saveAllSectionsLocal(_currentPeriodKey);
   document.getElementById('period-badge').textContent=MONTH_SHORT[mi].toUpperCase()+' '+y;
   document.getElementById('period-display').textContent=getDay()+' '+m+' '+y;
+  populateDorDaySelect();
   _currentPeriodKey=m+'_'+y;
   if(currentUser) loadFormDataGS();
 }
@@ -1206,6 +1389,7 @@ const TITLES={
   'mor-dtd':()=>`MOR-DTD – DU Technical Data · ${getMonth()} ${getYear()}`,
   'mor-csd':()=>`MOR-CSD – Customer Sales Data · ${getMonth()} ${getYear()}`,
   'mor-dsd':()=>`MOR-DSD – DU Supply Data · ${getMonth()} ${getYear()}`,
+  'dor-off-dd':()=>`DOR-OFF-DD – Off-Grid Daily Demand · ${getMonth()} ${getYear()}`,
   'export': ()=>'Export CSV Files',
   'audit':  ()=>'Audit Log · System Activity',
   'changepw':()=>'Change Password',
@@ -1219,7 +1403,7 @@ function goTab(id) {
   if(id==='audit') { renderLog(); updateLogStats(); }
   if(id==='changepw') { document.getElementById('cpw-username-label').textContent=currentUser?.name+' ('+currentUser?.username+')'; }
   if(id==='users') renderUserTable();
-  const _csvSections=['mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'];
+  const _csvSections=['mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','dor-off-dd'];
   if(_csvSections.includes(id)){ const _body=document.getElementById('csvbody-'+id); if(_body&&_body.classList.contains('open')) renderCsvPreview(id); }
 }
 function showOk(msg){const a=document.getElementById('alert-ok');document.getElementById('alert-msg').textContent=msg;a.classList.add('show');setTimeout(()=>a.classList.remove('show'),3000);}
@@ -1237,16 +1421,486 @@ function saveSection(id) {
   renderLog(); saveFormDataGS(id);
 }
 
+// ── DU PROFILE COLUMN PERMISSIONS ──
+// Admin  → all cols editable (no restrictions)
+// TSD    → cols 12–15 and 17–19 editable, rest locked
+// Finance→ col 16 editable, rest locked
+// Others → all cols locked (read-only)
+const PROFILE_TSD_IDS     = ['p_circ','p_density','p_saidi','p_saifi','p_load','p_subs','p_kva'];
+const PROFILE_FINANCE_IDS = ['p_collect'];
+const PROFILE_ALL_KPI_IDS = [...PROFILE_TSD_IDS, ...PROFILE_FINANCE_IDS];
+// Cols 1–11 are general info — always locked for non-admins
+const PROFILE_GENERAL_IDS = ['p_id','p_region','p_company','p_head','p_pres','p_email','p_web','p_tel','p_addr','p_emp','p_conemp'];
+
+function applyProfilePermissions() {
+  const deptKey = currentUser?.deptKey || '';
+  const isAdmin  = currentRole === 'admin';
+
+  // Determine which KPI fields this user may edit
+  let editableKpi = [];
+  if (isAdmin)                  editableKpi = PROFILE_ALL_KPI_IDS;
+  else if (deptKey === 'tsd')   editableKpi = PROFILE_TSD_IDS;
+  else if (deptKey === 'finance') editableKpi = PROFILE_FINANCE_IDS;
+
+  // Lock/unlock each KPI field
+  PROFILE_ALL_KPI_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const td = el.closest('td');
+    const canEdit = editableKpi.includes(id);
+    el.disabled = !canEdit;
+    if (td) {
+      td.classList.toggle('col-locked',  !canEdit);
+      td.classList.toggle('col-unlocked', canEdit && !isAdmin);
+    }
+  });
+
+  // Lock cols 1–11 for everyone except admin
+  PROFILE_GENERAL_IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const td = el.closest('td');
+    el.disabled = !isAdmin;
+    if (td) td.classList.toggle('col-locked', !isAdmin);
+  });
+
+  // Show/hide Save button: only admin, tsd, finance can save profile
+  const saveBtn = document.querySelector('#pane-profile .btn-primary');
+  if (saveBtn) saveBtn.style.display = (isAdmin || deptKey === 'tsd' || deptKey === 'finance') ? '' : 'none';
+}
+
 // ── BUILD TABLES ──
 function buildURTable() {
-  const tbody=document.getElementById('ur-body');tbody.innerHTML='';
-  CT.forEach((ct,ri)=>{ const vals=UR_DEF[ct]||Array(29).fill(''); const tr=document.createElement('tr'); const cells=vals.map((v,i)=>`<td class="has-val" data-label="${ct} Col ${i+4}"><input type="number" step="0.0001" value="${v}" placeholder="0.0" style="min-width:90px" oninput="clearErr(this)" onblur="validateField(this)"></td>`).join(''); tr.innerHTML=`<td class="row-num">${ri+1}</td><td class="field-label">${ct}</td><td class="type-cell">PhP/kWh</td>${cells}`; tbody.appendChild(tr); });
-  const eof=document.createElement('tr');eof.className='eof';eof.innerHTML=`<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="32"></td>`;tbody.appendChild(eof);
+  const tbody = document.getElementById('ur-body');
+  tbody.innerHTML = '';
+
+  CT.forEach((ct, ri) => {
+    const vals = UR_DEF[ct] || Array(31).fill(0);
+    const tr = document.createElement('tr');
+    let cells = '';
+
+    vals.forEach((v, ci) => {
+      let isAuto = false;
+      let triggerAttr = '';
+
+      if (ci === 0) {
+        if (ri === 0) triggerAttr = `oninput="urAutoFill(this,0)" `;
+        else isAuto = true;
+      }
+      else if (ci >= 1 && ci <= 3) { isAuto = true; v = 0; }
+      else if (ci === 4) {
+        if (ri === 0) triggerAttr = `oninput="urAutoFill(this,4)" `;
+        else if (ri === 1) isAuto = true;
+        else if (ri === 2) triggerAttr = `oninput="urAutoFill(this,4)" `;
+        else if (ri === 3) { isAuto = true; v = 0; }
+        else isAuto = true;
+      }
+      else if (ci === 5) {
+        if (ri !== 3) { isAuto = true; v = 0; }
+      }
+      else if (ci === 6) {
+        if (ri === 0) triggerAttr = `oninput="urAutoFill(this,6)" `;
+        else isAuto = true;
+      }
+      else if (ci === 7) {
+        if (ri === 0) triggerAttr = `oninput="urAutoFill(this,7)" `;
+        else if (ri === 1) isAuto = true;
+        else if (ri === 2) triggerAttr = `oninput="urAutoFill(this,7)" `;
+        else if (ri === 3) { isAuto = true; v = 0; }
+        else isAuto = true;
+      }
+      else if (ci === 8) { if (ri !== 3) { isAuto = true; v = 0; } }
+      else if (ci === 9) { isAuto = true; v = 0; }
+      else if (ci === 10) {
+        if (ri === 0) triggerAttr = `oninput="urAutoFill(this,10)" `;
+        else if (ri === 1) isAuto = true;
+        else { isAuto = true; v = 0; }
+      }
+      else if (ci === 11) {
+        if (ri <= 1) { isAuto = true; v = 0; }
+        else if (ri === 2) triggerAttr = `oninput="urAutoFill(this,11)" `;
+        else isAuto = true;
+      }
+      else if (ci === 12) {
+        if (ri === 0) triggerAttr = `oninput="urAutoFill(this,12)" `;
+        else if (ri === 1) isAuto = true;
+        else { isAuto = true; v = 0; }
+      }
+      else if (ci === 13) {
+        if (ri === 0) triggerAttr = `oninput="urAutoFill(this,13,0)" `;
+        else if (ri === 1) isAuto = true;
+        else if (ri === 2) triggerAttr = `oninput="urAutoFill(this,13,2)" `;
+        else isAuto = true;
+      }
+      else if (ci === 14) {
+        // Col18 RFSC: row0 → rows1-6 all same
+        if (ri === 0) triggerAttr = `oninput="urAutoFill(this,14)" `;
+        else isAuto = true;
+      }
+      else if (ci === 15) {
+        // Col19 Lifeline: row0=0 auto; row1 trigger → rows2-6 auto
+        if (ri === 0) { isAuto = true; v = 0; }
+        else if (ri === 1) triggerAttr = `oninput="urAutoFill(this,15)" `;
+        else isAuto = true;
+      }
+      else if (ci >= 16 && ci <= 31) {
+        // Cols20-35: row0 trigger → rows1-6 all same
+        if (ri === 0) triggerAttr = `oninput="urAutoFill(this,${ci})" `;
+        else isAuto = true;
+      }
+
+      const isAdmin = currentRole === 'admin';
+      // isZeroLocked = this cell is always 0 (not a copy of another cell)
+      const isZeroLocked = isAuto && v === 0 && triggerAttr === '';
+
+      if (isAuto && !isAdmin) {
+        const displayVal = isZeroLocked ? '0' : '';
+        cells += `<td class="has-val ur-auto" data-col="${ci}" data-row="${ri}" data-label="${ct} Col ${ci+4}" style="background:rgba(139,148,158,.05)"><input type="number" step="0.0001" value="${displayVal}" placeholder="0.0" style="min-width:90px;opacity:.6;cursor:default" readonly tabindex="-1"></td>`;
+      } else if (isAuto && isAdmin) {
+        const displayVal = isZeroLocked ? '0' : '';
+        cells += `<td class="has-val ur-auto" data-col="${ci}" data-row="${ri}" data-label="${ct} Col ${ci+4}" style="background:rgba(31,111,235,.04)"><input type="number" step="0.0001" value="${displayVal}" placeholder="0.0" style="min-width:90px" oninput="clearErr(this)" onblur="validateField(this)"></td>`;
+      } else {
+        const autoCall = triggerAttr ? triggerAttr.replace('oninput="','').replace('" ','') : '';
+        const onInput = autoCall ? `oninput="clearErr(this);${autoCall}"` : `oninput="clearErr(this)"`;
+        cells += `<td class="has-val" data-col="${ci}" data-row="${ri}" data-label="${ct} Col ${ci+4}"><input type="number" step="0.0001" placeholder="0.0" style="min-width:90px" ${onInput} onblur="validateField(this)"></td>`;
+      }
+    });
+
+    tr.innerHTML = `<td class="row-num">${ri+1}</td><td class="field-label">${ct}</td><td class="type-cell">PhP/kWh</td>${cells}`;
+    tbody.appendChild(tr);
+  });
+
+  const eof = document.createElement('tr');
+  eof.className = 'eof';
+  eof.innerHTML = `<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="35"></td>`;
+  tbody.appendChild(eof);
+  urInitAutoFill();
+}
+
+function urInitAutoFill() {
+  const tbody = document.getElementById('ur-body');
+  if (!tbody) return;
+  const rows = tbody.querySelectorAll('tr:not(.eof)');
+  function getVal(ri,ci){ return rows[ri]?.querySelector(`td[data-col="${ci}"] input`)?.value||0; }
+  function setAuto(ri,ci,val){ const td=rows[ri]?.querySelector(`td[data-col="${ci}"]`); if(td){const inp=td.querySelector('input');if(inp)inp.value=val;} }
+
+  const g=getVal(0,0); for(let r=1;r<=6;r++) setAuto(r,0,g);
+  setAuto(1,4,getVal(0,4)); setAuto(3,4,0);
+  const tx2=getVal(2,4); for(let r=4;r<=6;r++) setAuto(r,4,tx2);
+  const sl=getVal(0,6); for(let r=1;r<=6;r++) setAuto(r,6,sl);
+  setAuto(1,7,getVal(0,7)); setAuto(3,7,0);
+  const ds2=getVal(2,7); for(let r=4;r<=6;r++) setAuto(r,7,ds2);
+  setAuto(1,10,getVal(0,10));
+  const sr=getVal(2,11); for(let r=3;r<=6;r++) setAuto(r,11,sr);
+  setAuto(1,12,getVal(0,12));
+  setAuto(1,13,getVal(0,13));
+  const mr=getVal(2,13); for(let r=3;r<=6;r++) setAuto(r,13,mr);
+  const rfsc=getVal(0,14); for(let r=1;r<=6;r++) setAuto(r,14,rfsc);
+  setAuto(0,15,0); const ll=getVal(1,15); for(let r=2;r<=6;r++) setAuto(r,15,ll);
+  for(let ci=16;ci<=31;ci++){ const val=getVal(0,ci); for(let r=1;r<=6;r++) setAuto(r,ci,val); }
+}
+
+function pasteURFromClipboard() {
+  const overlay = document.createElement('div');
+  overlay.className = 'paste-modal-overlay';
+  overlay.innerHTML = `
+    <div class="paste-modal">
+      <h3>📋 Paste UR Data from Excel / Spreadsheet</h3>
+      <p>
+        Copy any range from Excel/Sheets — headers, row numbers, and customer type labels are
+        <strong>automatically ignored</strong>. Just copy your data and paste below.
+      </p>
+      <textarea id="paste-ur-input" placeholder="Ctrl+V to paste here..."></textarea>
+      <div class="paste-result" id="paste-ur-result"></div>
+      <div class="paste-modal-btns">
+        <button class="paste-cancel-btn" onclick="this.closest('.paste-modal-overlay').remove()">Cancel</button>
+        <button class="paste-ok-btn" onclick="applyURPaste()">Apply</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const ta = overlay.querySelector('#paste-ur-input');
+  ta.focus();
+  // Try to auto-read clipboard immediately
+  if (navigator.clipboard?.readText) {
+    navigator.clipboard.readText().then(txt => {
+      if (txt) {
+        ta.value = txt;
+        showPasteResult('Clipboard loaded — click Apply to fill the table.', true);
+      }
+    }).catch(() => {});
+  }
+}
+
+function applyURPaste() {
+  const ta = document.getElementById('paste-ur-input');
+  const raw = ta.value.trim();
+  if (!raw) { showPasteResult('No data pasted.', false); return; }
+
+  // ── STEP 1: Split into rows ──
+  let allRows = raw.split(/\r?\n/).map(r => r.split('\t'));
+
+  // ── STEP 2: Filter to only DATA rows ──
+  // A data row must have at least one cell that is a pure number (int or decimal)
+  // This automatically skips:
+  //   - Column header rows  ("4 - Generation Charges", "Customer Type" etc.)
+  //   - Type description rows ("Numeric, up to 4 decimal places" etc.)
+  //   - Completely empty rows
+  const isNumber = v => { const n = v.trim().replace(',','.'); return n !== '' && n !== '-' && !isNaN(parseFloat(n)) && isFinite(n); };
+
+  let dataRows = allRows.filter(cols => {
+    // Count pure numeric cells
+    const numCount = cols.filter(v => isNumber(v)).length;
+    // Count non-empty text cells  
+    const totalNonEmpty = cols.filter(v => v.trim() !== '').length;
+    // A data row has numeric cells; a header row has only text
+    return numCount > 0;
+  });
+
+  // ── STEP 3: Strip leading label columns from each row ──
+  // Remove: customer type names, row numbers (1-7), any leading text
+  dataRows = dataRows.map(cols => {
+    // Remove cells that are customer type labels (long text)
+    cols = cols.filter(v => {
+      const t = v.trim();
+      // Keep if numeric, keep if empty, remove if it looks like a CT label (long text with letters)
+      if (isNumber(t) || t === '') return true;
+      if (t.length > 3 && /[a-zA-Z]/.test(t)) return false;
+      return true;
+    });
+    // Strip leading row number (1-7)
+    if (cols.length > 0) {
+      const first = cols[0].trim();
+      if (/^\d+$/.test(first) && +first >= 1 && +first <= 7) cols = cols.slice(1);
+    }
+    // Strip any remaining leading non-numeric cells
+    let start = 0;
+    for (let i = 0; i < cols.length; i++) {
+      if (isNumber(cols[i]) || cols[i].trim() === '') { start = i; break; }
+    }
+    return cols.slice(start);
+  });
+
+  // Take max 7 rows
+  dataRows = dataRows.slice(0, 7);
+
+  // ── VALIDATION ──
+  if (dataRows.length === 0) {
+    showPasteResult('❌ No data rows found. Check your copied data.', false); return;
+  }
+  if (dataRows.length !== 7) {
+    showPasteResult(`❌ Found ${dataRows.length} data row(s) but need exactly 7 (one per customer type). Copy all 7 rows.`, false); return;
+  }
+  const maxCols = Math.max(...dataRows.map(r => r.length));
+  if (maxCols > 38) {
+    showPasteResult(`❌ Too many columns (${maxCols}). UR only has 32 rate columns.`, false); return;
+  }
+
+  // ── APPLY ──
+  const tbody = document.getElementById('ur-body');
+  const trEls = Array.from(tbody.querySelectorAll('tr:not(.eof)'));
+  let filled = 0;
+
+  dataRows.forEach((cols, ri) => {
+    const trEl = trEls[ri];
+    if (!trEl) return;
+    cols.forEach((val, ci) => {
+      if (!isNumber(val)) return;
+      const td = trEl.querySelector(`td[data-col="${ci}"]`);
+      if (!td) return;
+      const inp = td.querySelector('input');
+      if (!inp) return;
+      const wasReadonly = inp.readOnly;
+      if (wasReadonly) inp.removeAttribute('readonly');
+      inp.value = parseFloat(val.trim().replace(',','.'));
+      if (wasReadonly && currentRole !== 'admin') inp.setAttribute('readonly', true);
+      filled++;
+    });
+  });
+
+  urInitAutoFill();
+
+  if (filled > 0) {
+    showPasteResult(`✓ Filled ${filled} value(s) across ${dataRows.length} rows. Auto-fill updated.`, true);
+    setTimeout(() => document.querySelector('.paste-modal-overlay')?.remove(), 1800);
+  } else {
+    showPasteResult('❌ No values filled. Check your data.', false);
+  }
+}
+
+function showPasteResult(msg, ok) {
+  const el = document.getElementById('paste-ur-result') || document.getElementById('paste-table-result');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'paste-result ' + (ok ? 'ok' : 'err');
+  el.style.display = 'block';
+}
+
+function pasteTableFromClipboard(section) {
+  const titles = { wcd:'WCD – Wheeling Customer Data', csd:'CSD – Customer Sales Data', dsd:'DSD – Supply Data' };
+  const overlay = document.createElement('div');
+  overlay.className = 'paste-modal-overlay';
+  overlay.id = 'paste-overlay-' + section;
+  overlay.innerHTML = `
+    <div class="paste-modal">
+      <h3>📋 Paste ${titles[section]} from Excel / Spreadsheet</h3>
+      <p>Copy any range from Excel/Sheets — headers, row numbers, and labels are <strong>automatically ignored</strong>. Just copy your data and paste below.</p>
+      <textarea id="paste-table-input" placeholder="Ctrl+V to paste here..."></textarea>
+      <div class="paste-result" id="paste-table-result"></div>
+      <div class="paste-modal-btns">
+        <button class="paste-cancel-btn" onclick="this.closest('.paste-modal-overlay').remove()">Cancel</button>
+        <button class="paste-ok-btn" onclick="applyTablePaste('${section}')">Apply</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const ta = overlay.querySelector('#paste-table-input');
+  ta.focus();
+  if (navigator.clipboard?.readText) {
+    navigator.clipboard.readText().then(txt => {
+      if (txt) {
+        ta.value = txt;
+        const el = document.getElementById('paste-table-result');
+        if (el) { el.textContent = 'Clipboard loaded — click Apply to fill the table.'; el.className = 'paste-result ok'; el.style.display = 'block'; }
+      }
+    }).catch(() => {});
+  }
+}
+
+function applyTablePaste(section) {
+  const ta = document.getElementById('paste-table-input');
+  const raw = ta?.value?.trim();
+  const resultEl = document.getElementById('paste-table-result');
+  function showErr(msg) { if(resultEl){resultEl.textContent=msg;resultEl.className='paste-result err';resultEl.style.display='block';} }
+  function showOk(msg)  { if(resultEl){resultEl.textContent=msg;resultEl.className='paste-result ok'; resultEl.style.display='block';} }
+
+  if (!raw) { showErr('No data pasted.'); return; }
+
+  let rows = raw.split(/\r?\n/)
+    .map(r => r.split('\t'))
+    .filter(cols => cols.some(c => { const v=c.trim().replace(',','.'); return v!=='' && !isNaN(parseFloat(v)); }));
+
+  // Strip leading non-numeric columns per row
+  rows = rows.map(cols => {
+    let start = 0;
+    for (let i = 0; i < cols.length; i++) {
+      const v = cols[i].trim().replace(',','.');
+      if (!isNaN(parseFloat(v))) { start = i; break; }
+    }
+    return cols.slice(start);
+  });
+
+  if (rows.length === 0) { showErr('❌ No valid numeric data found.'); return; }
+
+  // Section-specific validation
+  const sectionCols = { wcd: 3, csd: 4, dsd: 7 };
+  const sectionRows = { wcd: null, csd: 7, dsd: null }; // null = dynamic
+  const minCols = sectionCols[section] || 2;
+  const expectedRows = sectionRows[section];
+  const avgCols = rows.reduce((s, r) => s + r.length, 0) / rows.length;
+
+  if (avgCols < minCols) {
+    showErr(`❌ Data too short (avg ${Math.round(avgCols)} columns). ${section.toUpperCase()} needs at least ${minCols} columns.`); return;
+  }
+  if (expectedRows && rows.length !== expectedRows) {
+    showErr(`❌ Expected ${expectedRows} rows but got ${rows.length}. Copy all ${expectedRows} customer type rows.`); return;
+  }
+
+  let filled = 0;
+
+  if (section === 'wcd') {
+    document.getElementById('wcd-body').innerHTML = '';
+    wcdCount = 0;
+    rows.forEach(cols => {
+      addWCDRow();
+      const last = document.getElementById('wcd-body').querySelectorAll('tr');
+      const inputs = last[last.length-1].querySelectorAll('input,select');
+      cols.forEach((v,i) => { const n=parseFloat(v.replace(',','.')); if(inputs[i]&&!isNaN(n)){inputs[i].value=n;filled++;} });
+    });
+  }
+  else if (section === 'csd') {
+    const trEls = Array.from(document.getElementById('csd-body').querySelectorAll('tr:not(.eof)'));
+    rows.slice(0,7).forEach((cols,ri) => {
+      const trEl = trEls[ri]; if(!trEl) return;
+      const inputs = Array.from(trEl.querySelectorAll('input')).filter(inp=>!inp.readOnly);
+      cols.forEach((v,i) => { const n=parseFloat(v.replace(',','.')); if(inputs[i]&&!isNaN(n)){inputs[i].value=n;filled++;} });
+    });
+  }
+  else if (section === 'dsd') {
+    document.getElementById('dsd-body').innerHTML = '';
+    dsdCount = 0;
+    rows.forEach(cols => {
+      addDSDRow();
+      const last = document.getElementById('dsd-body').querySelectorAll('tr');
+      const inputs = last[last.length-1].querySelectorAll('input,select');
+      cols.forEach((v,i) => { const n=parseFloat(v.replace(',','.')); if(inputs[i]&&!isNaN(n)){inputs[i].value=n;filled++;} });
+    });
+  }
+
+  if (filled > 0) {
+    showOk(`✓ Applied ${filled} value(s) across ${rows.length} row(s).`);
+    setTimeout(() => document.getElementById('paste-overlay-'+section)?.remove(), 1800);
+  } else {
+    showErr('❌ No values filled. Data may not match this section format.');
+  }
+}
+function urAutoFill(inp, ci, groupStart) {
+  const tbody = document.getElementById('ur-body');
+  const rows = tbody.querySelectorAll('tr:not(.eof)');
+  const val = inp.value;
+  function setAuto(ri,c,v){ const td=rows[ri]?.querySelector(`td[data-col="${c}"]`); if(td){const i=td.querySelector('input');if(i)i.value=v;} }
+
+  if (ci===0) { for(let r=1;r<=6;r++) setAuto(r,0,val); }
+  else if (ci===4) {
+    const ri=parseInt(inp.closest('td').dataset.row);
+    if(ri===0) setAuto(1,4,val);
+    else if(ri===2) for(let r=4;r<=6;r++) setAuto(r,4,val);
+  }
+  else if (ci===6) { for(let r=1;r<=6;r++) setAuto(r,6,val); }
+  else if (ci===7) {
+    const ri=parseInt(inp.closest('td').dataset.row);
+    if(ri===0) setAuto(1,7,val);
+    else if(ri===2) for(let r=4;r<=6;r++) setAuto(r,7,val);
+  }
+  else if (ci===10) { setAuto(1,10,val); }
+  else if (ci===11) { for(let r=3;r<=6;r++) setAuto(r,11,val); }
+  else if (ci===12) { setAuto(1,12,val); }
+  else if (ci===13) {
+    if(groupStart===0) setAuto(1,13,val);
+    else if(groupStart===2) for(let r=3;r<=6;r++) setAuto(r,13,val);
+  }
+  else if (ci===14) { for(let r=1;r<=6;r++) setAuto(r,14,val); }
+  else if (ci===15) { for(let r=2;r<=6;r++) setAuto(r,15,val); }
+  else if (ci>=16 && ci<=31) { for(let r=1;r<=6;r++) setAuto(r,ci,val); }
 }
 function buildCSDTable() {
-  const tbody=document.getElementById('csd-body');tbody.innerHTML='';
-  CT.forEach((ct,ri)=>{ const tr=document.createElement('tr'); tr.innerHTML=`<td class="row-num">${ri+1}</td><td class="field-label">${ct}</td><td class="type-cell">—</td><td class="has-val" data-label="${ct} – No. of Customers"><input type="number" placeholder="0" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="${ct} – Electricity Sales"><input type="number" step="0.0001" placeholder="0.0" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="${ct} – Effective Rate"><input type="number" step="0.0001" placeholder="0.0" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td><td class="has-val" data-label="${ct} – Capacity Alloc"><input type="number" step="0.0001" placeholder="0.0" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>`; tbody.appendChild(tr); });
-  const eof=document.createElement('tr');eof.className='eof';eof.innerHTML=`<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="6"></td>`;tbody.appendChild(eof);
+  const tbody = document.getElementById('csd-body');
+  tbody.innerHTML = '';
+  const isAdmin = currentRole === 'admin';
+  const deptKey = currentUser?.deptKey || '';
+  // Col 4-5: finance (or admin) can edit; Col 6-7: power-trading (or admin) can edit
+  const canFinance = isAdmin || deptKey === 'finance';
+  const canPT      = isAdmin || deptKey === 'power-trading';
+
+  CT.forEach((ct, ri) => {
+    const tr = document.createElement('tr');
+    const mkCell = (label, type, canEdit, isInt) => {
+      const inp = `<input type="number" ${isInt?'':'step="0.0001"'} placeholder="0" style="min-width:${isInt?'120':'130'}px${canEdit?'':';opacity:.45;cursor:not-allowed'}" ${canEdit?'oninput="clearErr(this)" onblur="validateField(this)"':' readonly tabindex="-1"'}>`;
+      return `<td class="has-val${canEdit?'':' col-locked'}" data-label="${ct} – ${label}" style="${canEdit?'':'background:rgba(139,148,158,.05)'}; ">${inp}</td>`;
+    };
+    tr.innerHTML =
+      `<td class="row-num">${ri+1}</td>` +
+      `<td class="field-label">${ct}</td>` +
+      `<td class="type-cell">—</td>` +
+      mkCell('No. of Customers',   'int',  canFinance, true)  +  // col 4
+      mkCell('Electricity Sales',  'num',  canFinance, false) +  // col 5
+      mkCell('Effective Rate',     'num',  canPT,      false) +  // col 6
+      mkCell('Capacity Allocation','num',  canPT,      false);   // col 7
+    tbody.appendChild(tr);
+  });
+
+  const eof = document.createElement('tr');
+  eof.className = 'eof';
+  eof.innerHTML = `<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="6"></td>`;
+  tbody.appendChild(eof);
 }
 function buildWCDTable(){document.getElementById('wcd-body').innerHTML='';wcdCount=0;WCD_DEF.forEach(r=>addWCDRowData(r));}
 function addWCDRow(){addWCDRowData(['','','','']);}
@@ -1273,7 +1927,8 @@ function addDSDRowData([supplier,gen,cstart,cend,ccap,cenergy,_,purch,cost]){
 // ── EXPORT VALIDATION ──
 function paneHasEmpty(paneId){ const pane=document.getElementById('pane-'+paneId); if(!pane) return false; let empty=false; pane.querySelectorAll('input[type=text],input[type=number],input[type=email]').forEach(inp=>{if(inp.value.trim()==='') empty=true;}); return empty; }
 function refreshExportStatus(){
-  const map={'profile':'profile','mor-ur':'ur','mor-wcd':'wcd','mor-dtd':'dtd','mor-csd':'csd','mor-dsd':'dsd'};
+  updateDorExportBadge();
+  const map={'profile':'profile','mor-ur':'ur','mor-wcd':'wcd','mor-dtd':'dtd','mor-csd':'csd','mor-dsd':'dsd','dor-off-dd':'dor-off-dd'};
   Object.entries(map).forEach(([paneId,key])=>{ const card=document.getElementById('ec-'+key),stat=document.getElementById('es-'+key); if(!card||!stat) return; const hasEmpty=paneHasEmpty(paneId); card.classList.toggle('blocked',hasEmpty); if(hasEmpty){stat.className='export-status err';stat.textContent='⚠ Has empty fields';}else{stat.className='export-status ok';stat.textContent='✓ Ready to export';} });
 }
 
@@ -1283,15 +1938,15 @@ function makeCSV(rows){return rows.map(r=>r.map(csvEsc).join(',')).join('\r\n');
 function getP(){return{id:v('p_id'),region:v('p_region'),company:v('p_company'),head:v('p_head'),pres:v('p_pres'),email:v('p_email'),web:v('p_web'),tel:v('p_tel'),addr:v('p_addr'),emp:v('p_emp'),conemp:v('p_conemp'),circ:v('p_circ'),density:v('p_density'),saidi:v('p_saidi'),saifi:v('p_saifi'),collect:v('p_collect'),load:v('p_load'),subs:v('p_subs'),kva:v('p_kva')};}
 
 function buildProfileCSV(){const p=getP(),m=getMonth(),y=getYear(),d=getDay();const hdr=`DU General Information (DU-PROFILE) as of <${d}> <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Company Name','4 - Head of the Company','5 - Board President','6 - Official Email','7 - Website','8 - Telephone Number','9 - Physical Address','10 - Number of Employees','11 - Connection/ Employees','12 - Circuit km of Lines','13 - Consumer Density per Circuit km of lines','14 - SAIDI','15 - SAIFI','16 - Collection Efficiency (%)','17 - Load Factor (%)','18 - No. of Substations','19 - Total Capacity (kVA)'];const types=['Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Integers','Integers','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Integers','Numeric, up to 4 decimal places'];const blank=Array(19).fill('');blank[0]=hdr;return makeCSV([blank,cols,types,[p.id,p.region,p.company,p.head,p.pres,p.email,p.web,p.tel,p.addr,p.emp,p.conemp,p.circ,p.density,p.saidi,p.saifi,p.collect,p.load,p.subs,p.kva],['EOF',...Array(18).fill('')]]);}
-function buildURCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report - Unbundled Rates (MOR-UR) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Customer Type','4 - Generation Charges','5 - GRAM-DAA','6 - ICERA-DAA','7 - Power Act Reduction','8 - Transmission System Charge','9 - Transmission Demand Charge','10 - System Loss Charge','11 - Distribution System Charge','12 - Distribution Demand Charge','13 - True-Up Adjustments','14 - Supply System Charge','15 - Supply Retail Customer Charge','16 - Metering System Charge','17 - Metering Retail Customer Charge','18 - RFSC','19 - Lifeline Subsidy','20 - Senior Citizen Subsidy','21 - UCME  - NPC SPUG','22 - UCME - REDCI','23 - UC - EC','24 - UC - SCC','25 - UC - SD','26 - FIT - All','27 - Franchise Tax','28 - Real Property Tax','29 - Generation VAT','30 - Transmission VAT','31 - Distribution VAT','32 - Other VAT'];const types=Array(32).fill('Numeric, up to 4 decimal places');types[0]='Alphanumeric';types[1]='Alphanumeric';types[2]='Alphanumeric';const blank=Array(32).fill('');blank[0]=hdr;const rows=[blank,cols,types];document.getElementById('ur-body').querySelectorAll('tr:not(.eof)').forEach((tr,i)=>{const vals=[p.id,p.region,CT[i]];tr.querySelectorAll('input').forEach(inp=>vals.push(inp.value));rows.push(vals);});rows.push(['EOF',...Array(31).fill('')]);return makeCSV(rows);}
+function buildURCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report - Unbundled Rates (MOR-UR) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Customer Type','4 - Generation Charges','5 - GRAM-DAA','6 - ICERA-DAA','7 - Power Act Reduction','8 - Transmission System Charge','9 - Transmission Demand Charge','10 - System Loss Charge','11 - Distribution System Charge','12 - Distribution Demand Charge','13 - True-Up Adjustments','14 - Supply System Charge','15 - Supply Retail Customer Charge','16 - Metering System Charge','17 - Metering Retail Customer Charge','18 - RFSC','19 - Lifeline Subsidy','20 - Senior Citizen Subsidy','21 - UCME  - NPC SPUG','22 - UCME - REDCI','23 - UC - EC','24 - UC - SCC','25 - UC - SD','26 - FIT - All','27 - Franchise Tax','28 - Real Property Tax','29 - Generation VAT','30 - Transmission VAT','31 - Distribution VAT','32 - Distribution VAT','33 - Other VAT','34 - REC Rate','35 - GEA All'];const types=Array(35).fill('Numeric, up to 4 decimal places');types[0]='Alphanumeric';types[1]='Alphanumeric';types[2]='Alphanumeric';const blank=Array(35).fill('');blank[0]=hdr;const rows=[blank,cols,types];document.getElementById('ur-body').querySelectorAll('tr:not(.eof)').forEach((tr,i)=>{const vals=[p.id,p.region,CT[i]];tr.querySelectorAll('input').forEach(inp=>vals.push(inp.value));rows.push(vals);});rows.push(['EOF',...Array(34).fill('')]);return makeCSV(rows);}
 function buildWCDCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report - Wheeling Customer Data (MOR-WCD) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Customer Category','4 - No. of Customers','5 - Total Electricity Wheeled','6 - Wheeling Rate'];const types=['Alphanumeric','Alphanumeric','Alphanumeric','Integers','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places'];const blank=Array(6).fill('');blank[0]=hdr;const rows=[blank,cols,types];document.getElementById('wcd-body').querySelectorAll('tr').forEach(tr=>{const cat=tr.querySelector('select')?.value||'';const inps=tr.querySelectorAll('input');rows.push([p.id,p.region,cat,inps[0]?.value||'',inps[1]?.value||'',inps[2]?.value||'']);});rows.push(['EOF',...Array(5).fill('')]);return makeCSV(rows);}
 function buildDTDCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report - DU Technical Data (MOR-DTD) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Maximum Load','4 - Company Use','5 - System Loss','6 - Total No. of Barangays','7 - Total Energized Barangays'];const types=['Alphanumeric','Alphanumeric','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Integers','Integers'];const blank=Array(7).fill('');blank[0]=hdr;return makeCSV([blank,cols,types,[p.id,p.region,v('dtd_ml'),v('dtd_cu'),v('dtd_sl'),v('dtd_tb'),v('dtd_eb')],['EOF',...Array(6).fill('')]]);}
 function buildCSDCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report  Customer Sales Data (MOR-CSD) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Customer Type','4 - No. of Customers','5 - Electricity Sales','6 - Effective Rate','7 - Capacity Allocation'];const types=['Alphanumeric','Alphanumeric','Alphanumeric','Integers','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places'];const blank=Array(7).fill('');blank[0]=hdr;const rows=[blank,cols,types];document.getElementById('csd-body').querySelectorAll('tr:not(.eof)').forEach((tr,i)=>{const inps=tr.querySelectorAll('input');rows.push([p.id,p.region,CT[i],inps[0]?.value||'',inps[1]?.value||'',inps[2]?.value||'',inps[3]?.value||'']);});rows.push(['EOF',...Array(6).fill('')]);return makeCSV(rows);}
 function buildDSDCSV(){const p=getP(),m=getMonth(),y=getYear();const hdr=`Monthly Operations Report  DU Supply Data (MOR-DSD) for <${m}> <${y}>`;const cols=['1 - Participant ID','2 - Region','3 - Power Suppliers','4 - Generator Affiliated to DU','5 - Contract Start','6 - Contract End','7 - Contracted Capacity','8 - Contracted Energy','9 - Purchased Electricity','10 - Generation Cost'];const types=['Alphanumeric','Alphanumeric','Alphanumeric','Alphabet','Date in yyyy-mm-dd format','Date in yyyy-mm-dd format','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places','Numeric, up to 4 decimal places'];const blank=Array(10).fill('');blank[0]=hdr;const rows=[blank,cols,types];document.getElementById('dsd-body').querySelectorAll('tr').forEach(tr=>{const sup=tr.querySelector('td.field-label input')?.value||'';const gen=tr.querySelector('select')?.value||'N';const inps=tr.querySelectorAll('td.has-val input');if(sup)rows.push([p.id,p.region,sup,gen,inps[0]?.value||'',inps[1]?.value||'',inps[2]?.value||'',inps[3]?.value||'',inps[4]?.value||'',inps[5]?.value||'']);});rows.push(['EOF',...Array(9).fill('')]);return makeCSV(rows);}
 
-const CSV_BUILDERS={profile:buildProfileCSV,'mor-ur':buildURCSV,'mor-wcd':buildWCDCSV,'mor-dtd':buildDTDCSV,'mor-csd':buildCSDCSV,'mor-dsd':buildDSDCSV};
-const PANE_KEY={'profile':'profile','mor-ur':'ur','mor-wcd':'wcd','mor-dtd':'dtd','mor-csd':'csd','mor-dsd':'dsd'};
-function getFilename(type){const mi=getMonthIdx()+1,m=getMonth().toLowerCase(),y=getYear();return({'profile':`DU_PROFILE_template_${mi}${m}${y}.csv`,'mor-ur':`MOR_UR_template_${mi}${m}${y}.csv`,'mor-wcd':`MOR_WCD_template_${mi}${m}${y}.csv`,'mor-dtd':`MOR_DTD_template_${mi}${m}${y}.csv`,'mor-csd':`MOR_CSD_template_${mi}${m}${y}.csv`,'mor-dsd':`MOR_DSD_template_${mi}${m}${y}.csv`})[type];}
+const CSV_BUILDERS={profile:buildProfileCSV,'mor-ur':buildURCSV,'mor-wcd':buildWCDCSV,'mor-dtd':buildDTDCSV,'mor-csd':buildCSDCSV,'mor-dsd':buildDSDCSV,'dor-off-dd':buildDorOffDdCSV};
+const PANE_KEY={'profile':'profile','mor-ur':'ur','mor-wcd':'wcd','mor-dtd':'dtd','mor-csd':'csd','mor-dsd':'dsd','dor-off-dd':'dor-off-dd'};
+function getFilename(type){const mi=getMonthIdx()+1,m=getMonth().toLowerCase(),y=getYear();return({'profile':`DU_PROFILE_template_${mi}${m}${y}.csv`,'mor-ur':`MOR_UR_template_${mi}${m}${y}.csv`,'mor-wcd':`MOR_WCD_template_${mi}${m}${y}.csv`,'mor-dtd':`MOR_DTD_template_${mi}${m}${y}.csv`,'mor-csd':`MOR_CSD_template_${mi}${m}${y}.csv`,'mor-dsd':`MOR_DSD_template_${mi}${m}${y}.csv`,'dor-off-dd':`DOR_OFF_DD_template_1${m}${y}.csv`})[type];}
 function dlCSV(content,filename){const blob=new Blob(['\ufeff'+content],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}
 function exportCSV(type){
   if(paneHasEmpty(type)){ const empties=validatePane(type); showModal('⚠ Cannot Export – Empty Fields Found in '+type.toUpperCase().replace('MOR-','MOR-'),empties.length>0?empties:['Some fields are empty.']); addLog('FIELD',`Blocked export of "${type.toUpperCase()}" — empty required fields`); renderLog(); return; }
@@ -1302,17 +1957,226 @@ function exportCSV(type){
   showOk('Downloaded: '+getFilename(type)); addLog('EXPORT',`Downloaded CSV: "${getFilename(type)}" — Period: ${getMonth()} ${getYear()}`); renderLog();
 }
 async function exportAll(){
-  const types=['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'];
+  const types=['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','dor-off-dd'];
   const blocked=types.filter(t=>paneHasEmpty(t));
   if(blocked.length>0){ showModal('⚠ Cannot Export All – Incomplete Sections',blocked.map(t=>t.toUpperCase()+' has empty fields')); addLog('FIELD',`Blocked "Export All" — sections with empty fields: ${blocked.map(t=>t.toUpperCase()).join(', ')}`); renderLog(); return; }
   for(const t of types){dlCSV(CSV_BUILDERS[t](),getFilename(t));await new Promise(r=>setTimeout(r,300));}
   showOk('All 6 CSV files downloaded successfully!'); addLog('EXPORT',`Downloaded ALL 6 CSV files — Period: ${getMonth()} ${getYear()}`); renderLog();
 }
 
-buildURTable(); buildCSDTable(); buildWCDTable(); buildDSDTable();
+// ── DOR-OFF-DD TABLE ──
+const DOR_HOURS = [
+  '12:00 AM','01:00 AM','02:00 AM','03:00 AM','04:00 AM','05:00 AM',
+  '06:00 AM','07:00 AM','08:00 AM','09:00 AM','10:00 AM','11:00 AM',
+  '12:00 PM','01:00 PM','02:00 PM','03:00 PM','04:00 PM','05:00 PM',
+  '06:00 PM','07:00 PM','08:00 PM','09:00 PM','10:00 PM','11:00 PM'
+];
 
-// ── GOOGLE SHEETS INTEGRATION ──
-const GS_URL = 'https://script.google.com/macros/s/AKfycbzf2HnvqbYt4lQN4yWJYHV_1g0tJ7De23_FMow4WisEpEoZjimTWZLF_mDTGDTIz1YFMw/exec';
+function getDorDay() { return document.getElementById('dor-day-select')?.value || '1'; }
+
+function populateDorDaySelect() {
+  const sel = document.getElementById('dor-day-select');
+  if (!sel) return;
+  const current = sel.value;
+  const maxDay = MONTH_DAYS[getMonthIdx()];
+  sel.innerHTML = '';
+  for (let d = 1; d <= maxDay; d++) {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = d;
+    sel.appendChild(opt);
+  }
+  // restore previous selection if still valid
+  if (current && parseInt(current) <= maxDay) sel.value = current;
+  updateDorDateDisplay();
+}
+
+function updateDorDateDisplay() {
+  const day = getDorDay(), m = getMonth(), y = getYear();
+  const mi = MONTHS.indexOf(m) + 1;
+  const el = document.getElementById('dor-date-display');
+  const mEl = document.getElementById('dor-month-display');
+  const yEl = document.getElementById('dor-year-display');
+  if (el) el.textContent = `${mi}/${day}/${y}`;
+  if (mEl) mEl.textContent = m;
+  if (yEl) yEl.textContent = y;
+}
+
+function onDorDayChange() { updateDorDateDisplay(); }
+
+function buildDorOffDdTable() {
+  const tbody = document.getElementById('dor-off-dd-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  DOR_HOURS.forEach((hour, idx) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="row-num">${idx + 1}</td>
+      <td class="field-label" style="min-width:120px;font-family:'DM Mono',monospace;font-size:12px;">${hour}</td>
+      <td class="type-cell">Time</td>
+      <td class="has-val" data-label="Row ${idx+1} – Region"><input type="text" placeholder="e.g. R3" style="min-width:90px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+      <td class="has-val" data-label="Row ${idx+1} – Province"><input type="text" placeholder="e.g. Zambales" style="min-width:130px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+      <td class="has-val" data-label="Row ${idx+1} – SIIG"><input type="text" placeholder="e.g. ZAMECO1" style="min-width:110px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+      <td class="has-val" data-label="Row ${idx+1} – Scenario"><input type="text" placeholder="e.g. Base" style="min-width:110px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+      <td class="has-val" data-label="Row ${idx+1} – Demand"><input type="number" step="0.0001" placeholder="0.0000" style="min-width:120px" oninput="clearErr(this)" onblur="validateField(this)"></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  const eof = document.createElement('tr');
+  eof.className = 'eof';
+  eof.innerHTML = `<td class="row-num">—</td><td class="field-label">EOF</td><td colspan="6"></td>`;
+  tbody.appendChild(eof);
+
+  populateDorDaySelect();
+}
+
+let _dorAmPm = true; // true = with AM/PM, false = without
+
+function toggleAmPmFormat() {
+  _dorAmPm = !_dorAmPm;
+  const btn = document.getElementById('ampm-toggle-btn');
+  if (btn) {
+    if (_dorAmPm) {
+      btn.textContent = '✓ With AM/PM';
+      btn.style.background = 'rgba(31,111,235,.15)';
+      btn.style.borderColor = 'rgba(31,111,235,.35)';
+      btn.style.color = '#58a6ff';
+    } else {
+      btn.textContent = '✕ Without AM/PM';
+      btn.style.background = 'rgba(139,148,158,.12)';
+      btn.style.borderColor = 'rgba(139,148,158,.3)';
+      btn.style.color = 'var(--muted)';
+    }
+  }
+  updateDorExportBadge();
+  renderCsvPreview('dor-off-dd');
+}
+
+function updateDorExportBadge() {
+  const badge = document.getElementById('dor-ampm-export-badge');
+  if (!badge) return;
+  if (_dorAmPm) {
+    badge.textContent = '🕐 With AM/PM';
+    badge.style.background = 'rgba(31,111,235,.12)';
+    badge.style.color = '#58a6ff';
+    badge.style.borderColor = 'rgba(31,111,235,.3)';
+  } else {
+    badge.textContent = '🕐 Without AM/PM';
+    badge.style.background = 'rgba(139,148,158,.1)';
+    badge.style.color = 'var(--muted)';
+    badge.style.borderColor = 'rgba(139,148,158,.25)';
+  }
+}
+
+function buildDorOffDdCSV() {
+  const m = getMonth(), y = getYear();
+  const day = getDorDay();
+  const mi = MONTHS.indexOf(m) + 1;
+  const datePrefix = `${mi}/${day}/${y}`;
+  const hdr = `Daily Operations Report – Off-Grid – Daily Demand (DOR-OFF-DD) for <${day}> <${m}> <${y}>`;
+  const cols = ['1 - Time Interval','2 - Region','3 - Province','4 - SIIG','5 - Scenario','6 - Demand'];
+  const types = [_dorAmPm ? 'Date (mm/dd/yyyy hh:mm AM/PM)' : 'Date (mm/dd/yyyy HH:mm)','Alphanumeric','Alphanumeric','Alphanumeric','Alphanumeric','Numeric, 4 decimal places'];
+  const blank = Array(6).fill(''); blank[0] = hdr;
+  const rows = [blank, cols, types];
+  // Format time based on AM/PM toggle
+  const formatTime = (hour24str) => {
+    if (_dorAmPm) return hour24str; // e.g. "12:00 AM"
+    // Convert to 24-hour format: "12:00 AM" -> "00:00", "01:00 PM" -> "13:00"
+    const [time, period] = hour24str.split(' ');
+    let [h, m] = time.split(':').map(Number);
+    if (period === 'AM' && h === 12) h = 0;
+    else if (period === 'PM' && h !== 12) h += 12;
+    return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+  };
+
+  document.getElementById('dor-off-dd-body').querySelectorAll('tr:not(.eof)').forEach((tr, idx) => {
+    const timeStr = `${datePrefix} ${formatTime(DOR_HOURS[idx])}`;
+    const inps = tr.querySelectorAll('td.has-val input');
+    rows.push([timeStr, inps[0]?.value||'', inps[1]?.value||'', inps[2]?.value||'', inps[3]?.value||'', inps[4]?.value||'']);
+  });
+  rows.push(['EOF',...Array(5).fill('')]);
+  return makeCSV(rows);
+}
+
+function pasteDorOffDdFromClipboard() {
+  const overlay = document.createElement('div');
+  overlay.className = 'paste-modal-overlay';
+  overlay.id = 'paste-overlay-dor-off-dd';
+  overlay.innerHTML = `
+    <div class="paste-modal">
+      <h3>📋 Paste DOR-OFF-DD Data from Excel / Spreadsheet</h3>
+      <p>Copy your 24-row hourly data from Excel/Sheets. Time interval, labels, and headers are <strong>automatically ignored</strong>. Paste below.</p>
+      <textarea id="paste-dor-off-dd-input" placeholder="Ctrl+V to paste here..."></textarea>
+      <div class="paste-result" id="paste-dor-off-dd-result"></div>
+      <div class="paste-modal-btns">
+        <button class="paste-cancel-btn" onclick="this.closest('.paste-modal-overlay').remove()">Cancel</button>
+        <button class="paste-ok-btn" onclick="applyDorOffDdPaste()">Apply</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const ta = overlay.querySelector('#paste-dor-off-dd-input');
+  ta.focus();
+  if (navigator.clipboard?.readText) {
+    navigator.clipboard.readText().then(txt => {
+      if (txt) { ta.value = txt; showPasteResult('Clipboard loaded — click Apply to fill the table.', true); }
+    }).catch(() => {});
+  }
+}
+
+function applyDorOffDdPaste() {
+  const ta = document.getElementById('paste-dor-off-dd-input');
+  const raw = ta?.value?.trim();
+  const resultEl = document.getElementById('paste-dor-off-dd-result');
+  function showE(msg) { if(resultEl){resultEl.textContent=msg;resultEl.className='paste-result err';resultEl.style.display='block';} }
+  function showK(msg) { if(resultEl){resultEl.textContent=msg;resultEl.className='paste-result ok';resultEl.style.display='block';} }
+  if (!raw) { showE('No data pasted.'); return; }
+
+  const isNum = v => { const n=v.trim().replace(',','.'); return n!==''&&!isNaN(parseFloat(n))&&isFinite(n); };
+  let rows = raw.split(/\r?\n/)
+    .map(r => r.split('\t'))
+    .filter(cols => cols.some(c => c.trim() !== ''));
+
+  // Strip leading time-interval or date-like columns per row
+  rows = rows.map(cols => {
+    let start = 0;
+    for (let i = 0; i < cols.length; i++) {
+      const t = cols[i].trim();
+      if (/^\d+\/\d+\/\d+/.test(t) || /^(0?\d|1[0-2]):\d{2}\s*(AM|PM)/i.test(t) || /^\d+$/.test(t)) { start = i + 1; continue; }
+      break;
+    }
+    return cols.slice(start);
+  }).filter(cols => cols.length >= 1 && cols.some(c => c.trim() !== '') && !/Time Interval|Region|Province|SIIG|Scenario|Demand|Alphanumeric|Numeric|Date/i.test(cols[0]));
+
+  rows = rows.slice(0, 24);
+  if (rows.length === 0) { showE('❌ No valid data rows found.'); return; }
+
+  const tbody = document.getElementById('dor-off-dd-body');
+  const trEls = Array.from(tbody.querySelectorAll('tr:not(.eof)'));
+  let filled = 0;
+
+  rows.forEach((cols, ri) => {
+    const trEl = trEls[ri]; if (!trEl) return;
+    const inps = Array.from(trEl.querySelectorAll('td.has-val input'));
+    cols.forEach((val, ci) => {
+      if (ci >= inps.length || val.trim() === '') return;
+      inps[ci].value = val.trim();
+      filled++;
+    });
+  });
+
+  if (filled > 0) {
+    showK(`✓ Filled ${filled} value(s) across ${rows.length} row(s).`);
+    setTimeout(() => document.getElementById('paste-overlay-dor-off-dd')?.remove(), 1800);
+  } else { showE('❌ No values filled. Check your data.'); }
+}
+
+buildURTable(); buildCSDTable(); buildWCDTable(); buildDSDTable(); buildDorOffDdTable();
+populateYearSelect();
+
+
+const GS_URL = 'https://script.google.com/macros/s/AKfycbzqmkBsSgMAnrHqDTK1lW4pmcve1g8brktGXIX8SCa25uMQMAtRI8Yo18cdYe98P4mo4A/exec';
 
 function setSyncStatus(state) {
   const el=document.getElementById('sync-status'); if(!el) return;
@@ -1354,8 +2218,24 @@ async function loadSignupsFromGS() {
   else { setSyncStatus('error'); loadSignupsLocal(); }
 }
 function loadSignupsLocal() { applySignupsToRuntime(getSignups()); }
+// Maps old role values → new role values
+const ROLE_MIGRATE = {'ur':'pt','wcd':'pt','dtd':'tsd','csd':'finance','dsd':'pt'};
+
 function applySignupsToRuntime(signups) {
-  signups.forEach(u=>{ USER_DB[u.username]={name:u.name,dept:u.dept,deptKey:u.deptKey,role:u.role,pwHash:u.pwHash}; if(!DEPT_USERS[u.deptKey]) DEPT_USERS[u.deptKey]=[]; if(!DEPT_USERS[u.deptKey].includes(u.username)) DEPT_USERS[u.deptKey].push(u.username); USER_LABELS[u.username]=u.name; });
+  signups.forEach(u=>{
+    const username=(u.username||'').trim();
+    const deptKey=(u.deptKey||'').trim();
+    const pwHash=(u.pwHash||'').trim();
+    const email=(u.email||'').trim().toLowerCase();
+    if(!username) return;
+    // ALWAYS derive role from deptKey — never trust the stored role value
+    // because old signups may have stale role names like 'ur','wcd','csd' etc.
+    const role = DEPT_DEFAULT_ROLE[deptKey] || 'finance';
+    USER_DB[username]={name:(u.name||'').trim(),dept:(u.dept||'').trim(),deptKey,role,pwHash,email};
+    if(!DEPT_USERS[deptKey]) DEPT_USERS[deptKey]=[];
+    if(!DEPT_USERS[deptKey].includes(username)) DEPT_USERS[deptKey].push(username);
+    USER_LABELS[username]=(u.name||'').trim();
+  });
 }
 
 // ── FORM DATA ──
@@ -1363,26 +2243,69 @@ function formDataKey(){ return getMonth()+'_'+getYear(); }
 function collectPane(paneId) {
   if(paneId==='mor-wcd') return{_rows:collectWCDRows()};
   if(paneId==='mor-dsd') return{_rows:collectDSDRows()};
+  if(paneId==='dor-off-dd') return collectDorOffDdRows();
   const pane=document.getElementById('pane-'+paneId); if(!pane) return {};
   const data={};
+
+  if(paneId==='mor-ur'){
+    // Save only editable (non-auto) UR cells keyed by __ur_ci_ri__
+    const tbody=document.getElementById('ur-body'); if(!tbody) return data;
+    tbody.querySelectorAll('td.has-val:not(.ur-auto)').forEach(td=>{
+      const inp=td.querySelector('input');
+      if(!inp||inp.readOnly) return;
+      const ci=td.dataset.col, ri=td.dataset.row;
+      if(ci!==undefined&&ri!==undefined) data[`__ur_${ci}_${ri}`]=inp.value;
+    });
+    return data;
+  }
+
   pane.querySelectorAll('input,select,textarea').forEach(el=>{ if(el.id) data[el.id]=el.value; });
-  let idx=0; pane.querySelectorAll('input:not([id]),select:not([id])').forEach(el=>{ data['__anon_'+idx++]=el.value; });
+  let idx=0;
+  pane.querySelectorAll('input:not([id]),select:not([id])').forEach(el=>{
+    const td=el.closest('td');
+    if(td?.classList.contains('ur-auto') || el.readOnly){ idx++; return; }
+    data['__anon_'+idx++]=el.value;
+  });
   return data;
 }
 function collectWCDRows(){ const rows=[]; document.getElementById('wcd-body').querySelectorAll('tr').forEach(tr=>{ const cat=tr.querySelector('select')?.value||'',inps=tr.querySelectorAll('input'); rows.push({cat,n:inps[0]?.value||'',elec:inps[1]?.value||'',rate:inps[2]?.value||''}); }); return rows; }
 function collectDSDRows(){ const rows=[]; document.getElementById('dsd-body').querySelectorAll('tr').forEach(tr=>{ const sup=tr.querySelector('td.field-label input')?.value||'',gen=tr.querySelector('select')?.value||'N',inps=tr.querySelectorAll('td.has-val input'); rows.push({sup,gen,cstart:inps[0]?.value||'',cend:inps[1]?.value||'',ccap:inps[2]?.value||'',cenergy:inps[3]?.value||'',purch:inps[4]?.value||'',cost:inps[5]?.value||''}); }); return rows; }
+function collectDorOffDdRows(){ const day=getDorDay(); const rows=[]; document.getElementById('dor-off-dd-body').querySelectorAll('tr:not(.eof)').forEach(tr=>{ const inps=tr.querySelectorAll('td.has-val input'); rows.push({region:inps[0]?.value||'',province:inps[1]?.value||'',siig:inps[2]?.value||'',scenario:inps[3]?.value||'',demand:inps[4]?.value||''}); }); return {day, rows}; }
 
 function restorePane(paneId,data) {
   if(!data) return;
   if(paneId==='mor-wcd'&&Array.isArray(data._rows)){ document.getElementById('wcd-body').innerHTML='';wcdCount=0;data._rows.forEach(r=>addWCDRowData([r.cat,r.n,r.elec,r.rate]));return; }
   if(paneId==='mor-dsd'&&Array.isArray(data._rows)){ document.getElementById('dsd-body').innerHTML='';dsdCount=0;data._rows.forEach(r=>addDSDRowData([r.sup,r.gen,r.cstart,r.cend,r.ccap,r.cenergy,'',r.purch,r.cost]));return; }
+  if(paneId==='dor-off-dd'){ const d=data; const rowArr=d.rows||d._rows||[]; const sel=document.getElementById('dor-day-select'); if(sel&&d.day){sel.value=d.day;updateDorDateDisplay();} const tbody=document.getElementById('dor-off-dd-body'); const trEls=Array.from(tbody.querySelectorAll('tr:not(.eof)')); rowArr.forEach((row,ri)=>{ const trEl=trEls[ri]; if(!trEl) return; const inps=trEl.querySelectorAll('td.has-val input'); ['region','province','siig','scenario','demand'].forEach((k,ci)=>{ if(inps[ci]&&row[k]!==undefined) inps[ci].value=row[k]; }); }); return; }
   const pane=document.getElementById('pane-'+paneId); if(!pane) return;
-  Object.entries(data).forEach(([id,val])=>{ if(id.startsWith('__anon_')) return; const el=document.getElementById(id); if(el) el.value=val; });
+
+  if(paneId==='mor-ur'){
+    // Restore only editable (non-auto) UR cells by their data-col/data-row
+    // Use __ur_ci_ri__ keyed data if available, else skip
+    const tbody=document.getElementById('ur-body'); if(!tbody) return;
+    Object.entries(data).forEach(([k,val])=>{
+      if(!k.startsWith('__ur_')) return;
+      const parts=k.replace('__ur_','').split('_');
+      const ci=parseInt(parts[0]),ri=parseInt(parts[1]);
+      const td=tbody.querySelector(`td[data-col="${ci}"][data-row="${ri}"]`);
+      if(td&&!td.classList.contains('ur-auto')){ const inp=td.querySelector('input'); if(inp&&!inp.readOnly) inp.value=val; }
+    });
+    urInitAutoFill();
+    return;
+  }
+
+  Object.entries(data).forEach(([id,val])=>{ if(id.startsWith('__anon_')||id.startsWith('__ur_')) return; const el=document.getElementById(id); if(el) el.value=val; });
   const anonEntries=Object.entries(data).filter(([k])=>k.startsWith('__anon_'));
-  if(anonEntries.length){ const anons=pane.querySelectorAll('input:not([id]),select:not([id])'); anonEntries.forEach(([k,val])=>{ const idx=parseInt(k.replace('__anon_',''),10); if(anons[idx]) anons[idx].value=val; }); }
+  if(anonEntries.length){
+    const anons=Array.from(pane.querySelectorAll('input:not([id]),select:not([id])')).filter(inp=>{
+      const td=inp.closest('td');
+      return !td?.classList.contains('ur-auto') && !inp.readOnly;
+    });
+    anonEntries.forEach(([k,val])=>{ const idx=parseInt(k.replace('__anon_',''),10); if(anons[idx]) anons[idx].value=val; });
+  }
 }
 function saveAllSectionsLocal(periodKey) {
-  try { const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}'); if(!stored[periodKey]) stored[periodKey]={}; ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s=>{ stored[periodKey][s]=collectPane(s); }); localStorage.setItem('depdms_formdata',JSON.stringify(stored)); } catch(e) {}
+  try { const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}'); if(!stored[periodKey]) stored[periodKey]={}; ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','dor-off-dd'].forEach(s=>{ stored[periodKey][s]=collectPane(s); }); localStorage.setItem('depdms_formdata',JSON.stringify(stored)); } catch(e) {}
 }
 async function saveFormDataGS(section) {
   const key=formDataKey(), sectionData=collectPane(section);
@@ -1392,18 +2315,28 @@ async function saveFormDataGS(section) {
 async function loadFormDataGS() {
   const key=formDataKey();
   buildURTable(); buildCSDTable(); buildWCDTable(); buildDSDTable();
+
+  // Clear any stale old-format mor-ur data (old __anon_ indexed saves cause wrong cell fills)
+  try {
+    const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}');
+    if(stored[key]?.['mor-ur']){
+      const urData=stored[key]['mor-ur'];
+      const hasOldFormat=Object.keys(urData).some(k=>k.startsWith('__anon_'));
+      if(hasOldFormat){ delete stored[key]['mor-ur']; localStorage.setItem('depdms_formdata',JSON.stringify(stored)); }
+    }
+  } catch(e) {}
   if(GS_URL){
     setSyncStatus('syncing');
     const res=await gsCall('getFormData',{key});
     if(res===null){ setSyncStatus('error'); }
     else if(res?.ok){
       setSyncStatus('ok');
-      if(res.data&&Object.keys(res.data).length>0){ ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s=>{if(res.data[s]) restorePane(s,res.data[s]);});}
-      else{ try{const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}');const pd=stored[key];if(pd){ ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s=>{if(pd[s]) restorePane(s,pd[s]);});}}catch(e){} }
+      if(res.data&&Object.keys(res.data).length>0){ ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','dor-off-dd'].forEach(s=>{if(res.data[s]) restorePane(s,res.data[s]);});}
+      else{ try{const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}');const pd=stored[key];if(pd){ ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','dor-off-dd'].forEach(s=>{if(pd[s]) restorePane(s,pd[s]);});}}catch(e){} }
       return;
     }else{ setSyncStatus('error'); }
   }else{ setSyncStatus('offline'); }
-  try{const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}');const pd=stored[key];if(pd){ ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd'].forEach(s=>{if(pd[s]) restorePane(s,pd[s]);});}}catch(e){}
+  try{const stored=JSON.parse(localStorage.getItem('depdms_formdata')||'{}');const pd=stored[key];if(pd){ ['profile','mor-ur','mor-wcd','mor-dtd','mor-csd','mor-dsd','dor-off-dd'].forEach(s=>{if(pd[s]) restorePane(s,pd[s]);});}}catch(e){}
 }
 
 const DEPT_LABEL_MAP={'finance':'Finance Department','tsd':'Technical Services Dept.','power-trading':'Power Trading Dept.','admin':'Administration'};
@@ -1430,11 +2363,59 @@ function toggleFpPw(inputId,btnId){const inp=document.getElementById(inputId);in
 function showSignUp(){document.getElementById('signin-card').style.display='none';document.getElementById('signup-card').style.display='block';document.getElementById('login-error').classList.remove('show');document.getElementById('signup-error').classList.remove('show');document.getElementById('signup-ok').classList.remove('show');}
 function hideSignUp(){document.getElementById('signup-card').style.display='none';document.getElementById('signin-card').style.display='block';}
 function toggleSuPw(){const inp=document.getElementById('su-pw');inp.type=inp.type==='password'?'text':'password';document.getElementById('su-eye').textContent=inp.type==='password'?'👁':'🙈';}
-const DEPT_DEFAULT_ROLE={'finance':'ur','tsd':'dtd','power-trading':'dsd','admin':'admin'};
+const DEPT_DEFAULT_ROLE={'finance':'finance','tsd':'tsd','power-trading':'pt','admin':'admin'};
 function onSuDeptChange(){document.getElementById('signup-error').classList.remove('show');}
 function showSignupErr(msg){const el=document.getElementById('signup-error');document.getElementById('signup-error-msg').textContent=msg;el.classList.add('show');document.getElementById('signup-ok').classList.remove('show');}
 function showSignupOk(msg){const el=document.getElementById('signup-ok');document.getElementById('signup-ok-msg').textContent=msg;el.classList.add('show');document.getElementById('signup-error').classList.remove('show');}
-async function doSignUp(){const name=document.getElementById('su-name').value.trim(),rawUser=document.getElementById('su-username').value.trim(),username=rawUser.toLowerCase().replace(/\s+/g,'.').replace(/[^a-z0-9._]/g,''),dept=document.getElementById('su-dept').value,email=document.getElementById('su-email').value.trim().toLowerCase(),pw=document.getElementById('su-pw').value,pw2=document.getElementById('su-pw2').value;document.getElementById('signup-error').classList.remove('show');document.getElementById('signup-ok').classList.remove('show');if(!name)return showSignupErr('Full name is required.');if(!dept)return showSignupErr('Please select a department.');if(!rawUser)return showSignupErr('Username is required.');if(username.length<3)return showSignupErr('Username must be at least 3 characters.');if(username!==rawUser.toLowerCase())document.getElementById('su-username').value=username;if(!email)return showSignupErr('Gmail address is required.');if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))return showSignupErr('Please enter a valid email address.');if(!pw)return showSignupErr('Password is required.');if(pw.length<6)return showSignupErr('Password must be at least 6 characters.');if(pw!==pw2)return showSignupErr('Passwords do not match.');if(USER_DB[username])return showSignupErr('Username "'+username+'" is already taken.');const signups=getSignups();if(signups.find(u=>u.username===username))return showSignupErr('Username "'+username+'" is already taken.');const btn=document.getElementById('signup-btn');btn.disabled=true;btn.textContent='Creating…';const role=DEPT_DEFAULT_ROLE[dept]||'ur',pwHash=await sha256(pw),newUser={username,name,email,dept:DEPT_LABEL_MAP[dept]||dept,deptKey:dept,role,password:pw,pwHash,createdAt:new Date().toISOString(),source:'signup'};signups.push(newUser);saveSignups(signups);USER_DB[username]={name:newUser.name,dept:newUser.dept,deptKey:dept,role,pwHash};if(!DEPT_USERS[dept])DEPT_USERS[dept]=[];if(!DEPT_USERS[dept].includes(username))DEPT_USERS[dept].push(username);USER_LABELS[username]=name;addLogAnon('LOGIN','New account created via Sign Up: "'+name+'" · Username: '+username+' · Dept: '+newUser.dept,username,name,newUser.dept);renderLog();btn.disabled=false;btn.textContent='Create Account ✓';showSignupOk('Account created! You can now sign in as "'+username+'".');['su-name','su-username','su-email','su-pw','su-pw2'].forEach(id=>document.getElementById(id).value='');document.getElementById('su-dept').value='';}
+async function doSignUp(){const name=document.getElementById('su-name').value.trim(),rawUser=document.getElementById('su-username').value.trim(),username=rawUser.toLowerCase().replace(/\s+/g,'.').replace(/[^a-z0-9._]/g,''),dept=document.getElementById('su-dept').value,email=document.getElementById('su-email').value.trim().toLowerCase(),pw=document.getElementById('su-pw').value,pw2=document.getElementById('su-pw2').value;document.getElementById('signup-error').classList.remove('show');document.getElementById('signup-ok').classList.remove('show');if(!name)return showSignupErr('Full name is required.');if(!dept)return showSignupErr('Please select a department.');if(!rawUser)return showSignupErr('Username is required.');if(username.length<3)return showSignupErr('Username must be at least 3 characters.');if(username!==rawUser.toLowerCase())document.getElementById('su-username').value=username;if(!email)return showSignupErr('Gmail address is required.');if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))return showSignupErr('Please enter a valid email address.');if(!pw)return showSignupErr('Password is required.');if(pw.length<6)return showSignupErr('Password must be at least 6 characters.');if(pw!==pw2)return showSignupErr('Passwords do not match.');if(USER_DB[username])return showSignupErr('Username "'+username+'" is already taken.');const btn=document.getElementById('signup-btn');btn.disabled=true;btn.textContent='Checking…';try{if(GS_URL){const fresh=await gsCall('getSignups');if(fresh?.ok&&Array.isArray(fresh.data)){localStorage.setItem('depdms_signups',JSON.stringify(fresh.data));applySignupsToRuntime(fresh.data);}}}catch(e){}const signups=getSignups();if(signups.find(u=>u.username===username)){btn.disabled=false;btn.textContent='Create Account ✓';return showSignupErr('Username "'+username+'" is already taken.');}if(signups.find(u=>u.email&&u.email===email)){btn.disabled=false;btn.textContent='Create Account ✓';return showSignupErr('This Gmail address is already registered to another account.');}btn.textContent='Creating…';const role=DEPT_DEFAULT_ROLE[dept]||'ur',pwHash=await sha256(pw),newUser={username,name,email,dept:DEPT_LABEL_MAP[dept]||dept,deptKey:dept,role,password:pw,pwHash,createdAt:new Date().toISOString(),source:'signup'};signups.push(newUser);
+
+  // 1. Save to localStorage immediately (instant)
+  localStorage.setItem('depdms_signups', JSON.stringify(signups));
+
+  // 2. Update runtime so login works immediately without page reload
+  USER_DB[username] = { name:newUser.name, dept:newUser.dept, deptKey:dept, role, pwHash };
+  if (!DEPT_USERS[dept]) DEPT_USERS[dept] = [];
+  if (!DEPT_USERS[dept].includes(username)) DEPT_USERS[dept].push(username);
+  USER_LABELS[username] = name;
+
+  // 3. Send welcome email + save to GS — both in parallel, don't block user
+  if (GS_URL) {
+    // Save account to Google Sheets
+    gsCall('saveSignups', { data: signups }).catch(() => {});
+    // Send welcome email via Google Apps Script MailApp
+    gsCall('sendWelcome', {
+      email,
+      name,
+      username,
+      dept: newUser.dept,
+      role: ROLE_CONFIG[role]?.label || role,
+    }).catch(() => {});
+  }
+
+  addLogAnon('LOGIN', 'New account created: "'+name+'" · '+username+' · '+newUser.dept, username, name, newUser.dept);
+  renderLog();
+
+  btn.disabled = false;
+  btn.textContent = 'Create Account ✓';
+
+  // 4. Show success then auto-redirect to Sign In with fields pre-filled
+  showSignupOk('✓ Account created! A welcome email was sent. Redirecting to sign in…');
+  ['su-name','su-username','su-email','su-pw','su-pw2'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('su-dept').value = '';
+
+  setTimeout(() => {
+    document.getElementById('signup-card').style.display = 'none';
+    document.getElementById('signin-card').style.display = 'block';
+    document.getElementById('signup-error').classList.remove('show');
+    document.getElementById('signup-ok').classList.remove('show');
+    // Pre-fill department and username so user just types password
+    const deptEl = document.getElementById('login-dept');
+    deptEl.value = dept;
+    onDeptChange();
+    document.getElementById('login-user').value = username;
+    document.getElementById('login-pw').focus();
+  }, 1800);
+}
 
 loadSignupsFromGS();
 
@@ -1476,10 +2457,9 @@ function cpwMsg(text,isErr){const msg=document.getElementById('cpw-msg');msg.tex
 async function doChangePassword(){const oldPw=document.getElementById('cpw-old').value,newPw=document.getElementById('cpw-new').value,newPw2=document.getElementById('cpw-new2').value;if(!oldPw)return cpwMsg('Enter your current password.',true);if(!newPw)return cpwMsg('Enter a new password.',true);if(newPw.length<6)return cpwMsg('New password must be at least 6 characters.',true);if(newPw!==newPw2)return cpwMsg('New passwords do not match.',true);const oldHash=await sha256(oldPw),user=USER_DB[currentUser.username];if(!user||oldHash!==user.pwHash)return cpwMsg('Current password is incorrect.',true);const newHash=await sha256(newPw);user.pwHash=newHash;const signups=getSignups(),idx=signups.findIndex(u=>u.username===currentUser.username);if(idx!==-1){signups[idx].pwHash=newHash;signups[idx].password=newPw;saveSignups(signups);}addLog('SAVE','Password changed for account "'+currentUser.username+'"');renderLog();cpwMsg('✓ Password updated successfully!',false);clearCpwForm();setTimeout(()=>{const m=document.getElementById('cpw-msg');m.className='changepw-msg';m.textContent='';},4000);}
 
 // ── USER MANAGEMENT ──
-const BUILTIN_PW={'admin':'zameco2025'};
-function getAllUsers(){const signups=getSignups(),signupMap={};signups.forEach(u=>signupMap[u.username]=u);const builtIn=Object.keys(USER_DB).filter(k=>!signupMap[k]).map(k=>({username:k,name:USER_DB[k].name,dept:USER_DB[k].dept,role:USER_DB[k].role,password:BUILTIN_PW[k]||'(built-in)',source:'built-in'}));const signedUp=signups.map(u=>({username:u.username,name:u.name,dept:u.dept,role:u.role,password:u.password,source:'signup'}));return[...builtIn,...signedUp];}
+function getAllUsers(){const signups=getSignups(),signupMap={};signups.forEach(u=>signupMap[u.username]=u);const builtIn=Object.keys(USER_DB).filter(k=>!signupMap[k]).map(k=>({username:k,name:USER_DB[k].name,dept:USER_DB[k].dept,role:USER_DB[k].role,password:BUILTIN_PW[k]||'(built-in)',source:'built-in'}));const signedUp=signups.map(u=>({username:u.username,name:u.name,dept:u.dept,role:u.role,password:u.password,email:u.email||'',source:u.source||'signup'}));return[...builtIn,...signedUp];}
 function renderUserTable(){const tbody=document.getElementById('uman-tbody');if(!tbody)return;tbody.innerHTML='<tr><td colspan="8" class="log-empty" style="color:var(--accent4);">⟳ Loading users…</td></tr>';_renderUserTableFromGS();}
-async function _renderUserTableFromGS(){const tbody=document.getElementById('uman-tbody');if(!tbody)return;if(GS_URL){const res=await gsCall('getSignups');if(res?.ok&&Array.isArray(res.data)){localStorage.setItem('depdms_signups',JSON.stringify(res.data));applySignupsToRuntime(res.data);}}const search=(document.getElementById('uman-search')?.value||'').toLowerCase();let users=getAllUsers();if(search)users=users.filter(u=>[u.username,u.name,u.dept,u.role].some(v=>(v||'').toLowerCase().includes(search)));if(users.length===0){tbody.innerHTML='<tr><td colspan="8" class="log-empty">No users found.</td></tr>';return;}tbody.innerHTML=users.map((u,i)=>{const safePw=escHtml(u.password||''),roleLabel=(ROLE_CONFIG[u.role]?.label)||u.role,sourceBadge=u.source==='signup'?'<span class="uman-source-badge signed-up">Signed Up</span>':'<span class="uman-source-badge built-in">Built-in</span>',deleteBtn=u.source==='signup'?'<button class="uman-delete-btn" onclick="deleteSignupUser(\''+escHtml(u.username)+'\')">🗑 Delete</button>':'<span style="color:var(--muted);font-size:10px">—</span>';return['<tr>','<td style="color:var(--muted);font-size:11px;">'+(i+1)+'</td>','<td style="font-family:monospace;font-size:12px;font-weight:600;">'+escHtml(u.username)+'</td>','<td>'+escHtml(u.name)+'</td>','<td style="font-size:11px;color:var(--muted);">'+escHtml(u.dept)+'</td>','<td style="font-size:11px;">'+escHtml(roleLabel)+'</td>','<td class="uman-pw-cell"><span class="uman-pw-mask" id="pw-mask-'+i+'" onclick="revealPw('+i+')" title="Click to reveal">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span><span class="uman-pw-reveal" id="pw-rev-'+i+'" style="display:none;">'+safePw+'</span><button class="eye" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;margin-left:4px;" onclick="revealPw('+i+')" title="Show/hide">&#128065;</button></td>','<td>'+sourceBadge+'</td>','<td>'+deleteBtn+'</td>','</tr>'].join('');}).join('');}
+async function _renderUserTableFromGS(){const tbody=document.getElementById('uman-tbody');if(!tbody)return;if(GS_URL){const res=await gsCall('getSignups');if(res?.ok&&Array.isArray(res.data)){localStorage.setItem('depdms_signups',JSON.stringify(res.data));applySignupsToRuntime(res.data);}}const search=(document.getElementById('uman-search')?.value||'').toLowerCase();let users=getAllUsers();if(search)users=users.filter(u=>[u.username,u.name,u.dept,u.role].some(v=>(v||'').toLowerCase().includes(search)));if(users.length===0){tbody.innerHTML='<tr><td colspan="8" class="log-empty">No users found.</td></tr>';return;}const signupMap=Object.fromEntries(getSignups().map(u=>[u.username,u]));tbody.innerHTML=users.map((u,i)=>{const safePw=escHtml(u.password||''),roleLabel=(ROLE_CONFIG[u.role]?.label)||u.role,sourceBadge=u.source==='signup'?'<span class="uman-source-badge signed-up">Signed Up</span>':'<span class="uman-source-badge built-in">Built-in</span>';const _isDeletable=signupMap.hasOwnProperty(u.username)||u.source==='signup';const deleteBtn=_isDeletable?'<button class="uman-delete-btn" onclick="deleteSignupUser(\''+escHtml(u.username)+'\')">🗑 Delete</button>':'<span style="color:var(--muted);font-size:10px">—</span>';return['<tr>','<td style="color:var(--muted);font-size:11px;">'+(i+1)+'</td>','<td style="font-family:monospace;font-size:12px;font-weight:600;">'+escHtml(u.username)+'</td>','<td>'+escHtml(u.name)+'</td>','<td style="font-size:11px;color:var(--muted);">'+escHtml(u.dept)+'</td>','<td style="font-size:11px;">'+escHtml(roleLabel)+'</td>','<td class="uman-pw-cell"><span class="uman-pw-mask" id="pw-mask-'+i+'" onclick="revealPw('+i+')" title="Click to reveal">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span><span class="uman-pw-reveal" id="pw-rev-'+i+'" style="display:none;">'+safePw+'</span><button class="eye" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:12px;margin-left:4px;" onclick="revealPw('+i+')" title="Show/hide">&#128065;</button></td>','<td>'+sourceBadge+'</td>','<td>'+deleteBtn+'</td>','</tr>'].join('');}).join('');}
 function revealPw(idx){const mask=document.getElementById('pw-mask-'+idx),rev=document.getElementById('pw-rev-'+idx);if(!mask||!rev)return;const showing=rev.style.display!=='none';mask.style.display=showing?'':'none';rev.style.display=showing?'none':'';}
 function deleteSignupUser(username){if(!confirm('Delete signed-up user "'+username+'"? This cannot be undone.'))return;const signups=getSignups().filter(u=>u.username!==username);saveSignups(signups);delete USER_DB[username];delete USER_LABELS[username];Object.keys(DEPT_USERS).forEach(k=>{DEPT_USERS[k]=DEPT_USERS[k].filter(u=>u!==username);});addLog('SAVE','Admin deleted signed-up user "'+username+'"');renderLog();renderUserTable();}
 
